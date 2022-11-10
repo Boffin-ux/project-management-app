@@ -1,0 +1,14 @@
+.chooseLang {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  height: 100%;
+  min-width: 6rem;
+}
+
+.select {
+  padding: .5rem;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+}

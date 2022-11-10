@@ -1,0 +1,53 @@
+.wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 -1px 0 0 #d2d0cc;
+  font-weight: 500;
+  cursor: default;
+}
+
+.copyright {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+
+.teams {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+.link, .icon {
+  height: 5rem;
+  display: inline-block;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.6;
+}
+.link:hover {
+  opacity: 1;
+}
+.rs-link {
+  width: 10rem;
+  background-image: url(../../assets/img/RSSchool.svg);
+}
+.github-icon {
+  width: 5rem;
+  background-image: url(../../assets/img/github.svg);
+  margin-right: 1rem;
+}
+
+@media (max-width: 768px) {
+  .wrap {
+    gap: 2rem;
+    flex-direction: column;
+  }
+}

@@ -17,10 +17,4 @@ const PAGESTITLE = {
   NOT_FOUND: '404',
 };
 
-const developers = [
-  { name: 'Boris Nizameev', role: 'Team-lead', github: 'https://github.com/Boffin-ux' },
-  { name: 'Sergey Chelnakov', role: 'Web-developer', github: 'https://github.com/stanlys' },
-  { name: 'Vitaliy Boudkin', role: 'Web-developer', github: 'https://github.com/bvfromru' },
-];
-
-export { LOCALES, VIEWPATH, PAGESTITLE, developers };
+export { LOCALES, VIEWPATH, PAGESTITLE };

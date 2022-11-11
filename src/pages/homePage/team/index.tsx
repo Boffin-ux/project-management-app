@@ -7,20 +7,20 @@ export default function Team() {
 
   return (
     <div className={styles.info}>
-      <h2 className={styles.title}>{t('teamTitle')}</h2>
-      <p className={styles.desc}>{t('teamDescription')}</p>
+      <h2 className={styles.title}>{t('team.title')}</h2>
+      <p className={styles.desc}>{t('team.description')}</p>
       <ul className={styles.list}>
         <li className={styles.developer}>
           <a
             className={styles.link}
             target="_blank"
-            href="https://github.com/bvfromru"
+            href="https://github.com/Boffin-ux"
             rel="noreferrer"
           >
             <span className={styles.img}></span>
-            <h3 className={styles.name}>Vitaliy Boudkin</h3>
-            <p className={styles.roleTitle}>Роль в проекте:</p>
-            <p className={styles.role}>Frontend-developer</p>
+            <h3 className={styles.name}>{t('team.author-01')}</h3>
+            <p className={styles.roleTitle}>{t('team.roleTitle')}</p>
+            <p className={styles.role}>{t('team.role-01')}</p>
           </a>
         </li>
         <li className={styles.developer}>
@@ -31,22 +31,22 @@ export default function Team() {
             rel="noreferrer"
           >
             <span className={styles.img}></span>
-            <h3 className={styles.name}>Sergey Chelnakov</h3>
-            <p className={styles.roleTitle}>Роль в проекте:</p>
-            <p className={styles.role}>Frontend-developer</p>
+            <h3 className={styles.name}>{t('team.author-02')}</h3>
+            <p className={styles.roleTitle}>{t('team.roleTitle')}</p>
+            <p className={styles.role}>{t('team.role-02')}</p>
           </a>
         </li>
         <li className={styles.developer}>
           <a
             className={styles.link}
             target="_blank"
-            href="https://github.com/Boffin-ux"
+            href="https://github.com/bvfromru"
             rel="noreferrer"
           >
             <span className={styles.img}></span>
-            <h3 className={styles.name}>Boris Nizameev</h3>
-            <p className={styles.roleTitle}>Роль в проекте:</p>
-            <p className={styles.role}>Team-lead</p>
+            <h3 className={styles.name}>{t('team.author-03')}</h3>
+            <p className={styles.roleTitle}>{t('team.roleTitle')}</p>
+            <p className={styles.role}>{t('team.role-02')}</p>
           </a>
         </li>
       </ul>

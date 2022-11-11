@@ -17,10 +17,10 @@ export default function Header() {
         <nav className={styles.list}>
           <SelectionLang />
           <NavLink className={styles.item} to={VIEWPATH.SIGNIN} end>
-            {t('signIn')}
+            {t('header.signIn')}
           </NavLink>
           <NavLink className={styles.item} to={VIEWPATH.SIGNUP} end>
-            {t('signUp')}
+            {t('header.signUp')}
           </NavLink>
         </nav>
       </div>

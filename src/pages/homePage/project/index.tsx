@@ -11,9 +11,9 @@ export default function Project() {
     <div className={styles.info}>
       <div className={styles.about}>
         <h1 className={styles.title}>{PAGESTITLE.MAIN}</h1>
-        <p className={styles.desc}>{t('pmaInfo')}</p>
+        <p className={styles.desc}>{t('project.info')}</p>
         <NavLink className={styles.link} to={VIEWPATH.SIGNIN} end>
-          {t('getStarted')}
+          {t('project.link')}
         </NavLink>
       </div>
       <div className={styles.img}></div>

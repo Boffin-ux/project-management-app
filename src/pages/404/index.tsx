@@ -15,11 +15,11 @@ export default function PageNotFound() {
     <div className={`${styles.wrapper} container`}>
       <div className={styles.wrapperLeft}>
         <h2 className={styles.title}>
-          {PAGESTITLE.NOT_FOUND}. {t('title404')}
+          {PAGESTITLE.NOT_FOUND}. {t('404.title')}
         </h2>
-        <p className={styles.desc}>{t('description404')}</p>
+        <p className={styles.desc}>{t('404.description')}</p>
         <div className={styles.links}>
-          <Link to={VIEWPATH.MAIN}>{t('goHomeLink')}</Link>
+          <Link to={VIEWPATH.MAIN}>{t('404.link')}</Link>
         </div>
       </div>
       <div className={styles.wrapperRight}></div>

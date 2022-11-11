@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { setupStore } from 'store';
-import '../i18n';
+import '../../i18n';
 import { Layout } from 'components/layouts';
 import PageNotFound from 'pages/404';
 import { VIEWPATH } from 'utils/variables';

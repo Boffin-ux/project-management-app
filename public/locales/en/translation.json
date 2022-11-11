@@ -3,5 +3,9 @@
   "signUp": "Sign Up",
   "title404": "Page not found",
   "description404": "It may have been moved or you entered the wrong page address.",
-  "goHomeLink": "Go to Main page"
+  "goHomeLink": "Go to Main page",
+  "pmaInfo": "A centralized project management tool that helps you keep track of your tasks and their timely completion.",
+  "getStarted": "Get Started",
+  "teamTitle": "Team",
+  "teamDescription": "The application was developed by a group of students from React Course · RS School 2022Q3."
 }

@@ -12,7 +12,7 @@ export default function PageNotFound() {
   }, []);
 
   return (
-    <div className={styles.wrapper}>
+    <div className={`${styles.wrapper} container`}>
       <div className={styles.wrapperLeft}>
         <h2 className={styles.title}>
           {PAGESTITLE.NOT_FOUND}. {t('title404')}

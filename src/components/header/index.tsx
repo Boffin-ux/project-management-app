@@ -3,6 +3,7 @@ import styles from './index.module.scss';
 import SelectionLang from 'components/selectionLang';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
+import { VIEWPATH } from 'utils/variables';
 
 export default function Header() {
   const { t } = useTranslation();
@@ -10,15 +11,15 @@ export default function Header() {
   return (
     <header className="header">
       <div className={styles.wrapper}>
-        <NavLink className={styles.logo} to="/" end>
+        <NavLink className={styles.logo} to={VIEWPATH.MAIN} end>
           PM-APP
         </NavLink>
         <nav className={styles.list}>
           <SelectionLang />
-          <NavLink className={styles.item} to="/signin" end>
+          <NavLink className={styles.item} to={VIEWPATH.SIGNIN} end>
             {t('signIn')}
           </NavLink>
-          <NavLink className={styles.item} to="/signup" end>
+          <NavLink className={styles.item} to={VIEWPATH.SIGNUP} end>
             {t('signUp')}
           </NavLink>
         </nav>

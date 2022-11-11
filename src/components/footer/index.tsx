@@ -8,7 +8,7 @@ export default function Footer() {
         <div className={styles.copyright}>
           ©<span>2022</span>
         </div>
-        <div className={styles.teams}>
+        <div className={styles.team}>
           <span className="icon github-icon"></span>
           <a target="_blank" href="https://github.com/bvfromru" rel="noreferrer">
             Vitaliy Boudkin

@@ -3,11 +3,12 @@
   margin: auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  cursor: default;
+  justify-content: center;
+  gap: 8rem;
 
   @media (max-width: 768px) {
     flex-direction: column;
+    gap: 3rem;
   }
 }
 
@@ -15,11 +16,13 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 2rem;
+  gap: 2.5rem;
+  width: 45%;
 
   @media (max-width: 768px) {
     order: 2;
     align-items: center;
+    width: 100%;
   }
 }
 
@@ -36,12 +39,15 @@
 
 .desc {
   padding-top: 2rem;
-  font-size: 1.6rem;
   line-height: 2.2rem;
+
+  @media (max-width: 768px) {
+    text-align: center;
+  }
 }
 
 .title {
-  font-size: 4.2rem;
+  font-size: 4rem;
   font-weight: bold;
   line-height: 5.2rem;
 }

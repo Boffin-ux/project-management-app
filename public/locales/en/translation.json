@@ -16,10 +16,25 @@
     "title": "Team",
     "description": "The application was developed by a group of students from React Course · RS School 2022Q3.",
     "roleTitle": "Role in the project:",
-    "role-01": "Team-lead",
-    "role-02": "Frontend-developer",
-    "author-01": "Boris Nizameev",
-    "author-02": "Sergey Chelnakov",
-    "author-03": "Vitaliy Boudkin"
+    "developers": [
+      {
+        "id": "01",
+        "name": "Boris Nizameev",
+        "role": "Team-lead",
+        "github": "https://github.com/Boffin-ux"
+      },
+      {
+        "id": "02",
+        "name": "Sergey Chelnakov",
+        "role": "Frontend-developer",
+        "github": "https://github.com/stanlys"
+      },
+      {
+        "id": "03",
+        "name": "Vitaliy Boudkin",
+        "role": "Frontend-developer",
+        "github": "https://github.com/bvfromru"
+      }
+    ] 
   }
 }

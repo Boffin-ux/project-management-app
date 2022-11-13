@@ -3,7 +3,7 @@ const LOCALES = {
   RUSSIAN: 'ru',
 };
 
-const VIEWPATH = {
+const VIEW_PATH = {
   MAIN: '/',
   ABOUT: 'about',
   ERROR: '404',
@@ -12,9 +12,9 @@ const VIEWPATH = {
   REST: '*',
 };
 
-const PAGESTITLE = {
+const PAGES_TITLE = {
   MAIN: 'Project Management App',
   NOT_FOUND: '404',
 };
 
-export { LOCALES, VIEWPATH, PAGESTITLE };
+export { LOCALES, VIEW_PATH, PAGES_TITLE };

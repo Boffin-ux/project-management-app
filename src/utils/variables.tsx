@@ -9,6 +9,7 @@ const VIEW_PATH = {
   ERROR: '404',
   SIGNIN: 'signin',
   SIGNUP: 'signup',
+  BOARDS: 'boards',
   REST: '*',
 };
 

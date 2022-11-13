@@ -1,9 +1,9 @@
-import React from 'react';
-import styles from './index.module.scss';
-import { LOCALES } from 'utils/variables';
-import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { setSelectedLang } from 'store/reducers/main/MainSlice';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { setSelectedLang } from 'store/reducers/MainSlice';
+import { LOCALES } from 'utils/variables';
+import styles from './index.module.scss';
 
 export default function SelectionLang() {
   const { i18n } = useTranslation();

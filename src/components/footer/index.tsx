@@ -22,7 +22,7 @@ export default function Footer() {
         </div>
         <a
           target="_blank"
-          href="https://rs.school/js/"
+          href="https://rs.school/react/"
           className="link rs-link"
           rel="noreferrer"
         ></a>

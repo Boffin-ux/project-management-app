@@ -1,9 +1,9 @@
-import React, { useEffect, useRef } from 'react';
-import styles from './index.module.scss';
+import { Button } from '@mui/material';
 import SelectionLang from 'components/selectionLang';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router-dom';
-import { VIEWPATH } from 'utils/variables';
+import { VIEW_PATH } from 'utils/variables';
+import styles from './index.module.scss';
 
 export default function Header() {
   const { t } = useTranslation();
@@ -13,33 +13,35 @@ export default function Header() {
     if (header.current) {
       const { current } = header;
 
-      const handleScroll = () => {
-        window.pageYOffset > current.offsetHeight
-          ? current.classList.add(`${styles.scrolled}`)
-          : current.classList.remove(`${styles.scrolled}`);
-      };
-      window.addEventListener('scroll', handleScroll);
+      if (!current.closest('scrolled')) {
+        const handleScroll = () => {
+          window.pageYOffset > current.offsetHeight
+            ? current.classList.add(`${styles.scrolled}`)
+            : current.classList.remove(`${styles.scrolled}`);
+        };
 
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+          window.removeEventListener('scroll', handleScroll);
+        };
+      }
     }
   }, []);
 
   return (
     <header className={styles.header} ref={header}>
       <div className={styles.wrapper}>
-        <NavLink className={styles.logo} to={VIEWPATH.MAIN} end>
+        <Button href={VIEW_PATH.MAIN} variant="contained">
           PM-APP
-        </NavLink>
+        </Button>
         <nav className={styles.list}>
           <SelectionLang />
-          <NavLink className={styles.item} to={VIEWPATH.SIGNIN} end>
+          <Button href={VIEW_PATH.SIGNIN} variant="contained">
             {t('header.signIn')}
-          </NavLink>
-          <NavLink className={styles.item} to={VIEWPATH.SIGNUP} end>
+          </Button>
+          <Button href={VIEW_PATH.SIGNUP} variant="contained">
             {t('header.signUp')}
-          </NavLink>
+          </Button>
         </nav>
       </div>
     </header>

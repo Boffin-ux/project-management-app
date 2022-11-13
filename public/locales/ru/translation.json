@@ -36,5 +36,10 @@
         "github": "https://github.com/bvfromru"
       }
     ]
+  },
+  "boards": {
+    "owner": "Автор",
+    "openBoard": "Открыть доску",
+    "members": "Участники"
   }
 }

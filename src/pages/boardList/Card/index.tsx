@@ -15,11 +15,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { BoardCardProps } from 'interfaces/boards';
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { setRandomColor } from './utils';
 
 const BoardCard: FC<BoardCardProps> = (board) => {
+  const { t } = useTranslation();
   const { title, owner, users } = board.board;
-  console.log(setRandomColor());
   return (
     <Card sx={{ width: 400, minHeight: 200, maxHeight: 250, m: 3, borderRadius: 3 }}>
       <CardHeader
@@ -32,11 +33,11 @@ const BoardCard: FC<BoardCardProps> = (board) => {
         title={title}
         titleTypographyProps={{ fontSize: 20, fontWeight: 500 }}
         subheaderTypographyProps={{ fontSize: 14 }}
-        subheader={`Owner: ${owner}`}
+        subheader={`${t('boards.owner')}: ${owner}`}
       />
       <Divider variant="inset" component="p" />
       <CardContent sx={{ paddingBottom: 0 }}>
-        <Typography variant="h5">Members:</Typography>
+        <Typography variant="h5">{t('boards.members')}:</Typography>
         <List>
           {users.map((user) => (
             <ListItem key={user.id} sx={{ fontSize: 13 }}>
@@ -47,7 +48,7 @@ const BoardCard: FC<BoardCardProps> = (board) => {
       </CardContent>
       <CardActions sx={{ fontSize: 14, justifyContent: 'space-between' }}>
         <Button size="large" sx={{ fontSize: 16 }}>
-          OPEN BOARD
+          {t('boards.openBoard')}
         </Button>
         <IconButton color="primary">
           <EditIcon sx={{ fontSize: 25 }} />

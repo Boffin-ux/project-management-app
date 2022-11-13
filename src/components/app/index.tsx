@@ -1,12 +1,13 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { setupStore } from 'store';
-import '../../i18n';
 import { Layout } from 'components/layouts';
 import PageNotFound from 'pages/404';
-import { VIEWPATH } from 'utils/variables';
 import HomePage from 'pages/homePage';
+import SignUp from 'pages/signUp';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { setupStore } from 'store';
+import { VIEWPATH } from 'utils/variables';
+import '../../i18n';
 
 export default function App() {
   const store = setupStore();
@@ -16,6 +17,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
+            <Route path={VIEWPATH.SIGNUP} element={<SignUp />} />
             <Route path={VIEWPATH.ERROR} element={<PageNotFound />} />
             <Route path={VIEWPATH.REST} element={<Navigate to={VIEWPATH.ERROR} replace />} />
           </Route>

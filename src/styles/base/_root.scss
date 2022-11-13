@@ -62,25 +62,13 @@ button, input, select {
   border-radius: .3rem;
 }
 
-.container {
-  width: 120rem;
-  margin: 0 auto;
-  padding: 3rem;
-  flex-grow: 1;
-  display: flex;
-
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-}
-
 .link, .icon {
-  height: 5rem;
+  height: 4rem;
   display: inline-block;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: 0.6;
+  opacity: .6;
 }
 
 .link:hover {
@@ -95,17 +83,21 @@ button, input, select {
 .github-icon {
   width: 5rem;
   background-image: url(../../assets/img/github.svg);
-  margin-right: 1rem;
 }
 
-.main {
+.container {
   width: 120rem;
   margin: 0 auto;
   padding: 3rem;
-  flex-grow: 1;
-  display: flex;
 
   @media (max-width: 768px) {
     width: 100%;
+    padding: 5rem;
   }
+}
+
+.main {
+  display: flex;
+  flex-grow: 1;
+  background: linear-gradient(45deg,rgba(63, 191, 195, 0.8),#333);
 }

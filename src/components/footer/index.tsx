@@ -8,7 +8,7 @@ export default function Footer() {
         <div className={styles.copyright}>
           ©<span>2022</span>
         </div>
-        <div className={styles.teams}>
+        <div className={styles.team}>
           <span className="icon github-icon"></span>
           <a target="_blank" href="https://github.com/bvfromru" rel="noreferrer">
             Vitaliy Boudkin
@@ -22,7 +22,7 @@ export default function Footer() {
         </div>
         <a
           target="_blank"
-          href="https://rs.school/js/"
+          href="https://rs.school/react/"
           className="link rs-link"
           rel="noreferrer"
         ></a>

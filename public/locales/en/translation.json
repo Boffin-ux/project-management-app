@@ -1,7 +1,40 @@
 {
-  "signIn": "Sign In",
-  "signUp": "Sign Up",
-  "title404": "Page not found",
-  "description404": "It may have been moved or you entered the wrong page address.",
-  "goHomeLink": "Go to Main page"
+  "header": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up"
+  },
+  "404": {
+    "title": "Page not found",
+    "description": "It may have been moved or you entered the wrong page address.",
+    "link": "Go to Main page"
+  },
+  "project": {
+    "info": "A centralized project management tool that helps you keep track of your tasks and their timely completion.",
+    "link": "Get Started"
+  },
+  "team": {
+    "title": "Team",
+    "description": "The application was developed by a group of students from React Course · RS School 2022Q3.",
+    "roleTitle": "Role in the project:",
+    "developers": [
+      {
+        "id": "01",
+        "name": "Boris Nizameev",
+        "role": "Team-lead",
+        "github": "https://github.com/Boffin-ux"
+      },
+      {
+        "id": "02",
+        "name": "Sergey Chelnakov",
+        "role": "Frontend-developer",
+        "github": "https://github.com/stanlys"
+      },
+      {
+        "id": "03",
+        "name": "Vitaliy Boudkin",
+        "role": "Frontend-developer",
+        "github": "https://github.com/bvfromru"
+      }
+    ] 
+  }
 }

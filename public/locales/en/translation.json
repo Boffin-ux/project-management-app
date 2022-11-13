@@ -40,6 +40,8 @@
   "boards": {
     "owner": "Owner",
     "openBoard": "Open Board",
-    "members": "Members"
+    "members": "Members",
+    "search": "Search",
+    "addBoard": "Add Board"
   }
 }

@@ -17,17 +17,20 @@ import { BoardCardProps } from 'interfaces/boards';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { setRandomColor } from './utils';
+import styles from './index.module.scss';
 
 const BoardCard: FC<BoardCardProps> = (board) => {
   const { t } = useTranslation();
+
   const { title, owner, users } = board.board;
+
   return (
-    <Card sx={{ width: 400, minHeight: 200, maxHeight: 250, m: 3, borderRadius: 3 }}>
+    <Card className={styles.card}>
       <CardHeader
         avatar={<Avatar sx={{ bgcolor: setRandomColor() }}>{title[0]}</Avatar>}
         action={
-          <IconButton aria-label="delete board">
-            <DeleteIcon color="error" sx={{ fontSize: 25 }} />
+          <IconButton>
+            <DeleteIcon color="error" className={styles.iconButton} />
           </IconButton>
         }
         title={title}
@@ -36,22 +39,22 @@ const BoardCard: FC<BoardCardProps> = (board) => {
         subheader={`${t('boards.owner')}: ${owner}`}
       />
       <Divider variant="inset" component="p" />
-      <CardContent sx={{ paddingBottom: 0 }}>
+      <CardContent className={styles.content}>
         <Typography variant="h5">{t('boards.members')}:</Typography>
         <List>
           {users.map((user) => (
-            <ListItem key={user.id} sx={{ fontSize: 13 }}>
+            <ListItem key={user.id} className={styles.membersList}>
               {user.name}
             </ListItem>
           ))}
         </List>
       </CardContent>
-      <CardActions sx={{ fontSize: 14, justifyContent: 'space-between' }}>
+      <CardActions className={styles.action}>
         <Button size="large" sx={{ fontSize: 16 }}>
           {t('boards.openBoard')}
         </Button>
         <IconButton color="primary">
-          <EditIcon sx={{ fontSize: 25 }} />
+          <EditIcon className={styles.iconButton} />
         </IconButton>
       </CardActions>
     </Card>

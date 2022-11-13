@@ -38,4 +38,10 @@ export const BOARDS: Array<Board> = [
     owner: 'stanlys4',
     users: USERS,
   },
+  {
+    id: '5',
+    title: 'Last Board in this test',
+    owner: 'stanlys5',
+    users: USERS,
+  },
 ];

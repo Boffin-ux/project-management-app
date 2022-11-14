@@ -1,9 +1,9 @@
 import { LockOutlined } from '@mui/icons-material';
 import { Avatar, Box, Button, Container, Link, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
-import { useAppDispatch } from 'hooks/redux';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { signIn } from 'store/reducers/AuthSlice';
 import { VIEW_PATH } from 'utils/variables';
 import * as yup from 'yup';
@@ -13,34 +13,32 @@ const initialValues = {
   password: '',
 };
 
-const validationSchema = yup.object({
-  login: yup
-    .string()
-    .min(3, 'Login should be of minimum 3 characters length')
-    .required('Login is required'),
-  password: yup
-    .string()
-    .min(8, 'Password should be of minimum 8 characters length')
-    .required('Password is required'),
-});
-
 function SignIn() {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const { status, error } = useAppSelector((state) => state.auth);
+
+  const validationSchema = yup.object({
+    login: yup
+      .string()
+      .min(3, 'Login should be of minimum 3 characters length')
+      .required('Login is required'),
+    password: yup
+      .string()
+      .min(8, 'Password should be of minimum 8 characters length')
+      .required('Password is required'),
+  });
 
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
-      try {
-        dispatch(signIn(values)).unwrap();
-        resetForm();
-        navigate('/boards');
-      } catch (err) {
-        console.error('Failed to sign in', err);
-      }
+      dispatch(signIn(values));
+      resetForm();
     },
   });
+
+  if (status === 'loading') return <div>Loading...</div>;
 
   return (
     <Container maxWidth="sm">
@@ -56,13 +54,13 @@ function SignIn() {
           <LockOutlined />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign In
+          {t('auth.signIn')}
         </Typography>
         <form onSubmit={formik.handleSubmit}>
           <TextField
             fullWidth
             id="login"
-            label="Login"
+            label={t('auth.login')}
             margin="normal"
             value={formik.values.login}
             onChange={formik.handleChange}
@@ -72,7 +70,7 @@ function SignIn() {
           <TextField
             fullWidth
             id="password"
-            label="Password"
+            label={t('auth.password')}
             type="password"
             margin="normal"
             value={formik.values.password}
@@ -81,13 +79,14 @@ function SignIn() {
             helperText={formik.touched.password && formik.errors.password}
           />
           <Button color="primary" variant="contained" fullWidth type="submit">
-            Submit
+            {t('auth.signIn')}
           </Button>
         </form>
         <Link href={VIEW_PATH.SIGNUP} sx={{ my: 2 }}>
-          Does not have an account? Sign up
+          {t('auth.signUpLink')}
         </Link>
       </Box>
+      {error && <h1>error</h1>}
     </Container>
   );
 }

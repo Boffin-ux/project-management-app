@@ -1,7 +1,17 @@
 {
   "header": {
     "signIn": "Sign In",
-    "signUp": "Sign Up"
+    "signUp": "Sign Up",
+    "mainPage": "Go to Go to Main Page"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sing Up",
+    "login": "Login",
+    "password": "Password",
+    "name": "Name",
+    "signUpLink": "Does not have an account? Sign up",
+    "signInLink": "Already have an account? Sign in"
   },
   "404": {
     "title": "Page not found",
@@ -35,6 +45,6 @@
         "role": "Frontend-developer",
         "github": "https://github.com/bvfromru"
       }
-    ] 
+    ]
   }
 }

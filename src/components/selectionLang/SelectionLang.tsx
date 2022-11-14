@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { setSelectedLang } from 'store/reducers/MainSlice';
 import { LOCALES } from 'utils/variables';
-import styles from './index.module.scss';
+import styles from './SelectionLang.module.scss';
 
 export default function SelectionLang() {
   const { i18n } = useTranslation();

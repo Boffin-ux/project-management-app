@@ -1,7 +1,7 @@
 import React from 'react';
 
-function Boards() {
+function Main() {
   return <div>Boards</div>;
 }
 
-export default Boards;
+export default Main;

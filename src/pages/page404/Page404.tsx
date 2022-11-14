@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import styles from './index.module.scss';
+import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { PAGES_TITLE, VIEW_PATH } from 'utils/variables';
-import { useTranslation } from 'react-i18next';
+import styles from './Page404.module.scss';
 
 export default function PageNotFound() {
   const { t } = useTranslation();

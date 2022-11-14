@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './index.module.scss';
-import Project from './project';
-import Team from './team';
+import Project from './project/Project';
+import Team from './team/Team';
 
 export default function HomePage() {
   return (

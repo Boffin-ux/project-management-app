@@ -1,9 +1,10 @@
 import { Button } from '@mui/material';
-import SelectionLang from 'components/selectionLang';
+import AuthMenu from 'components/AuthMenu/AuthMenu';
+import SelectionLang from 'components/selectionLang/SelectionLang';
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { VIEW_PATH } from 'utils/variables';
-import styles from './index.module.scss';
+import styles from './Header.module.scss';
 
 export default function Header() {
   const { t } = useTranslation();
@@ -36,12 +37,7 @@ export default function Header() {
         </Button>
         <nav className={styles.list}>
           <SelectionLang />
-          <Button href={VIEW_PATH.SIGNIN} variant="contained">
-            {t('header.signIn')}
-          </Button>
-          <Button href={VIEW_PATH.SIGNUP} variant="contained">
-            {t('header.signUp')}
-          </Button>
+          <AuthMenu />
         </nav>
       </div>
     </header>

@@ -2,6 +2,7 @@ import { LockOutlined } from '@mui/icons-material';
 import { Avatar, Box, Button, Container, Link, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { VIEW_PATH } from 'utils/variables';
 import * as yup from 'yup';
 
@@ -27,6 +28,8 @@ const validationSchema = yup.object({
 });
 
 function SignUp() {
+  const { t } = useTranslation();
+
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
@@ -49,14 +52,14 @@ function SignUp() {
           <LockOutlined />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          {t('auth.signUp')}
         </Typography>
         <form onSubmit={formik.handleSubmit}>
           <TextField
             autoFocus
             fullWidth
             id="name"
-            label="Name"
+            label={t('auth.name')}
             margin="normal"
             value={formik.values.name}
             onChange={formik.handleChange}
@@ -66,7 +69,7 @@ function SignUp() {
           <TextField
             fullWidth
             id="login"
-            label="Login"
+            label={t('auth.login')}
             margin="normal"
             value={formik.values.login}
             onChange={formik.handleChange}
@@ -76,7 +79,7 @@ function SignUp() {
           <TextField
             fullWidth
             id="password"
-            label="Password"
+            label={t('auth.password')}
             type="password"
             margin="normal"
             value={formik.values.password}
@@ -85,11 +88,11 @@ function SignUp() {
             helperText={formik.touched.password && formik.errors.password}
           />
           <Button color="primary" variant="contained" fullWidth type="submit">
-            Submit
+            {t('auth.signUp')}
           </Button>
         </form>
         <Link href={VIEW_PATH.SIGNIN} sx={{ my: 2 }}>
-          Already have an account? Sign in
+          {t('auth.signUpLink')}
         </Link>
       </Box>
     </Container>

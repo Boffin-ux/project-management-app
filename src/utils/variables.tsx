@@ -4,11 +4,12 @@ const LOCALES = {
 };
 
 const VIEW_PATH = {
-  MAIN: '/',
+  HOME: '/',
   ABOUT: 'about',
   ERROR: '404',
   SIGNIN: 'signin',
   SIGNUP: 'signup',
+  MAIN: 'main',
   REST: '*',
 };
 

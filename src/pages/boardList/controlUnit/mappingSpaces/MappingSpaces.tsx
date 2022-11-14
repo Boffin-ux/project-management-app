@@ -5,16 +5,16 @@ import SplitscreenIcon from '@mui/icons-material/Splitscreen';
 import { CardDisplayType } from './views';
 
 export const MappingSpaces = () => {
-  const [currectView, setCurrectView] = useState<string>(CardDisplayType.grid);
+  const [currentView, setCurrentView] = useState<string>(CardDisplayType.grid);
 
   const toggleView = () => {
-    setCurrectView((currect) =>
-      currect === CardDisplayType.grid ? CardDisplayType.rows : CardDisplayType.grid
+    setCurrentView((current) =>
+      current === CardDisplayType.grid ? CardDisplayType.rows : CardDisplayType.grid
     );
   };
 
   return (
-    <ToggleButtonGroup size="large" value={currectView} onChange={toggleView}>
+    <ToggleButtonGroup size="large" value={currentView} onChange={toggleView}>
       <ToggleButton value={CardDisplayType.grid} key={CardDisplayType.grid}>
         <GridViewIcon fontSize="large" />
       </ToggleButton>

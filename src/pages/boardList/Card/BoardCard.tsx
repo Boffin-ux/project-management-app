@@ -18,11 +18,12 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { setRandomColor } from './utils';
 import styles from './BoardCard.module.scss';
+import { Link } from 'react-router-dom';
 
 export const BoardCard: FC<BoardCardProps> = (board) => {
   const { t } = useTranslation();
 
-  const { title, owner, users } = board.board;
+  const { title, owner, users, id } = board.board;
 
   return (
     <Card className={styles.card}>
@@ -50,9 +51,11 @@ export const BoardCard: FC<BoardCardProps> = (board) => {
         </List>
       </CardContent>
       <CardActions className={styles.action}>
-        <Button size="large" sx={{ fontSize: 16 }}>
-          {t('boards.openBoard')}
-        </Button>
+        <Link to={id}>
+          <Button size="large" sx={{ fontSize: 16 }}>
+            {t('boards.openBoard')}
+          </Button>
+        </Link>
         <IconButton color="primary">
           <EditIcon className={styles.iconButton} />
         </IconButton>

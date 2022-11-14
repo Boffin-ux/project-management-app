@@ -8,6 +8,7 @@ import PageNotFound from 'pages/404';
 import { VIEW_PATH } from 'utils/variables';
 import HomePage from 'pages/homePage';
 import { Boards } from 'pages/boardList/BoardsList';
+import { BoardItem } from 'pages/boardItem/BoardItem';
 
 export default function App() {
   const store = setupStore();
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
             <Route path={VIEW_PATH.BOARDS} element={<Boards />} />
+            <Route path={VIEW_PATH.BOARDSID} element={<BoardItem />} />
             <Route path={VIEW_PATH.REST} element={<PageNotFound />} />
           </Route>
         </Routes>

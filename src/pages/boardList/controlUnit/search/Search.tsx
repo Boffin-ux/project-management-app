@@ -2,7 +2,7 @@ import React from 'react';
 import { Paper, InputBase, Divider, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
-import styles from './index.module.scss';
+import styles from './Search.module.scss';
 
 export const Search = () => {
   const { t } = useTranslation();

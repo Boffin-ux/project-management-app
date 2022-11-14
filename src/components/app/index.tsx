@@ -7,7 +7,7 @@ import { Layout } from 'components/layouts';
 import PageNotFound from 'pages/404';
 import { VIEW_PATH } from 'utils/variables';
 import HomePage from 'pages/homePage';
-import { Boards } from 'pages/boardList';
+import { Boards } from 'pages/boardList/BoardsList';
 
 export default function App() {
   const store = setupStore();

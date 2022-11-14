@@ -17,9 +17,9 @@ import { BoardCardProps } from 'interfaces/boards';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { setRandomColor } from './utils';
-import styles from './index.module.scss';
+import styles from './BoardCard.module.scss';
 
-const BoardCard: FC<BoardCardProps> = (board) => {
+export const BoardCard: FC<BoardCardProps> = (board) => {
   const { t } = useTranslation();
 
   const { title, owner, users } = board.board;
@@ -60,5 +60,3 @@ const BoardCard: FC<BoardCardProps> = (board) => {
     </Card>
   );
 };
-
-export default BoardCard;

@@ -42,6 +42,7 @@
     "openBoard": "Open Board",
     "members": "Members",
     "search": "Search",
-    "addBoard": "Add Board"
+    "addBoard": "Add Board",
+    "onlyMy": "Only my boards"
   }
 }

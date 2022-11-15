@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Box } from '@mui/material';
-import { BoardCard } from './card/BoardCard';
+import { BoardCard } from './Card/BoardCard';
 import { BOARDS } from './mockBoardList';
 import { ControlUnit } from './controlUnit/ControlUnit';
 

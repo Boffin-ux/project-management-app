@@ -22,7 +22,7 @@ export const signIn = createAsyncThunk(
       const err = error as AxiosError;
       if (!err?.response) {
         return rejectWithValue('authNoResponse');
-      } else if (err.response?.status === RESPONSE_CODES.SIGNUP.WRONG_PASSWORD) {
+      } else if (err.response?.status === RESPONSE_CODES.AUTH_ERROR) {
         return rejectWithValue('authWrongPassword');
       } else {
         return rejectWithValue('authLoginFailed');
@@ -41,7 +41,7 @@ export const signUp = createAsyncThunk(
       const err = error as AxiosError;
       if (!err?.response) {
         return rejectWithValue('authNoResponse');
-      } else if (err.response?.status === RESPONSE_CODES.SIGNIN.LOGIN_EXIST) {
+      } else if (err.response?.status === RESPONSE_CODES.ALREADY_EXIST) {
         return rejectWithValue('authLoginExist');
       } else {
         return rejectWithValue('authLoginFailed');

@@ -1,32 +1,35 @@
 import React from 'react';
 import styles from './footer.module.scss';
+import { Box } from '@mui/material';
+import RSIcon from '../../assets/img/RSSchool.svg';
+import githubIcon from '../../assets/img/github.svg';
 
 export default function Footer() {
   return (
-    <footer className="footer">
-      <div className={styles.wrap}>
-        <div className={styles.copyright}>
+    <Box component="footer" className="footer">
+      <Box className={styles.wrap}>
+        <Box className={styles.copyright}>
           ©<span>2022</span>
-        </div>
-        <div className={styles.team}>
-          <span className="icon github-icon"></span>
-          <a target="_blank" href="https://github.com/bvfromru" rel="noreferrer">
+        </Box>
+        <Box className={styles.team}>
+          <img src={githubIcon} className={`${styles.icon} ${styles.githubIcon}`} />
+
+          <Box component="a" href="https://github.com/bvfromru" target="_blank">
             Vitaliy Boudkin
-          </a>
-          <a target="_blank" href="https://github.com/stanlys" rel="noreferrer">
+          </Box>
+
+          <Box component="a" href="https://github.com/stanlys" target="_blank">
             Sergey Chelnakov
-          </a>
-          <a target="_blank" href="https://github.com/Boffin-ux" rel="noreferrer">
+          </Box>
+
+          <Box component="a" href="https://github.com/Boffin-ux" target="_blank">
             Boris Nizameev
-          </a>
-        </div>
-        <a
-          target="_blank"
-          href="https://rs.school/react/"
-          className="link rs-link"
-          rel="noreferrer"
-        ></a>
-      </div>
-    </footer>
+          </Box>
+        </Box>
+        <Box component="a" href="https://rs.school/react/" target="_blank">
+          <img src={RSIcon} className={`${styles.link} ${styles.rsLink}`} />
+        </Box>
+      </Box>
+    </Box>
   );
 }

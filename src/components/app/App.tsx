@@ -8,20 +8,24 @@ import PageNotFound from 'pages/404/PageNotFound';
 import { VIEW_PATH } from 'utils/variables';
 import HomePage from 'pages/homePage/HomePage';
 import { Boards } from 'pages/boardList/BoardsList';
+import { muiTheme } from 'utils/muiTheme';
+import { ThemeProvider } from '@emotion/react';
 
 export default function App() {
   const store = setupStore();
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<HomePage />} />
-            <Route path={VIEW_PATH.BOARDS} element={<Boards />} />
-            <Route path={VIEW_PATH.REST} element={<PageNotFound />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <ThemeProvider theme={muiTheme}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<HomePage />} />
+              <Route path={VIEW_PATH.BOARDS} element={<Boards />} />
+              <Route path={VIEW_PATH.REST} element={<PageNotFound />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
     </Provider>
   );
 }

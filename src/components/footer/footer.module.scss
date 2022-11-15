@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem 4rem;
+  padding: 20px 40px;
   width: 100%;
   height: 100%;
   box-shadow: 0 -1px 0 0 #d2d0cc;
@@ -10,7 +10,7 @@
   cursor: default;
 
   @media (max-width: 768px) {
-    gap: 2rem;
+    gap: 20px;
     flex-direction: column;
   }
 }
@@ -18,7 +18,7 @@
 .copyright {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 10px;
 }
 
 
@@ -26,11 +26,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 2rem;
+  gap: 20px;
+  
+  @media (max-width: 768px) {
+    gap: 10px;
+    padding: 10px;
+  }
 }
 
 .link, .icon {
-  height: 5rem;
+  height: 50px;
   display: inline-block;
   background-size: contain;
   background-position: center;
@@ -40,12 +45,10 @@
 .link:hover {
   opacity: 1;
 }
-.rs-link {
-  width: 10rem;
-  background-image: url(../../assets/img/RSSchool.svg);
+.rsLink {
+  width: 100px;
 }
-.github-icon {
-  width: 5rem;
-  background-image: url(../../assets/img/github.svg);
-  margin-right: 1rem;
+.githubIcon {
+  width: 50px;
+  margin-right: 10px;
 }

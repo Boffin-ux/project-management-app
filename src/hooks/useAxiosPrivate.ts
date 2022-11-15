@@ -35,7 +35,7 @@ const useAxiosPrivate = () => {
       axiosPrivate.interceptors.request.eject(requestIntercept);
       axiosPrivate.interceptors.response.eject(responseIntercept);
     };
-  }, [token]);
+  }, [dispatch, token]);
 
   return axiosPrivate;
 };

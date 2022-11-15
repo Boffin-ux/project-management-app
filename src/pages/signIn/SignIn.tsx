@@ -1,5 +1,14 @@
 import { LockOutlined } from '@mui/icons-material';
-import { Avatar, Box, Button, Container, Link, TextField, Typography } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  Link,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { useFormik } from 'formik';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import React from 'react';
@@ -17,6 +26,7 @@ function SignIn() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { status, error } = useAppSelector((state) => state.auth);
+  const isLoading = status === 'loading';
 
   const validationSchema = yup.object({
     login: yup
@@ -37,8 +47,6 @@ function SignIn() {
       resetForm();
     },
   });
-
-  if (status === 'loading') return <div>Loading...</div>;
 
   return (
     <Container maxWidth="sm">
@@ -66,6 +74,7 @@ function SignIn() {
             onChange={formik.handleChange}
             error={formik.touched.login && Boolean(formik.errors.login)}
             helperText={formik.touched.login && formik.errors.login}
+            disabled={isLoading}
           />
           <TextField
             fullWidth
@@ -77,16 +86,37 @@ function SignIn() {
             onChange={formik.handleChange}
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
+            disabled={isLoading}
           />
-          <Button color="primary" variant="contained" fullWidth type="submit">
-            {t('auth.signIn')}
-          </Button>
+          {!formik.dirty && error && <Typography sx={{ color: 'red', my: 1 }}>{error}</Typography>}
+          <Box sx={{ position: 'relative' }}>
+            <Button
+              color="primary"
+              variant="contained"
+              fullWidth
+              type="submit"
+              disabled={isLoading}
+            >
+              {t('auth.signIn')}
+            </Button>
+            {isLoading && (
+              <CircularProgress
+                size={24}
+                sx={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  marginTop: '-12px',
+                  marginLeft: '-12px',
+                }}
+              />
+            )}
+          </Box>
         </form>
         <Link href={VIEW_PATH.SIGNUP} sx={{ my: 2 }}>
           {t('auth.signUpLink')}
         </Link>
       </Box>
-      {error && <h1>error</h1>}
     </Container>
   );
 }

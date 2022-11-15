@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 import GridViewIcon from '@mui/icons-material/GridView';
 import SplitscreenIcon from '@mui/icons-material/Splitscreen';
+import { ToggleButton, ToggleButtonGroup } from '@mui/material';
+import React, { useState } from 'react';
 import { CardDisplayType } from './views';
 
 export const MappingSpaces = () => {
   const [currectView, setCurrectView] = useState<string>(CardDisplayType.grid);
+  // Misspell currect => current
 
   const toggleView = () => {
     setCurrectView((currect) =>

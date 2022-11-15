@@ -1,35 +1,61 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'api/axios';
+import { AxiosError } from 'axios';
 
-interface IState {
+interface IAuthState {
   token: string;
   status: string;
-  error: string | undefined;
+  error: string | null;
 }
 
-const initialState: IState = {
+const initialState: IAuthState = {
   token: '',
   status: '',
   error: '',
 };
-interface IData {
+interface ISignInData {
   login: string;
   password: string;
 }
 
+interface ISingUpData extends ISignInData {
+  name: string;
+}
+
 export const signIn = createAsyncThunk(
   'auth/signIn',
-  async (loginData: IData, { rejectWithValue }) => {
+  async (signInData: ISingUpData, { rejectWithValue }) => {
     try {
-      const response = await axios.post('auth/signin', loginData);
+      const response = await axios.post('auth/signin', signInData);
       return response.data;
-    } catch (err) {
-      // if (err.code === 'ERR_BAD_REQUEST') {
-      //   return rejectWithValue('Authorization error');
-      // }
+    } catch (error) {
+      const err = error as AxiosError;
+      if (!err?.response) {
+        return rejectWithValue('No Server Response');
+      } else if (err.response?.status === 409) {
+        return rejectWithValue('Login already exist');
+      } else {
+        return rejectWithValue('Login Failed');
+      }
+    }
+  }
+);
 
-      // I don't know how to write good error handling, please help me! :)
-      return rejectWithValue('Bad request');
+export const signUp = createAsyncThunk(
+  'auth/signUp',
+  async (signUpData: ISignInData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post('auth/signup', signUpData);
+      return response.data;
+    } catch (error) {
+      const err = error as AxiosError;
+      if (!err?.response) {
+        return rejectWithValue('No Server Response');
+      } else if (err.response?.status === 401) {
+        return rejectWithValue('Wrong Username or Password');
+      } else {
+        return rejectWithValue('Login Failed');
+      }
     }
   }
 );
@@ -37,16 +63,12 @@ export const signIn = createAsyncThunk(
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {
-    // setToken(state, action: PayloadAction<string>) {
-    //   state.token = action.payload;
-    // },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(signIn.pending, (state, action) => {
+      .addCase(signIn.pending, (state) => {
         state.status = 'loading';
-        state.error = '';
+        state.error = null;
       })
       .addCase(signIn.fulfilled, (state, action) => {
         state.status = 'succeeded';
@@ -54,7 +76,18 @@ export const authSlice = createSlice({
       })
       .addCase(signIn.rejected, (state, action) => {
         state.status = 'failed';
-        console.log(action);
+        state.error = action.payload as string;
+      })
+      .addCase(signUp.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(signUp.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.token = action.payload.token;
+      })
+      .addCase(signUp.rejected, (state, action) => {
+        state.status = 'failed';
         state.error = action.payload as string;
       });
   },

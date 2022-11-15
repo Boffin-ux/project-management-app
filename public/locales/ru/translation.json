@@ -1,12 +1,15 @@
 {
   "errors": {
-    "loginValidationMin": "Login should be of minimum 3 characters length",
-    "loginValidationRequired": "Login is required",
-    "passwordValidationMin": "Password should be of minimum 8 characters length",
-    "passwordValidationRequired": "Password is required",
-    "authNoResponse": "No Server Response",
-    "authWrongPassword": "Wrong Username or Password",
-    "authLoginFailed": "Login Failed"
+    "NameValidationMin": "Минимальная длина имени 2 символа",
+    "NameValidationRequired": "Имя не введено",
+    "loginValidationMin": "Минимальная длина логина 3 символа",
+    "loginValidationRequired": "Логин не введен",
+    "passwordValidationMin": "Минимальная длина пароля 8 символов",
+    "passwordValidationRequired": "Пароль не введен",
+    "authNoResponse": "Нет связи с сервером",
+    "authWrongPassword": "Неверный логин или пароль",
+    "authLoginExist": "Такой логин уже существует",
+    "authLoginFailed": "Ошибка аутентификации"
   },
   "header": {
     "signIn": "Войти",

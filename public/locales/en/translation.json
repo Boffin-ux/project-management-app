@@ -1,11 +1,14 @@
 {
   "errors": {
+    "NameValidationMin": "Name should be of minimum 2 characters length",
+    "NameValidationRequired": "Name is required",
     "loginValidationMin": "Login should be of minimum 3 characters length",
     "loginValidationRequired": "Login is required",
     "passwordValidationMin": "Password should be of minimum 8 characters length",
     "passwordValidationRequired": "Password is required",
     "authNoResponse": "No Server Response",
     "authWrongPassword": "Wrong Username or Password",
+    "authLoginExist": "Login already exist",
     "authLoginFailed": "Login Failed"
   },
   "header": {

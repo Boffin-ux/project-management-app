@@ -22,22 +22,16 @@ const initialValues = {
   password: '',
 };
 
+const validationSchema = yup.object({
+  login: yup.string().min(3, 'loginValidationMin').required('loginValidationRequired'),
+  password: yup.string().min(8, 'passwordValidationMin').required('passwordValidationRequired'),
+});
+
 function SignIn() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { status, error } = useAppSelector((state) => state.auth);
   const isLoading = status === 'loading';
-
-  const validationSchema = yup.object({
-    login: yup
-      .string()
-      .min(3, 'Login should be of minimum 3 characters length')
-      .required('Login is required'),
-    password: yup
-      .string()
-      .min(8, 'Password should be of minimum 8 characters length')
-      .required('Password is required'),
-  });
 
   const formik = useFormik({
     initialValues: initialValues,
@@ -47,6 +41,9 @@ function SignIn() {
       resetForm();
     },
   });
+
+  const loginError = formik.errors.login;
+  const passwordError = formik.errors.password;
 
   return (
     <Container maxWidth="sm">
@@ -72,8 +69,8 @@ function SignIn() {
             margin="normal"
             value={formik.values.login}
             onChange={formik.handleChange}
-            error={formik.touched.login && Boolean(formik.errors.login)}
-            helperText={formik.touched.login && formik.errors.login}
+            error={formik.touched.login && Boolean(loginError)}
+            helperText={formik.touched.login && Boolean(loginError) && t(`errors.${loginError}`)}
             disabled={isLoading}
           />
           <TextField
@@ -84,11 +81,15 @@ function SignIn() {
             margin="normal"
             value={formik.values.password}
             onChange={formik.handleChange}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={formik.touched.password && formik.errors.password}
+            error={formik.touched.password && Boolean(passwordError)}
+            helperText={
+              formik.touched.password && Boolean(passwordError) && t(`errors.${passwordError}`)
+            }
             disabled={isLoading}
           />
-          {!formik.dirty && error && <Typography sx={{ color: 'red', my: 1 }}>{error}</Typography>}
+          {!formik.dirty && error && (
+            <Typography sx={{ color: 'red', my: 1 }}>{t(`errors.${error}`)}</Typography>
+          )}
           <Box sx={{ position: 'relative' }}>
             <Button
               color="primary"

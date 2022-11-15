@@ -24,18 +24,18 @@ interface ISingUpData extends ISignInData {
 
 export const signIn = createAsyncThunk(
   'auth/signIn',
-  async (signInData: ISingUpData, { rejectWithValue }) => {
+  async (signInData: ISignInData, { rejectWithValue }) => {
     try {
       const response = await axios.post('auth/signin', signInData);
       return response.data;
     } catch (error) {
       const err = error as AxiosError;
       if (!err?.response) {
-        return rejectWithValue('No Server Response');
-      } else if (err.response?.status === 409) {
-        return rejectWithValue('Login already exist');
+        return rejectWithValue('authNoResponse');
+      } else if (err.response?.status === 401) {
+        return rejectWithValue('authWrongPassword');
       } else {
-        return rejectWithValue('Login Failed');
+        return rejectWithValue('authLoginFailed');
       }
     }
   }
@@ -43,18 +43,18 @@ export const signIn = createAsyncThunk(
 
 export const signUp = createAsyncThunk(
   'auth/signUp',
-  async (signUpData: ISignInData, { rejectWithValue }) => {
+  async (signUpData: ISingUpData, { rejectWithValue }) => {
     try {
       const response = await axios.post('auth/signup', signUpData);
       return response.data;
     } catch (error) {
       const err = error as AxiosError;
       if (!err?.response) {
-        return rejectWithValue('No Server Response');
-      } else if (err.response?.status === 401) {
-        return rejectWithValue('Wrong Username or Password');
+        return rejectWithValue('authNoResponse');
+      } else if (err.response?.status === 409) {
+        return rejectWithValue('authLoginExist');
       } else {
-        return rejectWithValue('Login Failed');
+        return rejectWithValue('authLoginFailed');
       }
     }
   }

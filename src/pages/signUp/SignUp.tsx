@@ -1,8 +1,19 @@
 import { LockOutlined } from '@mui/icons-material';
-import { Avatar, Box, Button, Container, Link, TextField, Typography } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  Link,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { useFormik } from 'formik';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { signUp } from 'store/reducers/AuthSlice';
 import { VIEW_PATH } from 'utils/variables';
 import * as yup from 'yup';
 
@@ -13,30 +24,29 @@ const initialValues = {
 };
 
 const validationSchema = yup.object({
-  name: yup
-    .string()
-    .min(2, 'Name should be of minimum 2 characters length')
-    .required('Name is required'),
-  login: yup
-    .string()
-    .min(3, 'Login should be of minimum 3 characters length')
-    .required('Login is required'),
-  password: yup
-    .string()
-    .min(8, 'Password should be of minimum 8 characters length')
-    .required('Password is required'),
+  name: yup.string().min(2, 'NameValidationMin').required('NameValidationRequired'),
+  login: yup.string().min(3, 'loginValidationMin').required('loginValidationRequired'),
+  password: yup.string().min(8, 'passwordValidationMin').required('passwordValidationRequired'),
 });
 
 function SignUp() {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const { status, error } = useAppSelector((state) => state.auth);
+  const isLoading = status === 'loading';
 
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: (values, { resetForm }) => {
+      dispatch(signUp(values));
+      resetForm();
     },
   });
+
+  const nameError = formik.errors.name;
+  const loginError = formik.errors.login;
+  const passwordError = formik.errors.password;
 
   return (
     <Container maxWidth="sm">
@@ -63,8 +73,8 @@ function SignUp() {
             margin="normal"
             value={formik.values.name}
             onChange={formik.handleChange}
-            error={formik.touched.name && Boolean(formik.errors.name)}
-            helperText={formik.touched.name && formik.errors.name}
+            error={formik.touched.name && Boolean(nameError)}
+            helperText={formik.touched.name && Boolean(nameError) && t(`errors.${nameError}`)}
           />
           <TextField
             fullWidth
@@ -73,8 +83,8 @@ function SignUp() {
             margin="normal"
             value={formik.values.login}
             onChange={formik.handleChange}
-            error={formik.touched.login && Boolean(formik.errors.login)}
-            helperText={formik.touched.login && formik.errors.login}
+            error={formik.touched.login && Boolean(loginError)}
+            helperText={formik.touched.login && Boolean(loginError) && t(`errors.${loginError}`)}
           />
           <TextField
             fullWidth
@@ -84,15 +94,40 @@ function SignUp() {
             margin="normal"
             value={formik.values.password}
             onChange={formik.handleChange}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={formik.touched.password && formik.errors.password}
+            error={formik.touched.password && Boolean(passwordError)}
+            helperText={
+              formik.touched.password && Boolean(passwordError) && t(`errors.${passwordError}`)
+            }
           />
-          <Button color="primary" variant="contained" fullWidth type="submit">
-            {t('auth.signUp')}
-          </Button>
+          {!formik.dirty && error && (
+            <Typography sx={{ color: 'red', my: 1 }}>{t(`errors.${error}`)}</Typography>
+          )}
+          <Box sx={{ position: 'relative' }}>
+            <Button
+              color="primary"
+              variant="contained"
+              fullWidth
+              type="submit"
+              disabled={isLoading}
+            >
+              {t('auth.signUp')}
+            </Button>
+            {isLoading && (
+              <CircularProgress
+                size={24}
+                sx={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  marginTop: '-12px',
+                  marginLeft: '-12px',
+                }}
+              />
+            )}
+          </Box>
         </form>
         <Link href={VIEW_PATH.SIGNIN} sx={{ my: 2 }}>
-          {t('auth.signUpLink')}
+          {t('auth.signInLink')}
         </Link>
       </Box>
     </Container>

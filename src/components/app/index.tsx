@@ -9,6 +9,7 @@ import { VIEW_PATH } from 'utils/variables';
 import HomePage from 'pages/homePage';
 import { Boards } from 'pages/boardList/BoardsList';
 import { BoardItem } from 'pages/boardItem/BoardItem';
+import 'idempotent-babel-polyfill';
 import BoardItem2 from 'pages/boardItem';
 
 export default function App() {

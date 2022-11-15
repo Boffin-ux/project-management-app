@@ -1,7 +1,7 @@
 import { Typography, Box, List, ListItem, Button } from '@mui/material';
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { DragDropContext, Draggable, Droppable, DropResult } from '@hello-pangea/dnd';
+// import { DragDropContext, Draggable, Droppable, DropResult } from '@hello-pangea/dnd';
 
 const LIST = [
   {
@@ -37,17 +37,17 @@ export const BoardItem = () => {
   //const params = useParams();
   const navigate = useNavigate();
 
-  const onDragEnd = (result: DropResult) => {
-    const { source, destination } = result;
-    if (!destination) return;
+  // const onDragEnd = (result: DropResult) => {
+  //   const { source, destination } = result;
+  //   if (!destination) return;
 
-    const items = Array.from(LIST);
-    const [newOrder] = items.splice(source.index, 1);
+  //   const items = Array.from(LIST);
+  //   const [newOrder] = items.splice(source.index, 1);
 
-    items.splice(destination.index, 0, newOrder);
+  //   items.splice(destination.index, 0, newOrder);
 
-    setList(items);
-  };
+  //   setList(items);
+  // };
 
   return (
     <Box>

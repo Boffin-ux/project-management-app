@@ -10,7 +10,7 @@ const AuthRedirect = ({ withAuth = true }) => {
   if (withAuth) {
     return token ? <Outlet /> : <Navigate to={`/${VIEW_PATH.SIGNIN}`} replace />;
   } else {
-    return token ? <Navigate to={`/${VIEW_PATH.MAIN}`} replace /> : <Outlet />;
+    return token ? <Navigate to={`/${VIEW_PATH.BOARDS}`} replace /> : <Outlet />;
   }
 };
 export default AuthRedirect;

@@ -46,5 +46,13 @@
         "github": "https://github.com/bvfromru"
       }
     ]
+  },
+  "boards": {
+    "owner": "Owner",
+    "openBoard": "Open Board",
+    "members": "Members",
+    "search": "Search",
+    "addBoard": "Add Board",
+    "onlyMy": "Only my boards"
   }
 }

@@ -32,7 +32,7 @@ export default function Header() {
   return (
     <header className={styles.header} ref={header}>
       <div className={styles.wrapper}>
-        <Button href={VIEW_PATH.MAIN} variant="contained">
+        <Button href={VIEW_PATH.BOARDS} variant="contained">
           PM-APP
         </Button>
         <nav className={styles.list}>

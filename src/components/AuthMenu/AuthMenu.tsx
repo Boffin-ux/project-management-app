@@ -11,7 +11,7 @@ function AuthMenu() {
   return (
     <>
       {token ? (
-        <Button href={VIEW_PATH.MAIN} variant="contained">
+        <Button href={VIEW_PATH.BOARDS} variant="contained">
           {t('header.signIn')}
         </Button>
       ) : (

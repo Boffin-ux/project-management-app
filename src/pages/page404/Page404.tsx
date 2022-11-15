@@ -19,7 +19,7 @@ export default function PageNotFound() {
         </h2>
         <p className={styles.desc}>{t('404.description')}</p>
         <div className={styles.links}>
-          <NavLink className={styles.link} to={VIEW_PATH.MAIN} end>
+          <NavLink className={styles.link} to={VIEW_PATH.BOARDS} end>
             {t('404.link')}
           </NavLink>
         </div>

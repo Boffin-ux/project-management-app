@@ -1,0 +1,28 @@
+.card {
+  width: 40rem;
+  min-height: 20rem;
+  margin: 3rem;
+  border-radius: 2rem;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.75);
+  }
+
+  .content {
+    padding-bottom: 0px;
+  }
+
+  .action {
+    font-size: 1.5rem;
+    justify-content: space-between;
+  }
+
+  .iconButton {
+    font-size: 3rem;
+  }
+
+  .membersList {
+    font-size: 1.5rem;
+  }
+}

@@ -13,17 +13,15 @@ import {
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { BoardCardProps } from 'interfaces/boards';
+import { Board, BoardCardProps } from 'interfaces/boards';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { setRandomColor } from './utils';
 import styles from './BoardCard.module.scss';
 import { Link } from 'react-router-dom';
 
-export const BoardCard: FC<BoardCardProps> = (board) => {
+export const BoardCard: FC<Board> = ({ title, owner, users, id }) => {
   const { t } = useTranslation();
-
-  const { title, owner, users, id } = board.board;
 
   return (
     <Card className={styles.card}>

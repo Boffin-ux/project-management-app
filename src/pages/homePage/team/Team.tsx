@@ -1,7 +1,7 @@
-import { ITeam } from 'interfaces/interface';
+import { ITeam } from 'interfaces/homePage';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styles from './index.module.scss';
+import styles from './team.module.scss';
 
 export default function Team() {
   const { t } = useTranslation();

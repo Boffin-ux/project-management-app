@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import styles from './index.module.scss';
-import SelectionLang from 'components/selectionLang';
+import styles from './header.module.scss';
+import SelectionLang from 'components/selectionLang/SelectionLang';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { VIEW_PATH } from 'utils/variables';

@@ -2,11 +2,11 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { setupStore } from 'store';
-import '../../i18n';
+import '../../i18n/i18next';
 import { Layout } from 'components/layouts';
-import PageNotFound from 'pages/404';
+import PageNotFound from 'pages/404/PageNotFound';
 import { VIEW_PATH } from 'utils/variables';
-import HomePage from 'pages/homePage';
+import HomePage from 'pages/homePage/HomePage';
 import { Boards } from 'pages/boardList/BoardsList';
 
 export default function App() {

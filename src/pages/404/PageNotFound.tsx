@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styles from './index.module.scss';
+import styles from './pageNotFound.module.scss';
 import { NavLink } from 'react-router-dom';
 import { PAGES_TITLE, VIEW_PATH } from 'utils/variables';
 import { useTranslation } from 'react-i18next';

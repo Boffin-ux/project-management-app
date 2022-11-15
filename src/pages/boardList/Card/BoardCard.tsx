@@ -22,8 +22,6 @@ import styles from './BoardCard.module.scss';
 export const BoardCard: FC<Board> = ({ title, owner, users }) => {
   const { t } = useTranslation();
 
-  // const { title, owner, users } = board.board;
-
   return (
     <Card className={styles.card}>
       <CardHeader

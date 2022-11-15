@@ -19,6 +19,7 @@
   "auth": {
     "signIn": "Sign In",
     "signUp": "Sing Up",
+    "signOut": "Sign Out",
     "login": "Login",
     "password": "Password",
     "name": "Name",

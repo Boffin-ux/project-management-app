@@ -73,8 +73,8 @@ function SignUp() {
             margin="normal"
             value={formik.values.name}
             onChange={formik.handleChange}
-            error={formik.touched.name && Boolean(nameError)}
-            helperText={formik.touched.name && Boolean(nameError) && t(`errors.${nameError}`)}
+            error={formik.touched.name && !!nameError}
+            helperText={formik.touched.name && !!nameError && t(`errors.${nameError}`)}
           />
           <TextField
             fullWidth
@@ -83,8 +83,8 @@ function SignUp() {
             margin="normal"
             value={formik.values.login}
             onChange={formik.handleChange}
-            error={formik.touched.login && Boolean(loginError)}
-            helperText={formik.touched.login && Boolean(loginError) && t(`errors.${loginError}`)}
+            error={formik.touched.login && !!loginError}
+            helperText={formik.touched.login && !!loginError && t(`errors.${loginError}`)}
           />
           <TextField
             fullWidth
@@ -94,10 +94,8 @@ function SignUp() {
             margin="normal"
             value={formik.values.password}
             onChange={formik.handleChange}
-            error={formik.touched.password && Boolean(passwordError)}
-            helperText={
-              formik.touched.password && Boolean(passwordError) && t(`errors.${passwordError}`)
-            }
+            error={formik.touched.password && !!passwordError}
+            helperText={formik.touched.password && !!passwordError && t(`errors.${passwordError}`)}
           />
           {!formik.dirty && error && (
             <Typography sx={{ color: 'red', my: 1 }}>{t(`errors.${error}`)}</Typography>

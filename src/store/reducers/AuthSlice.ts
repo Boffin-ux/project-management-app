@@ -3,15 +3,15 @@ import axios from 'api/axios';
 import { AxiosError } from 'axios';
 
 interface IAuthState {
-  token: string;
-  status: string;
+  token: string | null;
+  status: string | null;
   error: string | null;
 }
 
 const initialState: IAuthState = {
-  token: '',
-  status: '',
-  error: '',
+  token: null,
+  status: null,
+  error: null,
 };
 interface ISignInData {
   login: string;
@@ -63,7 +63,9 @@ export const signUp = createAsyncThunk(
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    logout: () => initialState,
+  },
   extraReducers(builder) {
     builder
       .addCase(signIn.pending, (state) => {
@@ -93,4 +95,5 @@ export const authSlice = createSlice({
   },
 });
 
+export const { logout } = authSlice.actions;
 export default authSlice.reducer;

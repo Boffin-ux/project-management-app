@@ -19,6 +19,7 @@
   "auth": {
     "signIn": "Войти",
     "signUp": "Регистрация",
+    "signOut": "Выйти",
     "login": "Логин",
     "password": "Пароль",
     "name": "Имя",

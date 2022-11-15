@@ -69,8 +69,8 @@ function SignIn() {
             margin="normal"
             value={formik.values.login}
             onChange={formik.handleChange}
-            error={formik.touched.login && Boolean(loginError)}
-            helperText={formik.touched.login && Boolean(loginError) && t(`errors.${loginError}`)}
+            error={formik.touched.login && !!loginError}
+            helperText={formik.touched.login && !!loginError && t(`errors.${loginError}`)}
             disabled={isLoading}
           />
           <TextField
@@ -81,10 +81,8 @@ function SignIn() {
             margin="normal"
             value={formik.values.password}
             onChange={formik.handleChange}
-            error={formik.touched.password && Boolean(passwordError)}
-            helperText={
-              formik.touched.password && Boolean(passwordError) && t(`errors.${passwordError}`)
-            }
+            error={formik.touched.password && !!passwordError}
+            helperText={formik.touched.password && !!passwordError && t(`errors.${passwordError}`)}
             disabled={isLoading}
           />
           {!formik.dirty && error && (

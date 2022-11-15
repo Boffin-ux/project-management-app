@@ -1,26 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'api/axios';
 import { AxiosError } from 'axios';
-
-interface IAuthState {
-  token: string | null;
-  status: string | null;
-  error: string | null;
-}
+import { IAuthState, ISignInData, ISingUpData } from 'interfaces/auth';
 
 const initialState: IAuthState = {
-  token: null,
+  token: localStorage.getItem('pmAppToken') ?? null, // This is totally unsecure, but it's just a study project. :)
   status: null,
   error: null,
 };
-interface ISignInData {
-  login: string;
-  password: string;
-}
-
-interface ISingUpData extends ISignInData {
-  name: string;
-}
 
 export const signIn = createAsyncThunk(
   'auth/signIn',
@@ -75,6 +62,7 @@ export const authSlice = createSlice({
       .addCase(signIn.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.token = action.payload.token;
+        localStorage.setItem('pmAppToken', action.payload.token);
       })
       .addCase(signIn.rejected, (state, action) => {
         state.status = 'failed';
@@ -86,7 +74,7 @@ export const authSlice = createSlice({
       })
       .addCase(signUp.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.token = action.payload.token;
+        state.token = action.payload.token; // ???
       })
       .addCase(signUp.rejected, (state, action) => {
         state.status = 'failed';

@@ -13,7 +13,7 @@ function AuthMenu() {
     <>
       {isAuth ? (
         <Button component={Link} to={VIEW_PATH.BOARDS} variant="contained">
-          {t('header.signIn')}
+          {t('header.mainPage')}
         </Button>
       ) : (
         <>

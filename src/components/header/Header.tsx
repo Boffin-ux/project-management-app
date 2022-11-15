@@ -36,6 +36,11 @@ export default function Header() {
     }
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem('pmAppToken');
+    dispatch(logout());
+  };
+
   return (
     <header className={styles.header} ref={header}>
       <div className={styles.wrapper}>
@@ -44,7 +49,7 @@ export default function Header() {
             PM-APP
           </Button>
           {isAuth && (
-            <Button onClick={() => dispatch(logout())} variant="contained">
+            <Button onClick={handleLogout} variant="contained">
               {t('auth.signOut')}
             </Button>
           )}

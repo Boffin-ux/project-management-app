@@ -18,4 +18,18 @@ const PAGES_TITLE = {
   NOT_FOUND: '404',
 };
 
-export { LOCALES, VIEW_PATH, PAGES_TITLE };
+const API_ENDPOINTS = {
+  SIGNIN: 'auth/signin',
+  SIGNUP: 'auth/signup',
+};
+
+const RESPONSE_CODES = {
+  SIGNIN: {
+    LOGIN_EXIST: 409,
+  },
+  SIGNUP: {
+    WRONG_PASSWORD: 401,
+  },
+};
+
+export { LOCALES, VIEW_PATH, PAGES_TITLE, API_ENDPOINTS, RESPONSE_CODES };

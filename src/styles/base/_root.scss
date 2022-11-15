@@ -11,17 +11,16 @@
 
 html,
 body {
-  font-family: $font-main;
-  color: $color-text;
+  font-family: 'Roboto', sans-serif;
+  color: rgba(255, 255, 255, 0.9);
   font-weight: normal;
-  background-color: $color-body;
+  background-color: #333;
 }
 
 #root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  font-size: 1.8rem;
 }
 
 footer {
@@ -45,7 +44,7 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 h1, h2 {
-  color: $color-light;
+  color: #ffffff;
 }
 a {
   text-decoration: none;
@@ -59,45 +58,5 @@ button, input {
 }
 
 button, input, select {
-  border-radius: .3rem;
-}
-
-.link, .icon {
-  height: 4rem;
-  display: inline-block;
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: .6;
-}
-
-.link:hover {
-  opacity: 1;
-}
-
-.rs-link {
-  width: 10rem;
-  background-image: url(../../assets/img/RSSchool.svg);
-}
-
-.github-icon {
-  width: 5rem;
-  background-image: url(../../assets/img/github.svg);
-}
-
-.container {
-  width: 120rem;
-  margin: 0 auto;
-  padding: 3rem;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    padding: 5rem;
-  }
-}
-
-.main {
-  display: flex;
-  flex-grow: 1;
-  background: linear-gradient(45deg,rgba(63, 191, 195, 0.8),#333);
+  border-radius: 30px;
 }

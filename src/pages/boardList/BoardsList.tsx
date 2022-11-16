@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Box } from '@mui/material';
 import { BoardCard } from './Card/BoardCard';
-import { BOARDS } from './mockBoardList';
+import { BOARDS } from '../../MOCKDATA/mockBoardList';
 import { ControlUnit } from './controlUnit/ControlUnit';
 
 export const Boards = () => {

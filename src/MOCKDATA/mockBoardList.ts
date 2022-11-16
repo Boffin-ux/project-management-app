@@ -1,4 +1,4 @@
-import { Board, User } from '../../interfaces/boards';
+import { Board, User } from '../interfaces/boards';
 
 const USERS: Array<User> = [
   {

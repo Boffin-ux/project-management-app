@@ -1,0 +1,24 @@
+.taskSubArea {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.rest {
+  margin-bottom: 0.5rem;
+  border: 1px solid #bdbdbd;
+  border-radius: 1rem;
+  color: #616161;
+  background-color: #e0e0e0;
+}
+
+.drag {
+  border: dotted 1px black;
+  border-radius: 1rem;
+  color: #eeeeee;
+  background-color: #bdbdbd;
+}

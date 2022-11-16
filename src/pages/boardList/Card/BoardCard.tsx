@@ -23,7 +23,7 @@ export const BoardCard: FC<Board> = ({ title, owner, users }) => {
   const { t } = useTranslation();
 
   return (
-    <Card className={styles.card}>
+    <Card className={styles.card} sx={{ width: { xs: '100%', sm: '400px' } }}>
       <CardHeader
         avatar={<Avatar sx={{ bgcolor: setRandomColor() }}>{title[0]}</Avatar>}
         action={

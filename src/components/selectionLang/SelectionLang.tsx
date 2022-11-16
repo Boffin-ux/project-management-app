@@ -16,11 +16,11 @@ export default function SelectionLang() {
     width: '60px',
     '&.Mui-selected': {
       backgroundColor: 'rgba(63, 191, 195, 0.8)',
-      color: '#fff',
+      color: 'inherit',
     },
     '&:hover': {
       backgroundColor: 'rgb(0 0 0 / 30%)',
-      color: '#fff',
+      color: 'inherit',
     },
   };
 

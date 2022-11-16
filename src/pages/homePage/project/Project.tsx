@@ -15,7 +15,6 @@ export default function Project() {
     height: '40px',
     border: '.1rem solid #fff',
     backgroundColor: 'transparent',
-    color: '#fff',
     '&:hover': {
       boxShadow: 'inset 0 0 1rem .2rem rgba(255 255 255 / 85%)',
     },

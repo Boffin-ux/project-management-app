@@ -13,6 +13,7 @@ const muiTheme = createTheme({
   palette: {
     primary: {
       main: 'rgba(63, 191, 195, 0.8)',
+      contrastText: '#fff',
     },
   },
 });

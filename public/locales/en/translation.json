@@ -1,7 +1,8 @@
 {
   "header": {
     "signIn": "Sign In",
-    "signUp": "Sign Up"
+    "signUp": "Sign Up",
+    "homeLink": "Home"
   },
   "404": {
     "title": "Page not found",

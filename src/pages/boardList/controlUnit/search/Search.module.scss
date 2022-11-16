@@ -2,19 +2,18 @@
   padding: 2px 4px;
   display: flex;
   align-items: center;
-  width: 50rem;
 
   .divider {
     height: 100%;
-    margin: 0.7rem;
+    margin: 7px;
   }
 
   .input {
     flex: auto;
-    margin-left: 1rem;
+    margin-left: 10px;
   }
 
   .btnSearch {
-    padding: 1rem;
+    padding: 10px;
   }
 }

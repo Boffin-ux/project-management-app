@@ -29,7 +29,6 @@ axiosPrivate.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error?.response?.status === RESPONSE_CODES.AUTH_ERROR) {
-      // !TODO add localstorage remove
       store.dispatch(logout());
     }
     return Promise.reject(error);

@@ -37,7 +37,6 @@ export default function Header() {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('pmAppToken');
     dispatch(logout());
   };
 

@@ -6,7 +6,7 @@ import { axiosErrorHandler } from 'utils/helpers';
 import { API_ENDPOINTS } from 'utils/variables';
 
 const initialState: IAuthState = {
-  token: localStorage.getItem('pmAppToken') ?? null, // This is totally unsecure, but it's just a study project. :)
+  token: localStorage.getItem('pmAppToken') ?? '',
   isLoading: false,
   error: null,
 };
@@ -16,8 +16,6 @@ export const signIn = createAsyncThunk(
   async (signInData: ISignInData, { rejectWithValue }) => {
     try {
       const response = await axios.post(API_ENDPOINTS.SIGN_IN, signInData);
-      localStorage.setItem('pmAppToken', response.data.token); // Not the best solution actually. It's better to create
-      // some auth middleware to save and restore data from localstorage, or maybe use redux-persist library.
       return response.data;
     } catch (error) {
       const err = error as AxiosError;
@@ -43,7 +41,7 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logout: () => initialState,
+    logout: () => ({ ...initialState, token: '' }),
   },
   extraReducers(builder) {
     builder

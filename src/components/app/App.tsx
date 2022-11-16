@@ -14,6 +14,10 @@ import '../../i18n';
 
 export const store = setupStore();
 
+store.subscribe(() => {
+  localStorage.setItem('pmAppToken', store.getState().auth.token);
+});
+
 export default function App() {
   return (
     <Provider store={store}>

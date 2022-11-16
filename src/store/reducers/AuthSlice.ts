@@ -2,11 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'api/axios';
 import { AxiosError } from 'axios';
 import { IAuthState, ISignInData, ISingUpData } from 'interfaces/auth';
-import { API_ENDPOINTS, RESPONSE_CODES } from 'utils/variables';
+import { axiosErrorHandler } from 'utils/helpers';
+import { API_ENDPOINTS } from 'utils/variables';
 
 const initialState: IAuthState = {
   token: localStorage.getItem('pmAppToken') ?? null, // This is totally unsecure, but it's just a study project. :)
-  status: null,
+  isLoading: false,
   error: null,
 };
 
@@ -14,19 +15,13 @@ export const signIn = createAsyncThunk(
   'auth/signIn',
   async (signInData: ISignInData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(API_ENDPOINTS.SIGNIN, signInData);
+      const response = await axios.post(API_ENDPOINTS.SIGN_IN, signInData);
       localStorage.setItem('pmAppToken', response.data.token); // Not the best solution actually. It's better to create
-      // some auth middleware to save and restore data from localstorage, or maybe use react-persist library.
+      // some auth middleware to save and restore data from localstorage, or maybe use redux-persist library.
       return response.data;
     } catch (error) {
       const err = error as AxiosError;
-      if (!err?.response) {
-        return rejectWithValue('authNoResponse');
-      } else if (err.response?.status === RESPONSE_CODES.AUTH_ERROR) {
-        return rejectWithValue('authWrongPassword');
-      } else {
-        return rejectWithValue('authLoginFailed');
-      }
+      return rejectWithValue(axiosErrorHandler(err));
     }
   }
 );
@@ -35,17 +30,11 @@ export const signUp = createAsyncThunk(
   'auth/signUp',
   async (signUpData: ISingUpData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(API_ENDPOINTS.SIGNUP, signUpData);
+      const response = await axios.post(API_ENDPOINTS.SIGN_UP, signUpData);
       return response.data;
     } catch (error) {
       const err = error as AxiosError;
-      if (!err?.response) {
-        return rejectWithValue('authNoResponse');
-      } else if (err.response?.status === RESPONSE_CODES.ALREADY_EXIST) {
-        return rejectWithValue('authLoginExist');
-      } else {
-        return rejectWithValue('authLoginFailed');
-      }
+      return rejectWithValue(axiosErrorHandler(err));
     }
   }
 );
@@ -59,27 +48,27 @@ export const authSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(signIn.pending, (state) => {
-        state.status = 'loading';
+        state.isLoading = true;
         state.error = null;
       })
       .addCase(signIn.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.isLoading = false;
         state.token = action.payload.token;
       })
       .addCase(signIn.rejected, (state, action) => {
-        state.status = 'failed';
+        state.isLoading = false;
         state.error = action.payload as string;
       })
       .addCase(signUp.pending, (state) => {
-        state.status = 'loading';
+        state.isLoading = true;
         state.error = null;
       })
       .addCase(signUp.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.isLoading = false;
         state.token = action.payload.token; // ???
       })
       .addCase(signUp.rejected, (state, action) => {
-        state.status = 'failed';
+        state.isLoading = false;
         state.error = action.payload as string;
       });
   },

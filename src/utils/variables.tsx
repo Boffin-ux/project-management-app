@@ -7,8 +7,8 @@ const VIEW_PATH = {
   HOME: '/',
   ABOUT: 'about',
   ERROR: '404',
-  SIGNIN: 'signin',
-  SIGNUP: 'signup',
+  SIGN_IN: 'signin',
+  SIGN_UP: 'signup',
   BOARDS: 'boards',
   REST: '*',
 };
@@ -19,8 +19,8 @@ const PAGES_TITLE = {
 };
 
 const API_ENDPOINTS = {
-  SIGNIN: 'auth/signin',
-  SIGNUP: 'auth/signup',
+  SIGN_IN: 'auth/signin',
+  SIGN_UP: 'auth/signup',
 };
 
 const RESPONSE_CODES = {

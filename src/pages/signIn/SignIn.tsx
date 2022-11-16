@@ -1,14 +1,6 @@
 import { LockOutlined } from '@mui/icons-material';
-import {
-  Avatar,
-  Box,
-  Button,
-  CircularProgress,
-  Container,
-  Link,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Avatar, Box, Button, Container, Link, TextField, Typography } from '@mui/material';
+import Loader from 'components/universal/Loader/Loader';
 import { useFormik } from 'formik';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import React from 'react';
@@ -30,8 +22,7 @@ const validationSchema = yup.object({
 function SignIn() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { status, error } = useAppSelector((state) => state.auth);
-  const isLoading = status === 'loading';
+  const { isLoading, error } = useAppSelector((state) => state.auth);
 
   const formik = useFormik({
     initialValues: initialValues,
@@ -42,6 +33,7 @@ function SignIn() {
     },
   });
 
+  const { values, touched } = formik;
   const loginError = formik.errors.login;
   const passwordError = formik.errors.password;
 
@@ -67,10 +59,10 @@ function SignIn() {
             id="login"
             label={t('auth.login')}
             margin="normal"
-            value={formik.values.login}
+            value={values.login}
             onChange={formik.handleChange}
-            error={formik.touched.login && !!loginError}
-            helperText={formik.touched.login && !!loginError && t(`errors.${loginError}`)}
+            error={touched.login && !!loginError}
+            helperText={touched.login && !!loginError && t(`errors.${loginError}`)}
             disabled={isLoading}
           />
           <TextField
@@ -79,10 +71,10 @@ function SignIn() {
             label={t('auth.password')}
             type="password"
             margin="normal"
-            value={formik.values.password}
+            value={values.password}
             onChange={formik.handleChange}
-            error={formik.touched.password && !!passwordError}
-            helperText={formik.touched.password && !!passwordError && t(`errors.${passwordError}`)}
+            error={touched.password && !!passwordError}
+            helperText={touched.password && !!passwordError && t(`errors.${passwordError}`)}
             disabled={isLoading}
           />
           {!formik.dirty && error && (
@@ -98,21 +90,10 @@ function SignIn() {
             >
               {t('auth.signIn')}
             </Button>
-            {isLoading && (
-              <CircularProgress
-                size={24}
-                sx={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  marginTop: '-12px',
-                  marginLeft: '-12px',
-                }}
-              />
-            )}
+            {isLoading && <Loader />}
           </Box>
         </form>
-        <Link href={VIEW_PATH.SIGNUP} sx={{ my: 2 }}>
+        <Link href={VIEW_PATH.SIGN_UP} sx={{ my: 2 }}>
           {t('auth.signUpLink')}
         </Link>
       </Box>

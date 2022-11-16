@@ -3,7 +3,7 @@ import { Box } from '@mui/system';
 import AuthMenu from 'components/AuthMenu/AuthMenu';
 import SelectionLang from 'components/selectionLang/SelectionLang';
 import { useAppDispatch } from 'hooks/redux';
-import useAuth from 'hooks/useAuth';
+import useAccessToken from 'hooks/useAccessToken';
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -13,7 +13,7 @@ import styles from './Header.module.scss';
 
 export default function Header() {
   const { t } = useTranslation();
-  const isAuth = useAuth();
+  const isAuth = useAccessToken();
   const header = useRef<HTMLElement>(null);
   const dispatch = useAppDispatch();
 

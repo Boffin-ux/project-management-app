@@ -12,8 +12,9 @@ import { setupStore } from 'store/store';
 import { VIEW_PATH } from 'utils/variables';
 import '../../i18n';
 
+export const store = setupStore();
+
 export default function App() {
-  const store = setupStore();
   return (
     <Provider store={store}>
       <BrowserRouter>
@@ -22,8 +23,8 @@ export default function App() {
             <Route index element={<HomePage />} />
             <Route path={VIEW_PATH.REST} element={<PageNotFound />} />
             <Route element={<AuthRedirect withAuth={false} />}>
-              <Route path={VIEW_PATH.SIGNUP} element={<SignUp />} />
-              <Route path={VIEW_PATH.SIGNIN} element={<SignIn />} />
+              <Route path={VIEW_PATH.SIGN_UP} element={<SignUp />} />
+              <Route path={VIEW_PATH.SIGN_IN} element={<SignIn />} />
             </Route>
             <Route element={<AuthRedirect withAuth />}>
               <Route path={VIEW_PATH.BOARDS} element={<Boards />} />

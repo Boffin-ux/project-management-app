@@ -1,8 +1,8 @@
 import { useAppSelector } from './redux';
 
-const useAuth = () => {
+const useAccessToken = () => {
   const { token } = useAppSelector((state) => state.auth);
   return token;
 };
 
-export default useAuth;
+export default useAccessToken;

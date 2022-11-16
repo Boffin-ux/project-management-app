@@ -1,12 +1,12 @@
 import { Button } from '@mui/material';
-import useAuth from 'hooks/useAuth';
+import useAccessToken from 'hooks/useAccessToken';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { VIEW_PATH } from 'utils/variables';
 
 function AuthMenu() {
-  const isAuth = useAuth();
+  const isAuth = useAccessToken();
   const { t } = useTranslation();
 
   return (
@@ -17,10 +17,10 @@ function AuthMenu() {
         </Button>
       ) : (
         <>
-          <Button component={Link} to={VIEW_PATH.SIGNIN} variant="contained">
+          <Button component={Link} to={VIEW_PATH.SIGN_IN} variant="contained">
             {t('header.signIn')}
           </Button>
-          <Button component={Link} to={VIEW_PATH.SIGNUP} variant="contained">
+          <Button component={Link} to={VIEW_PATH.SIGN_UP} variant="contained">
             {t('header.signUp')}
           </Button>
         </>

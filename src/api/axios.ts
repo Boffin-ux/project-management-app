@@ -1,4 +1,7 @@
 import axios from 'axios';
+import { store } from 'components/app/App';
+import { logout } from 'store/reducers/AuthSlice';
+import { RESPONSE_CODES } from 'utils/variables';
 const BASE_URL = 'https://final-task-backend-production-4e60.up.railway.app/';
 
 export default axios.create({
@@ -10,3 +13,25 @@ export const axiosPrivate = axios.create({
   headers: { 'Content-Type': 'application/json' },
   withCredentials: true,
 });
+
+axiosPrivate.interceptors.request.use(
+  (config) => {
+    config.headers = config.headers ?? {};
+    if (!config.headers['Authorization']) {
+      config.headers['Authorization'] = `Bearer ${store.getState().auth.token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+axiosPrivate.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error?.response?.status === RESPONSE_CODES.AUTH_ERROR) {
+      // !TODO add localstorage remove
+      store.dispatch(logout());
+    }
+    return Promise.reject(error);
+  }
+);

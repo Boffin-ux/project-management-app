@@ -12,7 +12,7 @@ export default function Project() {
       <div className={styles.about}>
         <h1 className={styles.title}>{PAGES_TITLE.MAIN}</h1>
         <p className={styles.desc}>{t('project.info')}</p>
-        <NavLink className={styles.link} to={VIEW_PATH.SIGNIN} end>
+        <NavLink className={styles.link} to={VIEW_PATH.SIGN_IN} end>
           {t('project.link')}
         </NavLink>
       </div>

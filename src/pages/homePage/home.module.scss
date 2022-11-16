@@ -1,0 +1,12 @@
+.container { 
+  display: flex; 
+  font-size: 1.2rem; 
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  padding: 32px 14px;
+};
+

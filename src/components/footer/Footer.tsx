@@ -16,7 +16,7 @@ export default function Footer() {
 
           <Box
             component={Link}
-            className={styles.linkActive}
+            className={styles.link}
             color="inherit"
             href="https://github.com/bvfromru"
             target="_blank"
@@ -26,7 +26,7 @@ export default function Footer() {
 
           <Box
             component={Link}
-            className={styles.linkActive}
+            className={styles.link}
             color="inherit"
             href="https://github.com/stanlys"
             target="_blank"
@@ -36,7 +36,7 @@ export default function Footer() {
 
           <Box
             component={Link}
-            className={styles.linkActive}
+            className={styles.link}
             color="inherit"
             href="https://github.com/Boffin-ux"
             target="_blank"

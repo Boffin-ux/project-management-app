@@ -13,32 +13,15 @@ export default function Team() {
     <Box className={styles.info}>
       <Typography
         variant="h3"
-        sx={{
-          fontWeight: 'bold',
-          fontSize: { xs: '1.6rem', sm: '1.7rem', md: '2.2rem', lg: '2.6rem' },
-        }}
+        fontWeight="bold"
+        sx={{ fontSize: { xs: '1.6rem', sm: '1.7rem', md: '2.2rem', lg: '2.6rem' } }}
       >
         {t('team.title')}
       </Typography>
-      <Box
-        component="p"
-        sx={{
-          fontSize: '1.2rem',
-          textAlign: 'center',
-        }}
-      >
+      <Box component="p" className={styles.description}>
         {t('team.description')}
       </Box>
-      <Grid
-        container
-        sx={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '100%',
-          padding: '40px 0',
-          gap: '40px',
-        }}
-      >
+      <Grid container className={styles.teamWrap}>
         {developers &&
           developers.map((item) => {
             return (
@@ -50,32 +33,14 @@ export default function Team() {
                   href={item.github}
                   rel="noreferrer"
                 >
-                  <Box component="img" sx={{ width: 220 }} src={imgDeveloper}></Box>
-                  <Typography
-                    variant="h4"
-                    sx={{
-                      fontWeight: 'bold',
-                      fontSize: '1.5rem',
-                      textAlign: 'center',
-                    }}
-                  >
+                  <Box component="img" className={styles.imgDeveloper} src={imgDeveloper}></Box>
+                  <Typography variant="h4" className={styles.developerTitle}>
                     {item.name}
                   </Typography>
-                  <Box
-                    component="p"
-                    sx={{
-                      fontWeight: 500,
-                      marginTop: '10px',
-                    }}
-                  >
+                  <Box component="p" className={styles.roleTitle}>
                     {t('team.roleTitle')}
                   </Box>
-                  <Box
-                    component="p"
-                    sx={{
-                      textAlign: 'center',
-                    }}
-                  >
+                  <Box component="p" className={styles.role}>
                     {item.role}
                   </Box>
                 </Box>

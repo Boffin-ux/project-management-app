@@ -36,20 +36,17 @@
   }
 }
 
-.link, .icon {
+.icon {
   height: 50px;
   display: inline-block;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: 0.6;
 }
-.link, .icon,
-.linkActive {
+.link, .icon {
   opacity: 0.6;
 }
 
-.linkActive:hover,
 .link:hover {
   opacity: 1;
 }

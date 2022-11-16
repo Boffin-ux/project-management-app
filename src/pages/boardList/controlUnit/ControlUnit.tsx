@@ -9,7 +9,6 @@ export const ControlUnit = () => {
   return (
     <Grid
       container
-      display="flex"
       flexDirection="column"
       justifyContent="center"
       gap={2}
@@ -18,13 +17,10 @@ export const ControlUnit = () => {
     >
       <Grid
         container
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          gap: 2,
-          width: '100%',
-          flexDirection: { xs: 'column', sm: 'row' },
-        }}
+        justifyContent="center"
+        gap={2}
+        width="100%"
+        sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
       >
         <AddBoardButton />
         <Search />

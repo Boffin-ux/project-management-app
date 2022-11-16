@@ -27,3 +27,36 @@
     box-shadow: inset 0 0 25px 4px rgba(255 255 255 / 80%);
   }
 }
+
+.description {
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.teamWrap {
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 40px 0;
+  gap: 40px;
+  text-align: center;
+}
+
+.developerTitle {
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.roleTitle {
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.role {
+  text-align: center;
+}
+
+.imgDeveloper {
+  width: 220px;
+}

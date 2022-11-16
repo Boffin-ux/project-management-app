@@ -14,15 +14,33 @@ export default function Footer() {
         <Box className={styles.team}>
           <Box component="img" src={githubIcon} className={`${styles.icon} ${styles.githubIcon}`} />
 
-          <Box component={Link} color="inherit" href="https://github.com/bvfromru" target="_blank">
+          <Box
+            component={Link}
+            className={styles.linkActive}
+            color="inherit"
+            href="https://github.com/bvfromru"
+            target="_blank"
+          >
             Vitaliy Boudkin
           </Box>
 
-          <Box component={Link} color="inherit" href="https://github.com/stanlys" target="_blank">
+          <Box
+            component={Link}
+            className={styles.linkActive}
+            color="inherit"
+            href="https://github.com/stanlys"
+            target="_blank"
+          >
             Sergey Chelnakov
           </Box>
 
-          <Box component={Link} color="inherit" href="https://github.com/Boffin-ux" target="_blank">
+          <Box
+            component={Link}
+            className={styles.linkActive}
+            color="inherit"
+            href="https://github.com/Boffin-ux"
+            target="_blank"
+          >
             Boris Nizameev
           </Box>
         </Box>

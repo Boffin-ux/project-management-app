@@ -44,7 +44,12 @@
   background-repeat: no-repeat;
   opacity: 0.6;
 }
+.link, .icon,
+.linkActive {
+  opacity: 0.6;
+}
 
+.linkActive:hover,
 .link:hover {
   opacity: 1;
 }

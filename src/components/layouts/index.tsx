@@ -3,19 +3,13 @@ import Footer from 'components/footer/Footer';
 import Header from 'components/header/Header';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
+import styles from './index.module.scss';
 
 const Layout = () => {
   return (
     <>
       <Header />
-      <Box
-        sx={{
-          display: 'flex',
-          flexGrow: '1',
-          background: 'linear-gradient(45deg,rgba(63, 191, 195, 0.8),#333)',
-        }}
-        component="main"
-      >
+      <Box className={styles.wrap} component="main">
         <Outlet />
       </Box>
       <Footer />

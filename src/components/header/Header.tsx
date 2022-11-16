@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { VIEW_PATH } from 'utils/variables';
 import HeaderScroll from './HeaderScroll';
-import { AppBar, Box, Button, Grid, Typography } from '@mui/material';
+import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
 import { Login, AppRegistration, Home } from '@mui/icons-material';
 
 export default function Header() {
@@ -19,8 +19,7 @@ export default function Header() {
   return (
     <HeaderScroll>
       <AppBar position="sticky" color="inherit">
-        <Grid
-          container
+        <Toolbar
           sx={{
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -66,7 +65,7 @@ export default function Header() {
             </Box>
             <SelectionLang />
           </Box>
-        </Grid>
+        </Toolbar>
       </AppBar>
     </HeaderScroll>
   );

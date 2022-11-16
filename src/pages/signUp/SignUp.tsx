@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { signUp } from 'store/reducers/AuthSlice';
+import { signIn, signUp } from 'store/reducers/AuthSlice';
 import { VIEW_PATH } from 'utils/variables';
 import * as yup from 'yup';
 
@@ -29,9 +29,10 @@ function SignUp() {
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
-    onSubmit: (values, { resetForm }) => {
-      dispatch(signUp(values));
+    onSubmit: async (values, { resetForm }) => {
+      await dispatch(signUp(values));
       resetForm();
+      dispatch(signIn({ login: values.login, password: values.password }));
     },
   });
 

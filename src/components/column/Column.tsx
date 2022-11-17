@@ -32,7 +32,7 @@ export interface IColumn {
 //   );
 // });
 
-export const Column: FC<IColumn> = ({ id, title, tasks }) => {
+export const Column: FC<IColumn> = ({ id, title, tasks, order }) => {
   const [btnCapture, setBtnCapture] = useState<boolean>(false);
   // const [tasks, setTasks] = useState<Array<ITask>>(TASKS);
 
@@ -71,23 +71,41 @@ export const Column: FC<IColumn> = ({ id, title, tasks }) => {
           </Button>
         </Box>
         <Box sx={{ mt: 2 }}>
-          <List>
-            {tasks.map((task, index) => (
-              <Task key={task.id} task={task} />
-              // <Draggable index={index * 100} key={task.id} draggableId={id}>
-              //   {(taskProvided, taskSnapshot) => (
-              //     <Task
-              //       key={task.id}
-              //       task={task}
-              //       dropProvider={taskProvided}
-              //       snapshot={taskSnapshot}
-              //     />
-              //   )}
-              // </Draggable>
-            ))}
-          </List>
+          <Droppable droppableId={id}>
+            {(listProvided) => (
+              <List
+                ref={listProvided.innerRef}
+                {...listProvided.droppableProps}
+                sx={{
+                  display: 'flex',
+                  flexGrow: 1,
+                  flexDirection: 'column',
+                  height: 500,
+                }}
+              >
+                {tasks.map((task, index) => (
+                  <Task key={task.id} task={task} index={index} />
+                ))}
+                {listProvided.placeholder}
+              </List>
+            )}
+          </Droppable>
         </Box>
       </Box>
     </Box>
   );
 };
+
+/*
+// <Task key={task.id} task={task} />
+                  <Draggable index={index} key={task.id} draggableId={id}>
+                    {(taskProvided, taskSnapshot) => (
+                      <Task
+                        key={task.id}
+                        task={task}
+                        dropProvider={taskProvided}
+                        snapshot={taskSnapshot}
+                      />
+                    )}
+                  </Draggable>
+                  */

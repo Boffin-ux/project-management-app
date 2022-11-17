@@ -1,23 +1,23 @@
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import {
-  Card,
-  CardHeader,
   Avatar,
-  Divider,
-  CardActions,
   Button,
+  Card,
+  CardActions,
   CardContent,
+  CardHeader,
+  Divider,
+  IconButton,
   List,
   ListItem,
   Typography,
-  IconButton,
 } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { Board } from 'interfaces/boards';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { setRandomColor } from './utils';
 import styles from './BoardCard.module.scss';
+import { setRandomColor } from './utils';
 
 export const BoardCard: FC<Board> = ({ title, owner, users }) => {
   const { t } = useTranslation();

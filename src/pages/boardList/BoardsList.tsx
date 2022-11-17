@@ -1,8 +1,8 @@
+import { Box, Grid } from '@mui/material';
 import React from 'react';
-import { Grid, Box } from '@mui/material';
-import { BoardCard } from './card/BoardCard';
-import { BOARDS } from './mockBoardList';
+import { BoardCard } from './Card/BoardCard';
 import { ControlUnit } from './controlUnit/ControlUnit';
+import { BOARDS } from './mockBoardList';
 
 export const Boards = () => {
   return (

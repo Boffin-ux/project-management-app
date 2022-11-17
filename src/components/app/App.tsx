@@ -14,7 +14,7 @@ import { muiTheme } from 'utils/muiTheme';
 import { ThemeProvider } from '@emotion/react';
 import { CssBaseline } from '@mui/material';
 import '../../i18n/i18next';
-import './App.scss';
+import './app.scss';
 
 export const store = setupStore();
 

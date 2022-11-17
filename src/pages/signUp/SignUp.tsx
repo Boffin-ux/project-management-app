@@ -26,9 +26,9 @@ function SignUp() {
   const dispatch = useAppDispatch();
   const { isLoading, error } = useAppSelector((state) => state.auth);
 
-  const formik = useFormik({
-    initialValues: initialValues,
-    validationSchema: validationSchema,
+  const { values, touched, errors, handleSubmit, handleChange, dirty } = useFormik({
+    initialValues,
+    validationSchema,
     onSubmit: async (values, { resetForm }) => {
       await dispatch(signUp(values));
       resetForm();
@@ -36,10 +36,9 @@ function SignUp() {
     },
   });
 
-  const { values, touched } = formik;
-  const nameError = formik.errors.name;
-  const loginError = formik.errors.login;
-  const passwordError = formik.errors.password;
+  const nameError = errors.name;
+  const loginError = errors.login;
+  const passwordError = errors.password;
 
   return (
     <Container maxWidth="sm">
@@ -57,7 +56,7 @@ function SignUp() {
         <Typography component="h1" variant="h5">
           {t('auth.signUp')}
         </Typography>
-        <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <TextField
             autoFocus
             fullWidth
@@ -65,7 +64,7 @@ function SignUp() {
             label={t('auth.name')}
             margin="normal"
             value={values.name}
-            onChange={formik.handleChange}
+            onChange={handleChange}
             error={touched.name && !!nameError}
             helperText={touched.name && !!nameError && t(`errors.${nameError}`)}
           />
@@ -75,7 +74,7 @@ function SignUp() {
             label={t('auth.login')}
             margin="normal"
             value={values.login}
-            onChange={formik.handleChange}
+            onChange={handleChange}
             error={touched.login && !!loginError}
             helperText={touched.login && !!loginError && t(`errors.${loginError}`)}
           />
@@ -86,11 +85,11 @@ function SignUp() {
             type="password"
             margin="normal"
             value={values.password}
-            onChange={formik.handleChange}
+            onChange={handleChange}
             error={touched.password && !!passwordError}
             helperText={touched.password && !!passwordError && t(`errors.${passwordError}`)}
           />
-          {!formik.dirty && error && (
+          {!dirty && error && (
             <Typography sx={{ color: 'red', my: 1 }}>{t(`errors.${error}`)}</Typography>
           )}
           <Box sx={{ position: 'relative' }}>

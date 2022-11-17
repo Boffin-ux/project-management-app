@@ -24,18 +24,17 @@ function SignIn() {
   const dispatch = useAppDispatch();
   const { isLoading, error } = useAppSelector((state) => state.auth);
 
-  const formik = useFormik({
-    initialValues: initialValues,
-    validationSchema: validationSchema,
+  const { values, touched, errors, handleSubmit, handleChange, dirty } = useFormik({
+    initialValues,
+    validationSchema,
     onSubmit: (values, { resetForm }) => {
       dispatch(signIn(values));
       resetForm();
     },
   });
 
-  const { values, touched } = formik;
-  const loginError = formik.errors.login;
-  const passwordError = formik.errors.password;
+  const loginError = errors.login;
+  const passwordError = errors.password;
 
   return (
     <Container maxWidth="sm">
@@ -53,14 +52,14 @@ function SignIn() {
         <Typography component="h1" variant="h5">
           {t('auth.signIn')}
         </Typography>
-        <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <TextField
             fullWidth
             id="login"
             label={t('auth.login')}
             margin="normal"
             value={values.login}
-            onChange={formik.handleChange}
+            onChange={handleChange}
             error={touched.login && !!loginError}
             helperText={touched.login && !!loginError && t(`errors.${loginError}`)}
             disabled={isLoading}
@@ -72,12 +71,12 @@ function SignIn() {
             type="password"
             margin="normal"
             value={values.password}
-            onChange={formik.handleChange}
+            onChange={handleChange}
             error={touched.password && !!passwordError}
             helperText={touched.password && !!passwordError && t(`errors.${passwordError}`)}
             disabled={isLoading}
           />
-          {!formik.dirty && error && (
+          {!dirty && error && (
             <Typography sx={{ color: 'red', my: 1 }}>{t(`errors.${error}`)}</Typography>
           )}
           <Box sx={{ position: 'relative' }}>

@@ -2,7 +2,7 @@ import { ITeam } from 'interfaces/homePage';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './team.module.scss';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid, Link, Typography } from '@mui/material';
 import imgDeveloper from '../../../assets/img/developer.svg';
 
 export default function Team() {
@@ -27,22 +27,18 @@ export default function Team() {
             return (
               <Grid item xs={10} sm={5} md={3.5} key={item.id}>
                 <Box
-                  component="a"
+                  component={Link}
                   className={styles.link}
                   target="_blank"
                   href={item.github}
                   rel="noreferrer"
                 >
                   <Box component="img" className={styles.imgDeveloper} src={imgDeveloper}></Box>
-                  <Typography variant="h4" className={styles.developerTitle}>
+                  <Typography variant="h5" className={styles.developerTitle}>
                     {item.name}
                   </Typography>
-                  <Box component="p" className={styles.roleTitle}>
-                    {t('team.roleTitle')}
-                  </Box>
-                  <Box component="p" className={styles.role}>
-                    {item.role}
-                  </Box>
+                  <Box className={styles.roleTitle}>{t('team.roleTitle')}</Box>
+                  <Box className={styles.role}>{item.role}</Box>
                 </Box>
               </Grid>
             );

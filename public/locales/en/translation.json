@@ -14,7 +14,8 @@
   "header": {
     "signIn": "Sign In",
     "signUp": "Sign Up",
-    "mainPage": "Go to Main Page"
+    "homeLink": "Home",
+    "addBoard": "Add Board"
   },
   "auth": {
     "signIn": "Sign In",

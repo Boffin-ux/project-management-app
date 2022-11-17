@@ -8,7 +8,7 @@ export const Search = () => {
   const { t } = useTranslation();
 
   return (
-    <Paper component="form" className={styles.search}>
+    <Paper component="form" className={styles.search} sx={{ width: { xs: '100%', sm: '500px' } }}>
       <SearchIcon />
       <InputBase className={styles.input} placeholder={`${t('boards.search')} ...`} />
       <Divider className={styles.divider} orientation="vertical" />

@@ -8,7 +8,7 @@ export const AddBoardButton = () => {
   const { t } = useTranslation();
 
   return (
-    <Button className={styles.btnAdd} variant="contained">
+    <Button className={styles.btnAdd} variant="contained" sx={{ order: { xs: 2, sm: 0 } }}>
       <AddIcon fontSize="large" /> {t('boards.addBoard')}
     </Button>
   );

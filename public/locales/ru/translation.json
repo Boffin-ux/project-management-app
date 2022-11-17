@@ -14,7 +14,8 @@
   "header": {
     "signIn": "Войти",
     "signUp": "Регистрация",
-    "mainPage": "Перейти на Главную"
+    "homeLink": "Главная",
+    "addBoard": "Добавить доску"
   },
   "auth": {
     "signIn": "Войти",

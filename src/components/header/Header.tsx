@@ -1,63 +1,52 @@
-import { Button } from '@mui/material';
-import { Box } from '@mui/system';
-import AuthMenu from 'components/AuthMenu/AuthMenu';
+import React from 'react';
 import SelectionLang from 'components/selectionLang/SelectionLang';
-import { useAppDispatch } from 'hooks/redux';
-import useAccessToken from 'hooks/useAccessToken';
-import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import AuthMenu from 'components/AuthMenu/AuthMenu';
+import { useAppDispatch } from 'hooks/redux';
 import { logout } from 'store/reducers/AuthSlice';
+import useAccessToken from 'hooks/useAccessToken';
+import { Link } from 'react-router-dom';
 import { VIEW_PATH } from 'utils/variables';
-import styles from './Header.module.scss';
+import HeaderScroll from './HeaderScroll';
+import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
+import { Home, Logout } from '@mui/icons-material';
+import { btnStyle, navWrapStyle, titleStyle, toolbarStyle } from './headerStyles';
 
 export default function Header() {
   const { t } = useTranslation();
   const isAuth = useAccessToken();
-  const header = useRef<HTMLElement>(null);
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (header.current) {
-      const { current } = header;
-
-      if (!current.closest('scrolled')) {
-        const handleScroll = () => {
-          window.pageYOffset > current.offsetHeight
-            ? current.classList.add(`${styles.scrolled}`)
-            : current.classList.remove(`${styles.scrolled}`);
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => {
-          window.removeEventListener('scroll', handleScroll);
-        };
-      }
-    }
-  }, []);
 
   const handleLogout = () => {
     dispatch(logout());
   };
 
   return (
-    <header className={styles.header} ref={header}>
-      <div className={styles.wrapper}>
-        <Box>
-          <Button component={Link} to={VIEW_PATH.HOME} variant="contained">
-            PM-APP
-          </Button>
-          {isAuth && (
-            <Button onClick={handleLogout} variant="contained">
-              {t('auth.signOut')}
+    <HeaderScroll>
+      <AppBar position="sticky" color="inherit">
+        <Toolbar sx={toolbarStyle}>
+          <Typography variant="h1" sx={titleStyle}>
+            <Button component={Link} to={VIEW_PATH.HOME} sx={btnStyle} startIcon={<Home />}>
+              <Typography variant="subtitle1" sx={{ display: { xs: 'none', sm: 'flex' } }}>
+                {t('header.homeLink')}
+              </Typography>
             </Button>
-          )}
-        </Box>
-        <nav className={styles.list}>
-          <SelectionLang />
-          <AuthMenu />
-        </nav>
-      </div>
-    </header>
+          </Typography>
+          <Box sx={navWrapStyle}>
+            <Box component="nav">
+              <AuthMenu />
+              {isAuth && (
+                <Button sx={btnStyle} onClick={handleLogout} startIcon={<Logout />}>
+                  <Typography variant="subtitle1" sx={{ display: { xs: 'none', sm: 'flex' } }}>
+                    {t('auth.signOut')}
+                  </Typography>
+                </Button>
+              )}
+            </Box>
+            <SelectionLang />
+          </Box>
+        </Toolbar>
+      </AppBar>
+    </HeaderScroll>
   );
 }

@@ -31,41 +31,46 @@ export const BoardItem = () => {
     if (!destination) return;
     console.log(source.droppableId);
 
-    if (destination.droppableId === source.droppableId) {
-      const columnIndex = Number(source.droppableId.slice(-1)) - 1;
-      console.log(columnIndex);
-      const items = Array.from(col[columnIndex].tasks);
-      const [newOrder] = items.splice(source.index, 1);
-
-      items.splice(destination.index, 0, newOrder);
-
-      const newState = JSON.parse(JSON.stringify(col[columnIndex]));
-      setCol((state) => [
-        ...state.map((el, index) => {
-          if (index === columnIndex) el.tasks = items;
-          return el;
-        }),
-      ]);
+    if (source.droppableId === 'all-columns') {
+      console.log('перенос колонок');
+      setCol((state) => state.reverse());
     } else {
-      const columnSourceIndex = Number(source.droppableId.slice(-1)) - 1;
-      const columnDestIndex = Number(destination.droppableId.slice(-1));
-      console.log('Перенос в другую колонку ');
-      console.log(columnDestIndex);
-      const items = Array.from(col[columnSourceIndex].tasks);
-      const [newOrder] = items.splice(source.index, 1);
-      console.log(col);
-      // setCol((state) => [...state.map(el, index => )]);
-      setCol((state) => [
-        ...state.map((column, index) => {
-          if (column.id === destination.droppableId) {
-            return { ...column, tasks: [...column.tasks, newOrder] };
-          }
-          if (column.id === source.droppableId) {
-            return { ...column, tasks: [...items] };
-          }
-          return column;
-        }),
-      ]);
+      if (destination.droppableId === source.droppableId) {
+        const columnIndex = Number(source.droppableId.slice(-1)) - 1;
+        console.log(columnIndex);
+        const items = Array.from(col[columnIndex].tasks);
+        const [newOrder] = items.splice(source.index, 1);
+
+        items.splice(destination.index, 0, newOrder);
+
+        const newState = JSON.parse(JSON.stringify(col[columnIndex]));
+        setCol((state) => [
+          ...state.map((el, index) => {
+            if (index === columnIndex) el.tasks = items;
+            return el;
+          }),
+        ]);
+      } else {
+        const columnSourceIndex = Number(source.droppableId.slice(-1)) - 1;
+        const columnDestIndex = Number(destination.droppableId.slice(-1));
+        console.log('Перенос в другую колонку ');
+        console.log(columnDestIndex);
+        const items = Array.from(col[columnSourceIndex].tasks);
+        const [newOrder] = items.splice(source.index, 1);
+        console.log(col);
+        // setCol((state) => [...state.map(el, index => )]);
+        setCol((state) => [
+          ...state.map((column, index) => {
+            if (column.id === destination.droppableId) {
+              return { ...column, tasks: [...column.tasks, newOrder] };
+            }
+            if (column.id === source.droppableId) {
+              return { ...column, tasks: [...items] };
+            }
+            return column;
+          }),
+        ]);
+      }
     }
   };
 
@@ -75,23 +80,32 @@ export const BoardItem = () => {
       <Box className={styles.centering}>
         <Box className={styles.columns}>
           <DragDropContext onDragEnd={onDragEndColumn} onDragStart={onDragStart}>
-            <Box sx={{ display: 'flex' }}>
-              {col.map((column, index) => (
-                <Column key={column.id} {...column} />
-                // <Draggable index={index} key={column.id} draggableId={column.id}>
-                //   {(dragProvided) => (
-                //     <Box
-                //       key={column.id}
-                //       {...dragProvided.dragHandleProps}
-                //       {...dragProvided.draggableProps}
-                //       ref={dragProvided.innerRef}
-                //     >
-                //       <Column key={column.id} {...column} />
-                //     </Box>
-                //   )}
-                // </Draggable>
-              ))}
-            </Box>
+            <Droppable droppableId="all-columns" direction="horizontal" type="column">
+              {(columnsProvided) => (
+                <Box
+                  sx={{ display: 'flex' }}
+                  ref={columnsProvided.innerRef}
+                  {...columnsProvided.droppableProps}
+                >
+                  {col.map((column, index) => (
+                    <Column key={column.id} {...column} />
+                    // <Draggable index={index} key={column.id} draggableId={column.id}>
+                    //   {(dragProvided) => (
+                    //     <Box
+                    //       key={column.id}
+                    //       {...dragProvided.dragHandleProps}
+                    //       {...dragProvided.draggableProps}
+                    //       ref={dragProvided.innerRef}
+                    //     >
+                    //       <Column key={column.id} {...column} />
+                    //     </Box>
+                    //   )}
+                    // </Draggable>
+                  ))}
+                  {columnsProvided.placeholder}
+                </Box>
+              )}
+            </Droppable>
           </DragDropContext>
         </Box>
       </Box>

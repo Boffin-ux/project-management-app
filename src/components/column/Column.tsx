@@ -49,50 +49,62 @@ export const Column: FC<IColumn> = ({ id, title, tasks, order }) => {
   // };
 
   return (
-    <Box
-      sx={{ m: 2, p: 0.2, minWidth: '320px', backgroundColor: '#eeeeee', borderRadius: 2 }}
-      component="div"
-    >
-      <ColumnHeader title={title} />
-      <Box
-        component="div"
-        sx={{ height: '95%' }}
-        onMouseOver={() => setBtnCapture(true)}
-        onMouseOut={() => setBtnCapture(false)}
-      >
-        <Box sx={{ height: 20, justifyContent: 'center', display: 'flex', pt: 1 }}>
-          <Button
-            variant={btnCapture ? 'contained' : 'text'}
-            sx={{ fontSize: '13', height: 25 }}
-            fullWidth
-            startIcon={<AddTaskIcon />}
+    <Draggable draggableId={id} index={order}>
+      {(columnProvided) => (
+        <Box
+          sx={{
+            m: 2,
+            p: 0.2,
+            minWidth: '320px',
+            backgroundColor: '#eeeeee',
+            borderRadius: 2,
+          }}
+          component="div"
+          ref={columnProvided.innerRef}
+          {...columnProvided.draggableProps}
+          {...columnProvided.dragHandleProps}
+        >
+          <ColumnHeader title={title} {...columnProvided.dragHandleProps} />
+          <Box
+            component="div"
+            sx={{ height: '95%', display: 'flex', flexGrow: 1, flexDirection: 'column' }}
+            onMouseOver={() => setBtnCapture(true)}
+            onMouseOut={() => setBtnCapture(false)}
           >
-            {btnCapture && 'Add Task'}
-          </Button>
-        </Box>
-        <Box sx={{ mt: 2 }}>
-          <Droppable droppableId={id}>
-            {(listProvided) => (
-              <List
-                ref={listProvided.innerRef}
-                {...listProvided.droppableProps}
-                sx={{
-                  display: 'flex',
-                  flexGrow: 1,
-                  flexDirection: 'column',
-                  height: 500,
-                }}
+            <Box sx={{ height: 20, justifyContent: 'center', display: 'flex', pt: 1 }}>
+              <Button
+                variant={btnCapture ? 'contained' : 'text'}
+                sx={{ fontSize: '13', height: 25 }}
+                fullWidth
+                startIcon={<AddTaskIcon />}
               >
-                {tasks.map((task, index) => (
-                  <Task key={task.id} task={task} index={index} />
-                ))}
-                {listProvided.placeholder}
-              </List>
-            )}
-          </Droppable>
+                {btnCapture && 'Add Task'}
+              </Button>
+            </Box>
+            <Box sx={{ mt: 2 }}>
+              <Droppable droppableId={id}>
+                {(listProvided) => (
+                  <List
+                    ref={listProvided.innerRef}
+                    {...listProvided.droppableProps}
+                    sx={{
+                      display: 'flex',
+                      flexGrow: 1,
+                      flexDirection: 'column',
+                    }}
+                  >
+                    {tasks.map((task, index) => (
+                      <Task key={task.id} task={task} index={index} />
+                    ))}
+                    {listProvided.placeholder}
+                  </List>
+                )}
+              </Droppable>
+            </Box>
+          </Box>
         </Box>
-      </Box>
-    </Box>
+      )}
+    </Draggable>
   );
 };
 

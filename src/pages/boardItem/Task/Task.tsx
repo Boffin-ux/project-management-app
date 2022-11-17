@@ -33,6 +33,7 @@ export const Task: FC<TaskProps> = ({ task, index }) => {
           {...taskProvided.draggableProps}
           {...taskProvided.dragHandleProps}
           ref={taskProvided.innerRef}
+          sx={{ flexGrow: 1 }}
           className={taskSnapshot.isDragging ? styles.drag : styles.rest}
           // className={styles.rest}
         >

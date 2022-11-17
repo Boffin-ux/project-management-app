@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './footer.module.scss';
+import styles from './Footer.module.scss';
 import { Box, Link } from '@mui/material';
 import RSIcon from '../../assets/img/RSSchool.svg';
 import githubIcon from '../../assets/img/github.svg';

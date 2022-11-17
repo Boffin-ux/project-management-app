@@ -11,7 +11,7 @@ import {
   infoWrapStyle,
   titleStyle,
   wrapperStyle,
-} from './pageNotFoundStyles';
+} from './page404Styles';
 
 export default function PageNotFound() {
   const { t } = useTranslation();
@@ -30,7 +30,7 @@ export default function PageNotFound() {
           <Grid item component="p" sx={descriptionStyle}>
             {t('404.description')}
           </Grid>
-          <Button sx={btnStyle} component={Link} to={VIEW_PATH.MAIN} variant="contained">
+          <Button sx={btnStyle} component={Link} to={VIEW_PATH.HOME} variant="contained">
             {t('404.link')}
           </Button>
         </Grid>

@@ -1,20 +1,28 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { setupStore } from 'store';
-import '../../i18n/i18next';
-import { Layout } from 'components/layouts';
-import PageNotFound from 'pages/404/PageNotFound';
-import { VIEW_PATH } from 'utils/variables';
-import HomePage from 'pages/homePage/HomePage';
+import AuthRedirect from 'components/AuthRedirect/AuthRedirect';
+import { Layout } from 'components/layout/Layout';
 import { Boards } from 'pages/boardList/BoardsList';
+import HomePage from 'pages/homePage/HomePage';
+import PageNotFound from 'pages/page404/Page404';
+import SignIn from 'pages/signIn/SignIn';
+import SignUp from 'pages/signUp/SignUp';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { setupStore } from 'store/store';
+import { VIEW_PATH } from 'utils/variables';
 import { muiTheme } from 'utils/muiTheme';
 import { ThemeProvider } from '@emotion/react';
 import { CssBaseline } from '@mui/material';
-import './app.scss';
+import '../../i18n/i18next';
+import './App.scss';
+
+export const store = setupStore();
+
+store.subscribe(() => {
+  localStorage.setItem('pmAppToken', store.getState().auth.token);
+});
 
 export default function App() {
-  const store = setupStore();
   return (
     <Provider store={store}>
       <ThemeProvider theme={muiTheme}>
@@ -25,6 +33,13 @@ export default function App() {
                 <Route index element={<HomePage />} />
                 <Route path={VIEW_PATH.BOARDS} element={<Boards />} />
                 <Route path={VIEW_PATH.REST} element={<PageNotFound />} />
+                <Route element={<AuthRedirect withAuth={false} />}>
+                  <Route path={VIEW_PATH.SIGN_UP} element={<SignUp />} />
+                  <Route path={VIEW_PATH.SIGN_IN} element={<SignIn />} />
+                </Route>
+                <Route element={<AuthRedirect withAuth />}>
+                  <Route path={VIEW_PATH.BOARDS} element={<Boards />} />
+                </Route>
               </Route>
             </Routes>
           </BrowserRouter>

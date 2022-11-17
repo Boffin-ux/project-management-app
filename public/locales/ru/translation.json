@@ -1,8 +1,31 @@
 {
+  "errors": {
+    "NameValidationMin": "Минимальная длина имени 2 символа",
+    "NameValidationRequired": "Имя не введено",
+    "loginValidationMin": "Минимальная длина логина 3 символа",
+    "loginValidationRequired": "Логин не введен",
+    "passwordValidationMin": "Минимальная длина пароля 8 символов",
+    "passwordValidationRequired": "Пароль не введен",
+    "authNoResponse": "Нет связи с сервером",
+    "authWrongPassword": "Неверный логин или пароль",
+    "authLoginExist": "Такой логин уже существует",
+    "authLoginFailed": "Ошибка аутентификации"
+  },
   "header": {
     "signIn": "Войти",
     "signUp": "Регистрация",
-    "homeLink": "Главная"
+    "homeLink": "Главная",
+    "addBoard": "Добавить доску"
+  },
+  "auth": {
+    "signIn": "Войти",
+    "signUp": "Регистрация",
+    "signOut": "Выйти",
+    "login": "Логин",
+    "password": "Пароль",
+    "name": "Имя",
+    "signUpLink": "Нет аккаунта? Зарегистрироваться",
+    "signInLink": "Есть аккаунт? Войти"
   },
   "404": {
     "title": "Страница не найдена",

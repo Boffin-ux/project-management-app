@@ -2,7 +2,7 @@ import { Box, Container } from '@mui/material';
 import React from 'react';
 import Project from './project/Project';
 import Team from './team/Team';
-import styles from './home.module.scss';
+import styles from './Home.module.scss';
 
 export default function HomePage() {
   return (

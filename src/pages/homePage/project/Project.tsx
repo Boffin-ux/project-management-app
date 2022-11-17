@@ -18,7 +18,7 @@ export default function Project() {
         <Grid item component="p" sx={infoStyle}>
           {t('project.info')}
         </Grid>
-        <Button sx={btnStyle} component={Link} to={VIEW_PATH.SIGNIN} variant="contained">
+        <Button sx={btnStyle} component={Link} to={VIEW_PATH.SIGN_IN} variant="contained">
           {t('project.link')}
         </Button>
       </Grid>

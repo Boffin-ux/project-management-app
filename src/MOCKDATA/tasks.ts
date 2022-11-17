@@ -12,7 +12,7 @@ import task10 from './../assets/img/icons_task/010.png';
 
 export const TASKS: Array<ITask> = [
   {
-    id: '0',
+    id: 'task0',
     title: 'Task1',
     order: 0,
     boardId: 'board1',
@@ -22,7 +22,7 @@ export const TASKS: Array<ITask> = [
     users: ['1', '2'],
   },
   {
-    id: '1',
+    id: 'task1',
     title: 'Task2',
     order: 0,
     boardId: 'board1',
@@ -32,7 +32,7 @@ export const TASKS: Array<ITask> = [
     users: ['1', '2', '3'],
   },
   {
-    id: '2',
+    id: 'task2',
     title: 'Task3',
     order: 0,
     boardId: 'board1',
@@ -42,7 +42,7 @@ export const TASKS: Array<ITask> = [
     users: [],
   },
   {
-    id: '3',
+    id: 'task3',
     title: 'Task4',
     order: 0,
     boardId: 'board1',
@@ -52,7 +52,7 @@ export const TASKS: Array<ITask> = [
     users: [],
   },
   {
-    id: '4',
+    id: 'task4',
     title: 'Task5',
     order: 0,
     boardId: 'board1',

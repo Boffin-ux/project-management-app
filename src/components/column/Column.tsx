@@ -1,33 +1,59 @@
 import { Box, List, Button } from '@mui/material';
-import React, { useState } from 'react';
-import { DragDropContext, Draggable, Droppable, DropResult } from '@hello-pangea/dnd';
+import React, { useState, FC } from 'react';
+import {
+  DragDropContext,
+  Draggable,
+  DraggableProvided,
+  DraggableStateSnapshot,
+  Droppable,
+  DropResult,
+} from '@hello-pangea/dnd';
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import { ITask, Task } from 'pages/boardItem/Task/Task';
-import { TASKS } from 'MOCKDATA/tasks';
 import { ColumnHeader } from './Header/ColumnHeader';
+import { TASKS } from 'MOCKDATA/tasks';
 
-export const Column = () => {
+export interface IColumn {
+  id: string;
+  title: string;
+  order: number;
+  boardId: string;
+  tasks: Array<ITask>;
+}
+
+// export interface ColumnProps extends IColumn {}
+// export const Column = React.forwardRef<ColumnProps>((props, ref) => {
+//   return (
+//     <Box
+//       sx={{ m: 2, p: 0.2, minWidth: '320px', backgroundColor: '#eeeeee', borderRadius: 2 }}
+//       component="div"
+//       ref={ref}
+//     ></Box>
+//   );
+// });
+
+export const Column: FC<IColumn> = ({ id, title, tasks }) => {
   const [btnCapture, setBtnCapture] = useState<boolean>(false);
-  const [list, setList] = useState<Array<ITask>>(TASKS);
+  // const [tasks, setTasks] = useState<Array<ITask>>(TASKS);
 
-  const onDragEnd = (result: DropResult) => {
-    const { source, destination } = result;
-    if (!destination) return;
+  // const onDragEnd = (result: DropResult) => {
+  //   const { source, destination } = result;
+  //   if (!destination) return;
+  //   console.log(destination.droppableId);
+  //   const items = Array.from(tasks);
+  //   const [newOrder] = items.splice(source.index, 1);
 
-    const items = Array.from(list);
-    const [newOrder] = items.splice(source.index, 1);
+  //   items.splice(destination.index, 0, newOrder);
 
-    items.splice(destination.index, 0, newOrder);
-
-    setList(items);
-  };
+  //   setTasks(items);
+  // };
 
   return (
     <Box
       sx={{ m: 2, p: 0.2, minWidth: '320px', backgroundColor: '#eeeeee', borderRadius: 2 }}
       component="div"
     >
-      <ColumnHeader />
+      <ColumnHeader title={title} />
       <Box
         component="div"
         sx={{ height: '95%' }}
@@ -44,28 +70,22 @@ export const Column = () => {
             {btnCapture && 'Add Task'}
           </Button>
         </Box>
-        <Box sx={{ p: 1 }}>
-          <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable droppableId="list">
-              {(provided) => (
-                <List ref={provided.innerRef} {...provided.droppableProps} sx={{ mt: 1 }}>
-                  {list.map((task, index) => (
-                    <Draggable key={task.id} draggableId={task.id} index={index}>
-                      {(DropProvided, snapshot) => (
-                        <Task
-                          dropProvider={DropProvided}
-                          snapshot={snapshot}
-                          key={task.id}
-                          task={task}
-                        />
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
-                </List>
-              )}
-            </Droppable>
-          </DragDropContext>
+        <Box sx={{ mt: 2 }}>
+          <List>
+            {tasks.map((task, index) => (
+              <Task key={task.id} task={task} />
+              // <Draggable index={index * 100} key={task.id} draggableId={id}>
+              //   {(taskProvided, taskSnapshot) => (
+              //     <Task
+              //       key={task.id}
+              //       task={task}
+              //       dropProvider={taskProvided}
+              //       snapshot={taskSnapshot}
+              //     />
+              //   )}
+              // </Draggable>
+            ))}
+          </List>
         </Box>
       </Box>
     </Box>

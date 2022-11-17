@@ -18,18 +18,19 @@ export interface ITask {
 }
 
 export interface TaskProps {
-  dropProvider: DraggableProvided;
-  snapshot: DraggableStateSnapshot;
+  dropProvider?: DraggableProvided;
+  snapshot?: DraggableStateSnapshot;
   task: ITask;
 }
 
 export const Task: FC<TaskProps> = ({ dropProvider, snapshot, task }) => {
   return (
     <ListItem
-      {...dropProvider.draggableProps}
-      {...dropProvider.dragHandleProps}
-      ref={dropProvider.innerRef}
-      className={snapshot.isDragging ? styles.drag : styles.rest}
+      // {...dropProvider.draggableProps}
+      // {...dropProvider.dragHandleProps}
+      // ref={dropProvider.innerRef}
+      // className={snapshot.isDragging ? styles.drag : styles.rest}
+      className={styles.rest}
     >
       <Box className={styles.fullWidth}>
         <Box className={styles.taskSubArea}>

@@ -17,7 +17,7 @@ export interface IRequestForBoard {
 }
 
 export interface IBoard extends IRequestForBoard {
-  id: string;
+  _id: string;
 }
 
 export interface BoardCardProps {

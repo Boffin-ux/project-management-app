@@ -15,31 +15,31 @@ const USERS: Array<User> = [
 
 export const BOARDS: Array<IBoard> = [
   {
-    id: '1',
+    _id: '1',
     title: 'Task1',
     owner: 'stanlys1',
     users: USERS,
   },
   {
-    id: '2',
+    _id: '2',
     title: 'My Task2',
     owner: 'stanlys2',
     users: USERS,
   },
   {
-    id: '3',
+    _id: '3',
     title: 'New Task3',
     owner: 'stanlys3',
     users: USERS,
   },
   {
-    id: '4',
+    _id: '4',
     title: 'End Task4',
     owner: 'stanlys4',
     users: USERS,
   },
   {
-    id: '5',
+    _id: '5',
     title: 'Last Board in this test',
     owner: 'stanlys5',
     users: USERS,

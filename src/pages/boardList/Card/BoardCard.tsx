@@ -13,21 +13,28 @@ import {
   ListItem,
   Typography,
 } from '@mui/material';
+import { useAppDispatch } from 'hooks/redux';
 import { IBoard } from 'interfaces/boards';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import { boardDelete } from 'store/reducers/BoardsSlice';
 import styles from './BoardCard.module.scss';
 import { setRandomColor } from './utils';
 
-export const BoardCard: FC<IBoard> = ({ title, owner, users }) => {
+export const BoardCard: FC<IBoard> = ({ _id: id, title, owner, users }) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+
+  const removeBoardWithId = () => {
+    dispatch(boardDelete(id));
+  };
 
   return (
     <Card className={styles.card} sx={{ width: { xs: '100%', sm: '400px' } }}>
       <CardHeader
         avatar={<Avatar sx={{ bgcolor: setRandomColor() }}>{title[0]}</Avatar>}
         action={
-          <IconButton>
+          <IconButton onClick={removeBoardWithId}>
             <DeleteIcon color="error" className={styles.iconButton} />
           </IconButton>
         }
@@ -41,7 +48,7 @@ export const BoardCard: FC<IBoard> = ({ title, owner, users }) => {
         <Typography variant="h5">{t('boards.members')}:</Typography>
         <List>
           {users.map((user) => (
-            <ListItem key={user.id} className={styles.membersList}>
+            <ListItem key={id + user.id} className={styles.membersList}>
               {user.name}
             </ListItem>
           ))}

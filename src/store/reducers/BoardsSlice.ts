@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { axiosPrivate } from 'api/axios';
 import { AxiosError } from 'axios';
-import { IBoardState, IRequestForBoard } from 'interfaces/boards';
+import { IBoard, IBoardState, IRequestForBoard } from 'interfaces/boards';
 import { axiosErrorHandler } from 'utils/helpers';
 import { API_ENDPOINTS } from 'utils/variables';
 
@@ -34,16 +34,25 @@ export const boardCreate = createAsyncThunk(
   }
 );
 
+export const boardDelete = createAsyncThunk(
+  'boards/delete',
+  async (boardId: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosPrivate.delete(`${API_ENDPOINTS.BOARDS}\\${boardId}`);
+      return response.data;
+    } catch (error) {
+      const err = error as AxiosError;
+      return rejectWithValue(axiosErrorHandler(err));
+    }
+  }
+);
+
 export const boardSlice = createSlice({
   name: 'boards',
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(boardCreate.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
       .addCase(boardGetAll.fulfilled, (state, action) => {
         state.isLoading = false;
         state.boards = action.payload;
@@ -56,11 +65,27 @@ export const boardSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
+      .addCase(boardCreate.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
       .addCase(boardCreate.fulfilled, (state, action) => {
         state.isLoading = false;
         state.boards.push(action.payload);
       })
       .addCase(boardCreate.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(boardDelete.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(boardDelete.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.boards = state.boards.filter((board) => board._id !== action.payload._id);
+      })
+      .addCase(boardDelete.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       });

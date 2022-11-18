@@ -23,11 +23,13 @@ export const Boards = () => {
     <Box>
       <ControlUnit />
       {isLoading && <Loader />}
-      <Grid container spacing={1} justifyContent="center">
-        {boards.map((board) => (
-          <BoardCard {...board} key={board.id} />
-        ))}
-      </Grid>
+      {!isLoading && boards.length > 0 && (
+        <Grid container spacing={1} justifyContent="center">
+          {boards.map((board) => (
+            <BoardCard {...board} key={board._id} />
+          ))}
+        </Grid>
+      )}
     </Box>
   );
 };

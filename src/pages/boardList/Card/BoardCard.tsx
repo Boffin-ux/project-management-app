@@ -13,13 +13,13 @@ import {
   ListItem,
   Typography,
 } from '@mui/material';
-import { Board } from 'interfaces/boards';
+import { IBoard } from 'interfaces/boards';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './BoardCard.module.scss';
 import { setRandomColor } from './utils';
 
-export const BoardCard: FC<Board> = ({ title, owner, users }) => {
+export const BoardCard: FC<IBoard> = ({ title, owner, users }) => {
   const { t } = useTranslation();
 
   return (

@@ -1,4 +1,4 @@
-import { Board, User } from '../../interfaces/boards';
+import { IBoard, User } from '../../interfaces/boards';
 
 const USERS: Array<User> = [
   {
@@ -13,7 +13,7 @@ const USERS: Array<User> = [
   },
 ];
 
-export const BOARDS: Array<Board> = [
+export const BOARDS: Array<IBoard> = [
   {
     id: '1',
     title: 'Task1',

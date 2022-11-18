@@ -4,13 +4,22 @@ export interface User {
   login: string;
 }
 
-export interface Board {
-  id: string;
+export interface IBoardState {
+  boards: Array<IBoard>;
+  isLoading: boolean;
+  error: string | null;
+}
+
+export interface IRequestForBoard {
   title: string;
   owner: string;
   users: Array<User>;
 }
 
+export interface IBoard extends IRequestForBoard {
+  id: string;
+}
+
 export interface BoardCardProps {
-  board: Board;
+  board: IBoard;
 }

@@ -11,7 +11,7 @@ export default axios.create({
 export const axiosPrivate = axios.create({
   baseURL: BASE_URL,
   headers: { 'Content-Type': 'application/json' },
-  withCredentials: true,
+  // withCredentials: true,
 });
 
 axiosPrivate.interceptors.request.use(
@@ -20,6 +20,7 @@ axiosPrivate.interceptors.request.use(
     if (!config.headers['Authorization']) {
       config.headers['Authorization'] = `Bearer ${store.getState().auth.token}`;
     }
+    console.log(config);
     return config;
   },
   (error) => Promise.reject(error)

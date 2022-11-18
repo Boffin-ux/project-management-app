@@ -31,7 +31,8 @@
   },
   "profile": {
     "profileHeader": "Edit profile",
-    "saveButton": "Save"
+    "saveButton": "Save",
+    "deleteUserButton": "Delete user"
   },
   "404": {
     "title": "Page not found",

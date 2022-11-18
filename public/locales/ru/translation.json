@@ -21,7 +21,8 @@
   },
   "profile": {
     "profileHeader": "Редактировать профиль",
-    "saveButton": "Сохранить"
+    "saveButton": "Сохранить",
+    "deleteUserButton": "Удалить пользователя"
   },
   "auth": {
     "signIn": "Войти",

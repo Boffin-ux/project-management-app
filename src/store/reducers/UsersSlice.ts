@@ -4,6 +4,7 @@ import { AxiosError } from 'axios';
 import { IupdateUserData, IUsersState } from 'interfaces/users';
 import { axiosErrorHandler } from 'utils/helpers';
 import { API_ENDPOINTS } from 'utils/variables';
+import { logout } from './AuthSlice';
 
 const initialState: IUsersState = {
   name: null,
@@ -43,6 +44,19 @@ export const updateUserInfo = createAsyncThunk(
   }
 );
 
+export const deleteUser = createAsyncThunk(
+  'users/deleteUser',
+  async (userId: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosPrivate.delete(API_ENDPOINTS.USER_INFO + userId);
+      return response.data;
+    } catch (error) {
+      const err = error as AxiosError;
+      return rejectWithValue(axiosErrorHandler(err));
+    }
+  }
+);
+
 export const usersSlice = createSlice({
   name: 'users',
   initialState,
@@ -74,6 +88,18 @@ export const usersSlice = createSlice({
         state.login = action.payload.login;
       })
       .addCase(updateUserInfo.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(deleteUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        logout();
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       });

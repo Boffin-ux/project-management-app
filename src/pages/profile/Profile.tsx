@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import useAccessToken from 'hooks/useAccessToken';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { updateUserInfo } from 'store/reducers/UsersSlice';
+import { deleteUser, updateUserInfo } from 'store/reducers/UsersSlice';
 import { parseJwt } from 'utils/helpers';
 import * as yup from 'yup';
 
@@ -41,6 +41,10 @@ function Profile() {
   const nameError = errors.name;
   const loginError = errors.login;
   const passwordError = errors.password;
+
+  const handleDeleteUser = () => {
+    dispatch(deleteUser(id));
+  };
 
   return (
     <Container maxWidth="sm">
@@ -107,9 +111,18 @@ function Profile() {
             {isLoading && <Loader />}
           </Box>
         </form>
-        {/* <Link href={VIEW_PATH.SIGN_IN} sx={{ my: 2 }}>
-          {t('auth.signInLink')}
-        </Link> */}
+        <Box sx={{ position: 'relative', p: 2 }}>
+          <Button
+            color="error"
+            variant="contained"
+            fullWidth
+            type="submit"
+            disabled={isLoading}
+            onClick={handleDeleteUser}
+          >
+            {t('profile.deleteUserButton')}
+          </Button>
+        </Box>
       </Box>
     </Container>
   );

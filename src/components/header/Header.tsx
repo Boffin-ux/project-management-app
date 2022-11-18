@@ -48,9 +48,14 @@ export default function Header() {
             PM-APP
           </Button>
           {isAuth && (
-            <Button onClick={handleLogout} variant="contained">
-              {t('auth.signOut')}
-            </Button>
+            <>
+              <Button onClick={handleLogout} variant="contained">
+                {t('auth.signOut')}
+              </Button>
+              <Button component={Link} to={VIEW_PATH.PROFILE} variant="contained">
+                {t('header.editProfile')}
+              </Button>
+            </>
           )}
         </Box>
         <nav className={styles.list}>

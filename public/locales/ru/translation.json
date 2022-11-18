@@ -10,12 +10,18 @@
     "authWrongPassword": "Неверный логин или пароль",
     "authLoginExist": "Такой логин уже существует",
     "authLoginFailed": "Ошибка аутентификации",
-    "invalidToken": "Неверный токен авторизации"
+    "invalidToken": "Неверный токен авторизации",
+    "badRequest": "Некорректный запрос"
   },
   "header": {
     "signIn": "Войти",
     "signUp": "Регистрация",
-    "mainPage": "Перейти на Главную"
+    "mainPage": "Перейти на Главную",
+    "editProfile": "Редактировать профиль"
+  },
+  "profile": {
+    "profileHeader": "Редактировать профиль",
+    "saveButton": "Сохранить"
   },
   "auth": {
     "signIn": "Войти",

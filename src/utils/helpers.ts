@@ -12,6 +12,8 @@ export const axiosErrorHandler = (err: AxiosError) => {
         return 'authLoginExist';
       case RESPONSE_CODES.INVALID_TOKEN:
         return 'invalidToken';
+      case RESPONSE_CODES.BAD_REQUEST:
+        return 'badRequest';
       default:
         return 'authLoginFailed';
     }

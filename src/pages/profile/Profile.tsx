@@ -1,20 +1,17 @@
-import { LockOutlined } from '@mui/icons-material';
-import { Avatar, Box, Button, Container, Link, TextField, Typography } from '@mui/material';
+import { Build } from '@mui/icons-material';
+import { Avatar, Box, Button, Container, TextField, Typography } from '@mui/material';
 import Loader from 'components/universal/Loader/Loader';
 import { useFormik } from 'formik';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import useAccessToken from 'hooks/useAccessToken';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { signIn } from 'store/reducers/AuthSlice';
-import { VIEW_PATH } from 'utils/variables';
+import { updateUserInfo } from 'store/reducers/UsersSlice';
+import { parseJwt } from 'utils/helpers';
 import * as yup from 'yup';
 
-const initialValues = {
-  login: '',
-  password: '',
-};
-
 const validationSchema = yup.object({
+  name: yup.string().min(2, 'NameValidationMin').required('NameValidationRequired'),
   login: yup.string().min(3, 'loginValidationMin').required('loginValidationRequired'),
   password: yup.string().min(8, 'passwordValidationMin').required('passwordValidationRequired'),
 });
@@ -22,17 +19,26 @@ const validationSchema = yup.object({
 function Profile() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { isLoading, error } = useAppSelector((state) => state.users);
+  const { name, login, isLoading, error } = useAppSelector((state) => state.users);
+  const token = useAccessToken();
+  const { id } = parseJwt(token);
+
+  const initialValues = {
+    name: name ?? '',
+    login: login ?? '',
+    password: '',
+  };
 
   const { values, touched, errors, handleSubmit, handleChange, dirty } = useFormik({
     initialValues,
     validationSchema,
     onSubmit: (values, { resetForm }) => {
-      dispatch(signIn(values));
+      dispatch(updateUserInfo({ ...values, userId: id }));
       resetForm();
     },
   });
 
+  const nameError = errors.name;
   const loginError = errors.login;
   const passwordError = errors.password;
 
@@ -47,12 +53,23 @@ function Profile() {
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlined />
+          <Build />
         </Avatar>
         <Typography component="h1" variant="h5">
-          {t('auth.signIn')}
+          {t('profile.profileHeader')}
         </Typography>
         <form onSubmit={handleSubmit}>
+          <TextField
+            autoFocus
+            fullWidth
+            id="name"
+            label={t('auth.name')}
+            margin="normal"
+            value={values.name}
+            onChange={handleChange}
+            error={touched.name && !!nameError}
+            helperText={touched.name && !!nameError && t(`errors.${nameError}`)}
+          />
           <TextField
             fullWidth
             id="login"
@@ -62,7 +79,6 @@ function Profile() {
             onChange={handleChange}
             error={touched.login && !!loginError}
             helperText={touched.login && !!loginError && t(`errors.${loginError}`)}
-            disabled={isLoading}
           />
           <TextField
             fullWidth
@@ -74,9 +90,10 @@ function Profile() {
             onChange={handleChange}
             error={touched.password && !!passwordError}
             helperText={touched.password && !!passwordError && t(`errors.${passwordError}`)}
-            disabled={isLoading}
           />
-          {error && <Typography sx={{ color: 'red', my: 1 }}>{t(`errors.${error}`)}</Typography>}
+          {!dirty && error && (
+            <Typography sx={{ color: 'red', my: 1 }}>{t(`errors.${error}`)}</Typography>
+          )}
           <Box sx={{ position: 'relative' }}>
             <Button
               color="primary"
@@ -85,14 +102,14 @@ function Profile() {
               type="submit"
               disabled={isLoading}
             >
-              {t('auth.signIn')}
+              {t('profile.saveButton')}
             </Button>
             {isLoading && <Loader />}
           </Box>
         </form>
-        <Link href={VIEW_PATH.SIGN_UP} sx={{ my: 2 }}>
-          {t('auth.signUpLink')}
-        </Link>
+        {/* <Link href={VIEW_PATH.SIGN_IN} sx={{ my: 2 }}>
+          {t('auth.signInLink')}
+        </Link> */}
       </Box>
     </Container>
   );

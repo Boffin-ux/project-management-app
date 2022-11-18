@@ -21,13 +21,14 @@ const PAGES_TITLE = {
 const API_ENDPOINTS = {
   SIGN_IN: 'auth/signin',
   SIGN_UP: 'auth/signup',
-  GET_USER_INFO: 'users/',
+  USER_INFO: 'users/',
 };
 
 const RESPONSE_CODES = {
-  ALREADY_EXIST: 409,
+  BAD_REQUEST: 400,
   AUTH_ERROR: 401,
   INVALID_TOKEN: 403,
+  ALREADY_EXIST: 409,
 };
 
 export { LOCALES, VIEW_PATH, PAGES_TITLE, API_ENDPOINTS, RESPONSE_CODES };

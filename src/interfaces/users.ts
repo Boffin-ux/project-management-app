@@ -1,3 +1,5 @@
+import { ISingUpData } from './auth';
+
 export interface IUsersState {
   name: string | null;
   login: string | null;
@@ -5,7 +7,6 @@ export interface IUsersState {
   error: string | null;
 }
 
-// export interface IGetUserInfoData {
-//   login: string;
-//   password: string;
-// }
+export interface IupdateUserData extends ISingUpData {
+  userId: string;
+}

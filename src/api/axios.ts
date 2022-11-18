@@ -11,7 +11,7 @@ export default axios.create({
 export const axiosPrivate = axios.create({
   baseURL: BASE_URL,
   headers: { 'Content-Type': 'application/json' },
-  withCredentials: true,
+  // withCredentials: true,
 });
 
 axiosPrivate.interceptors.request.use(
@@ -28,7 +28,8 @@ axiosPrivate.interceptors.request.use(
 axiosPrivate.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error?.response?.status === RESPONSE_CODES.AUTH_ERROR) {
+    if (error?.response?.status === RESPONSE_CODES.INVALID_TOKEN) {
+      console.log('Invalid token logout');
       store.dispatch(logout());
     }
     return Promise.reject(error);

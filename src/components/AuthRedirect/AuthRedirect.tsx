@@ -7,7 +7,7 @@ const AuthRedirect = ({ withAuth = true }) => {
   const isAuth = useAccessToken();
 
   if (withAuth) {
-    return isAuth ? <Outlet /> : <Navigate to={VIEW_PATH.SIGN_IN} replace />;
+    return isAuth ? <Outlet /> : <Navigate to={VIEW_PATH.HOME} replace />;
   } else {
     return isAuth ? <Navigate to={VIEW_PATH.BOARDS} replace /> : <Outlet />;
   }

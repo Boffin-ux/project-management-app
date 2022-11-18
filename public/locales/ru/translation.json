@@ -9,7 +9,8 @@
     "authNoResponse": "Нет связи с сервером",
     "authWrongPassword": "Неверный логин или пароль",
     "authLoginExist": "Такой логин уже существует",
-    "authLoginFailed": "Ошибка аутентификации"
+    "authLoginFailed": "Ошибка аутентификации",
+    "invalidToken": "Неверный токен авторизации"
   },
   "header": {
     "signIn": "Войти",

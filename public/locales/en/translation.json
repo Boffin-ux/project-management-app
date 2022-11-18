@@ -9,7 +9,8 @@
     "authNoResponse": "No Server Response",
     "authWrongPassword": "Wrong Username or Password",
     "authLoginExist": "Login already exist",
-    "authLoginFailed": "Login Failed"
+    "authLoginFailed": "Login Failed",
+    "invalidToken": "Invalid token"
   },
   "header": {
     "signIn": "Sign In",

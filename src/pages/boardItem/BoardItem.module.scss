@@ -8,10 +8,20 @@
 
   .columns {
     margin: 1rem;
-    width: 80vw;
+    min-width: 80vw;
     min-height: 78vh;
+    flex-grow: 1;
     overflow: auto;
     direction: row;
     display: inline-flex;
+    padding: 2rem;
   }
+}
+
+.over {
+  border: 0.1rem dotted white;
+}
+
+.drag {
+  border: 0.1rem dotted black;
 }

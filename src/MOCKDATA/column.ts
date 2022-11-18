@@ -120,7 +120,7 @@ const COLUMN4: IColumn = {
   tasks: [TASK4, TASK5],
 };
 
-export const BOARD = [COLUMN1, COLUMN2];
+export const BOARD = [COLUMN1, COLUMN2, COLUMN3];
 
 export const TASKSDEMO = [TASK1, TASK2, TASK3];
 

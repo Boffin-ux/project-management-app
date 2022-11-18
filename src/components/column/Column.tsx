@@ -12,6 +12,7 @@ import AddTaskIcon from '@mui/icons-material/AddTask';
 import { ITask, Task } from 'pages/boardItem/Task/Task';
 import { ColumnHeader } from './Header/ColumnHeader';
 import { TASKS } from 'MOCKDATA/tasks';
+import styles from './Column.module.scss';
 
 export interface IColumn {
   id: string;
@@ -50,7 +51,7 @@ export const Column: FC<IColumn> = ({ id, title, tasks, order }) => {
 
   return (
     <Draggable draggableId={id} index={order}>
-      {(columnProvided) => (
+      {(columnProvided, snapshot) => (
         <Box
           sx={{
             m: 2,
@@ -58,6 +59,9 @@ export const Column: FC<IColumn> = ({ id, title, tasks, order }) => {
             minWidth: '320px',
             backgroundColor: '#eeeeee',
             borderRadius: 2,
+            display: 'flex',
+            justifyContent: 'end',
+            flexDirection: 'column',
           }}
           component="div"
           ref={columnProvided.innerRef}
@@ -67,7 +71,7 @@ export const Column: FC<IColumn> = ({ id, title, tasks, order }) => {
           <ColumnHeader title={title} {...columnProvided.dragHandleProps} />
           <Box
             component="div"
-            sx={{ height: '95%', display: 'flex', flexGrow: 1, flexDirection: 'column' }}
+            sx={{ height: '95%', display: 'flex', flexDirection: 'column' }}
             onMouseOver={() => setBtnCapture(true)}
             onMouseOut={() => setBtnCapture(false)}
           >
@@ -81,17 +85,19 @@ export const Column: FC<IColumn> = ({ id, title, tasks, order }) => {
                 {btnCapture && 'Add Task'}
               </Button>
             </Box>
-            <Box sx={{ mt: 2 }}>
+            <Box sx={{ mt: 2, flexGrow: 1 }}>
               <Droppable droppableId={id}>
-                {(listProvided) => (
+                {(listProvided, snapshot) => (
                   <List
                     ref={listProvided.innerRef}
                     {...listProvided.droppableProps}
                     sx={{
                       display: 'flex',
-                      flexGrow: 1,
+                      height: '100%',
+                      flexGrow: 2,
                       flexDirection: 'column',
                     }}
+                    className={snapshot.isDraggingOver ? styles.over : styles.drag}
                   >
                     {tasks.map((task, index) => (
                       <Task key={task.id} task={task} index={index} />

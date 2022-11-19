@@ -1,38 +1,13 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { axiosPrivate } from 'api/axios';
-import { AxiosError } from 'axios';
-import { IBoardState, IRequestForBoard } from 'interfaces/boards';
-import { axiosErrorHandler } from 'utils/helpers';
-import { API_ENDPOINTS } from 'utils/variables';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IBoardState } from 'interfaces/boards';
+import { getAllBoards } from 'store/reducers/boardThunks/get';
+import { createBoard } from 'store/reducers/boardThunks/post';
 
 const initialState: IBoardState = {
   boards: [],
   isLoading: false,
   error: null,
 };
-
-export const getAllBoards = createAsyncThunk('boards/all', async (_, { rejectWithValue }) => {
-  try {
-    const response = await axiosPrivate.get(API_ENDPOINTS.BOARDS);
-    return response.data;
-  } catch (error) {
-    const err = error as AxiosError;
-    return rejectWithValue(axiosErrorHandler(err));
-  }
-});
-
-export const createBoard = createAsyncThunk(
-  'boards/create',
-  async (dataBoardCreator: IRequestForBoard, { rejectWithValue }) => {
-    try {
-      const response = await axiosPrivate.post(API_ENDPOINTS.BOARDS, dataBoardCreator);
-      return response.data;
-    } catch (error) {
-      const err = error as AxiosError;
-      return rejectWithValue(axiosErrorHandler(err));
-    }
-  }
-);
 
 export const boardSlice = createSlice({
   name: 'boards',

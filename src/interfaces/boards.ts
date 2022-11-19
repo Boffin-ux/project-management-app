@@ -23,3 +23,5 @@ export interface IBoard extends IRequestForBoard {
 export interface BoardCardProps {
   board: IBoard;
 }
+
+export type ResponceBoard = Array<IBoard> | string;

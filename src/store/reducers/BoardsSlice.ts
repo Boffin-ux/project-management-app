@@ -21,6 +21,19 @@ export const boardsGetAll = createAsyncThunk('boards/all', async (_, { rejectWit
   }
 });
 
+export const boardGetById = createAsyncThunk(
+  'boards/getById',
+  async (boardId: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosPrivate.get(`${API_ENDPOINTS.BOARDS}\\${boardId}`);
+      return response.data;
+    } catch (error) {
+      const err = error as AxiosError;
+      return rejectWithValue(axiosErrorHandler(err));
+    }
+  }
+);
+
 export const boardCreate = createAsyncThunk(
   'boards/create',
   async (dataBoardCreator: IRequestForBoard, { rejectWithValue }) => {
@@ -58,6 +71,19 @@ export const boardUpdate = createAsyncThunk(
         `${API_ENDPOINTS.BOARDS}\\${dataBoardUpdater._id}`,
         requestPayload
       );
+      return response.data;
+    } catch (error) {
+      const err = error as AxiosError;
+      return rejectWithValue(axiosErrorHandler(err));
+    }
+  }
+);
+
+export const boardGetAllForUser = createAsyncThunk(
+  'boards/getAllForUser',
+  async (userId: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosPrivate.get(`${API_ENDPOINTS.BOARDSSET}\\${userId}`);
       return response.data;
     } catch (error) {
       const err = error as AxiosError;
@@ -114,12 +140,23 @@ export const boardSlice = createSlice({
       })
       .addCase(boardUpdate.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log(`Action - ${action.payload}`);
         state.boards = state.boards.map((board) =>
           board._id === action.payload._id ? action.payload : board
         );
       })
       .addCase(boardUpdate.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(boardGetAllForUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(boardGetAllForUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.boards = action.payload;
+      })
+      .addCase(boardGetAllForUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       });

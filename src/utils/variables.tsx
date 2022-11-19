@@ -22,6 +22,7 @@ const API_ENDPOINTS = {
   SIGN_IN: 'auth/signin',
   SIGN_UP: 'auth/signup',
   BOARDS: 'boards',
+  BOARDSSET: 'boardsSet',
 };
 
 const RESPONSE_CODES = {

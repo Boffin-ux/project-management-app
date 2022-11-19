@@ -7,6 +7,7 @@ import { boardsGetAll } from 'store/reducers/BoardsSlice';
 import { useNavigate } from 'react-router-dom';
 import Loader from 'components/universal/Loader/Loader';
 import { VIEW_PATH } from 'utils/variables';
+import styles from './BoardList.module.scss';
 
 export const Boards = () => {
   const dispatch = useAppDispatch();
@@ -20,7 +21,7 @@ export const Boards = () => {
   }, []);
 
   return (
-    <Box>
+    <Box className={styles.boardWrapper}>
       <ControlUnit />
       {isLoading && <Loader />}
       {!isLoading && boards.length > 0 && (

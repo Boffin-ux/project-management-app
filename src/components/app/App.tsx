@@ -20,8 +20,8 @@ export default function App() {
   const token = useAccessToken();
 
   useEffect(() => {
-    const { id } = parseJwt(token);
     if (token) {
+      const { id } = parseJwt(token);
       dispatch(getUserInfo(id));
     } else {
       dispatch(cleanUserData());

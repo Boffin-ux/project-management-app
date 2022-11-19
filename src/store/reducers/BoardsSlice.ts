@@ -21,19 +21,6 @@ export const boardsGetAll = createAsyncThunk('boards/all', async (_, { rejectWit
   }
 });
 
-export const boardGetById = createAsyncThunk(
-  'boards/getById',
-  async (boardId: string, { rejectWithValue }) => {
-    try {
-      const response = await axiosPrivate.get(`${API_ENDPOINTS.BOARDS}\\${boardId}`);
-      return response.data;
-    } catch (error) {
-      const err = error as AxiosError;
-      return rejectWithValue(axiosErrorHandler(err));
-    }
-  }
-);
-
 export const boardCreate = createAsyncThunk(
   'boards/create',
   async (dataBoardCreator: IRequestForBoard, { rejectWithValue }) => {
@@ -84,6 +71,36 @@ export const boardGetAllForUser = createAsyncThunk(
   async (userId: string, { rejectWithValue }) => {
     try {
       const response = await axiosPrivate.get(`${API_ENDPOINTS.BOARDSSET}\\${userId}`);
+      return response.data;
+    } catch (error) {
+      const err = error as AxiosError;
+      return rejectWithValue(axiosErrorHandler(err));
+    }
+  }
+);
+
+// имеется на backend, пока не знаю где использовать
+export const boardGetById = createAsyncThunk(
+  'boards/getById',
+  async (boardId: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosPrivate.get(`${API_ENDPOINTS.BOARDS}\\${boardId}`);
+      return response.data;
+    } catch (error) {
+      const err = error as AxiosError;
+      return rejectWithValue(axiosErrorHandler(err));
+    }
+  }
+);
+
+// имеется на backend, пока не знаю где использовать
+export const boardGetByIds = createAsyncThunk(
+  'boards/getByIds',
+  async (boardIds: Array<string>, { rejectWithValue }) => {
+    try {
+      const response = await axiosPrivate.get(
+        `${API_ENDPOINTS.BOARDSSET}?ids=${boardIds.join(',')}`
+      );
       return response.data;
     } catch (error) {
       const err = error as AxiosError;

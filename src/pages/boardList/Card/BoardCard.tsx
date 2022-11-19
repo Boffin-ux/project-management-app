@@ -25,7 +25,7 @@ export const BoardCard: FC<IBoard> = ({ _id: id, title, owner, users }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
-  const removeBoardWithId = () => {
+  const removeBoardById = () => {
     dispatch(boardDelete(id));
   };
 
@@ -34,7 +34,7 @@ export const BoardCard: FC<IBoard> = ({ _id: id, title, owner, users }) => {
       <CardHeader
         avatar={<Avatar sx={{ bgcolor: setRandomColor() }}>{title[0]}</Avatar>}
         action={
-          <IconButton onClick={removeBoardWithId}>
+          <IconButton onClick={removeBoardById}>
             <DeleteIcon color="error" className={styles.iconButton} />
           </IconButton>
         }
@@ -48,7 +48,7 @@ export const BoardCard: FC<IBoard> = ({ _id: id, title, owner, users }) => {
         <Typography variant="h5">{t('boards.members')}:</Typography>
         <List>
           {users.map((user) => (
-            <ListItem key={id + user.id} className={styles.membersList}>
+            <ListItem key={user.id} className={styles.membersList}>
               {user.name}
             </ListItem>
           ))}

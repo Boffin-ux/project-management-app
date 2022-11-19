@@ -12,18 +12,18 @@ export const Boards = () => {
   const dispatch = useAppDispatch();
   const { boards, error, isLoading } = useAppSelector((state) => state.boards);
 
-  const navigate = useNavigate();
-  if (error) navigate(VIEW_PATH.ERROR);
-
   useEffect(() => {
     dispatch(boardGetAll());
   }, []);
+
+  const navigate = useNavigate();
+  if (error) navigate(VIEW_PATH.ERROR);
 
   return (
     <Box>
       <ControlUnit />
       {isLoading && <Loader />}
-      {!isLoading && boards.length > 0 && (
+      {!isLoading && (
         <Grid container spacing={1} justifyContent="center">
           {boards.map((board) => (
             <BoardCard {...board} key={board._id} />

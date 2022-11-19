@@ -1,6 +1,6 @@
 import { IBoard, User } from '../../interfaces/boards';
 
-const USERS: Array<User> = [
+export const USERS: Array<User> = [
   {
     id: '1',
     name: 'user1',

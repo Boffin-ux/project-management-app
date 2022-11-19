@@ -1,6 +1,7 @@
-import { IBoard, User } from '../../interfaces/boards';
+import { IUser } from 'interfaces/user';
+import { IBoard } from '../../interfaces/boards';
 
-const USERS: Array<User> = [
+const USERS: Array<IUser> = [
   {
     id: '1',
     name: 'user1',

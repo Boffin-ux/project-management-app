@@ -6,7 +6,7 @@ import styles from './AddBoardButton.module.scss';
 import useUserData from 'hooks/useUserData';
 import { useAppDispatch } from 'hooks/redux';
 import { IRequestForBoard } from 'interfaces/boards';
-import { createBoard } from 'store/reducers/boardThunks/post';
+import { createBoard } from 'store/reducers/actions/board';
 import { randomString } from 'utils/temputils';
 
 export const AddBoardButton = () => {

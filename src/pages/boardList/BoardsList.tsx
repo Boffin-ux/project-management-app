@@ -3,7 +3,7 @@ import { Grid, Box } from '@mui/material';
 import { ControlUnit } from './controlUnit/ControlUnit';
 import { BoardCard } from './Card/BoardCard';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { getAllBoards } from 'store/reducers/boardThunks/get';
+import { getAllBoards } from 'store/reducers/actions/board';
 import { useNavigate } from 'react-router-dom';
 import Loader from 'components/universal/Loader/Loader';
 import { VIEW_PATH } from 'utils/variables';

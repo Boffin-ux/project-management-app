@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IBoardState } from 'interfaces/boards';
-import { getAllBoards } from 'store/reducers/boardThunks/get';
-import { createBoard } from 'store/reducers/boardThunks/post';
+import { getAllBoards, createBoard } from 'store/reducers/actions/board';
 
 const initialState: IBoardState = {
   boards: [],

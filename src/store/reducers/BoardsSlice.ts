@@ -11,7 +11,7 @@ const initialState: IBoardState = {
   error: null,
 };
 
-export const boardGetAll = createAsyncThunk('boards/all', async (_, { rejectWithValue }) => {
+export const getAllBoards = createAsyncThunk('boards/all', async (_, { rejectWithValue }) => {
   try {
     const response = await axiosPrivate.get(API_ENDPOINTS.BOARDS);
     return response.data;
@@ -21,7 +21,7 @@ export const boardGetAll = createAsyncThunk('boards/all', async (_, { rejectWith
   }
 });
 
-export const boardCreate = createAsyncThunk(
+export const createBoard = createAsyncThunk(
   'boards/create',
   async (dataBoardCreator: IRequestForBoard, { rejectWithValue }) => {
     try {
@@ -40,27 +40,27 @@ export const boardSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(boardCreate.pending, (state) => {
+      .addCase(getAllBoards.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(boardGetAll.fulfilled, (state, action) => {
+      .addCase(getAllBoards.fulfilled, (state, action) => {
         state.isLoading = false;
         state.boards = action.payload;
       })
-      .addCase(boardGetAll.rejected, (state, action) => {
+      .addCase(getAllBoards.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       })
-      .addCase(boardGetAll.pending, (state) => {
+      .addCase(createBoard.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(boardCreate.fulfilled, (state, action) => {
+      .addCase(createBoard.fulfilled, (state, action) => {
         state.isLoading = false;
         state.boards.push(action.payload);
       })
-      .addCase(boardCreate.rejected, (state, action) => {
+      .addCase(createBoard.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       });

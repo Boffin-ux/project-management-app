@@ -6,7 +6,7 @@ import styles from './AddBoardButton.module.scss';
 import useUserId from 'hooks/useUserId';
 import { useAppDispatch } from 'hooks/redux';
 import { IRequestForBoard } from 'interfaces/boards';
-import { boardCreate } from 'store/reducers/BoardsSlice';
+import { createBoard } from 'store/reducers/BoardsSlice';
 import { randomString } from 'utils/temputils';
 
 export const AddBoardButton = () => {
@@ -14,14 +14,14 @@ export const AddBoardButton = () => {
   const userId = useUserId();
   const dispatch = useAppDispatch();
 
-  const createBoard = () => {
+  const addNewBoard = () => {
     //mockdata для создание доски
     const board1: IRequestForBoard = {
       title: randomString(15),
       owner: userId,
       users: [],
     };
-    dispatch(boardCreate(board1));
+    dispatch(createBoard(board1));
   };
 
   return (
@@ -29,7 +29,7 @@ export const AddBoardButton = () => {
       className={styles.btnAdd}
       variant="contained"
       sx={{ order: { xs: 2, sm: 0 } }}
-      onClick={createBoard}
+      onClick={addNewBoard}
     >
       <AddIcon fontSize="large" /> {t('boards.addBoard')}
     </Button>

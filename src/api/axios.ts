@@ -20,7 +20,6 @@ axiosPrivate.interceptors.request.use(
     if (!config.headers['Authorization']) {
       config.headers['Authorization'] = `Bearer ${store.getState().auth.token}`;
     }
-    console.log(config);
     return config;
   },
   (error) => Promise.reject(error)

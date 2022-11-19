@@ -25,7 +25,7 @@ export const Boards = () => {
       {isLoading && <Loader />}
       <Grid container spacing={1} justifyContent="center">
         {boards.map((board) => (
-          <BoardCard {...board} key={board.id} />
+          <BoardCard {...board} key={board._id} />
         ))}
       </Grid>
     </Box>

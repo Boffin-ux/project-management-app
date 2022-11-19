@@ -3,7 +3,7 @@ import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { useTranslation } from 'react-i18next';
 import styles from './AddBoardButton.module.scss';
-import useUserId from 'hooks/useUserId';
+import useUserData from 'hooks/useUserData';
 import { useAppDispatch } from 'hooks/redux';
 import { IRequestForBoard } from 'interfaces/boards';
 import { createBoard } from 'store/reducers/BoardsSlice';
@@ -11,14 +11,14 @@ import { randomString } from 'utils/temputils';
 
 export const AddBoardButton = () => {
   const { t } = useTranslation();
-  const userId = useUserId();
+  const user = useUserData();
   const dispatch = useAppDispatch();
 
   const addNewBoard = () => {
     //mockdata для создание доски
     const board1: IRequestForBoard = {
       title: randomString(15),
-      owner: userId,
+      owner: user.id,
       users: [],
     };
     dispatch(createBoard(board1));

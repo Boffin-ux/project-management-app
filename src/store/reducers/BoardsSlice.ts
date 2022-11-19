@@ -11,7 +11,7 @@ const initialState: IBoardState = {
   error: null,
 };
 
-export const boardGetAll = createAsyncThunk('boards/all', async (_, { rejectWithValue }) => {
+export const boardsGetAll = createAsyncThunk('boards/all', async (_, { rejectWithValue }) => {
   try {
     const response = await axiosPrivate.get(API_ENDPOINTS.BOARDS);
     return response.data;
@@ -47,21 +47,40 @@ export const boardDelete = createAsyncThunk(
   }
 );
 
+export const boardUpdate = createAsyncThunk(
+  'boards/update',
+  async (dataBoardUpdater: IBoard, { rejectWithValue }) => {
+    try {
+      const requestPayload = (({ title, owner, users }) => ({ title, owner, users }))(
+        dataBoardUpdater
+      );
+      const response = await axiosPrivate.put(
+        `${API_ENDPOINTS.BOARDS}\\${dataBoardUpdater._id}`,
+        requestPayload
+      );
+      return response.data;
+    } catch (error) {
+      const err = error as AxiosError;
+      return rejectWithValue(axiosErrorHandler(err));
+    }
+  }
+);
+
 export const boardSlice = createSlice({
   name: 'boards',
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(boardGetAll.fulfilled, (state, action) => {
+      .addCase(boardsGetAll.fulfilled, (state, action) => {
         state.isLoading = false;
         state.boards = action.payload;
       })
-      .addCase(boardGetAll.rejected, (state, action) => {
+      .addCase(boardsGetAll.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       })
-      .addCase(boardGetAll.pending, (state) => {
+      .addCase(boardsGetAll.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
@@ -86,6 +105,21 @@ export const boardSlice = createSlice({
         state.boards = state.boards.filter((board) => board._id !== action.payload._id);
       })
       .addCase(boardDelete.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(boardUpdate.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(boardUpdate.fulfilled, (state, action) => {
+        state.isLoading = false;
+        console.log(`Action - ${action.payload}`);
+        state.boards = state.boards.map((board) =>
+          board._id === action.payload._id ? action.payload : board
+        );
+      })
+      .addCase(boardUpdate.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       });

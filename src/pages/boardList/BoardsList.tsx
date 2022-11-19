@@ -4,21 +4,24 @@ import { ControlUnit } from './controlUnit/ControlUnit';
 import { BoardCard } from './Card/BoardCard';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { boardsGetAll } from 'store/reducers/BoardsSlice';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import Loader from 'components/universal/Loader/Loader';
 import { VIEW_PATH } from 'utils/variables';
 import styles from './BoardList.module.scss';
+import useAccessToken from 'hooks/useAccessToken';
 
 export const Boards = () => {
-  const dispatch = useAppDispatch();
-  const { boards, error, isLoading } = useAppSelector((state) => state.boards);
+  const isAuth = useAccessToken();
 
-  const navigate = useNavigate();
-  if (error) navigate(VIEW_PATH.ERROR);
+  const dispatch = useAppDispatch();
+
+  const { boards, error, isLoading } = useAppSelector((state) => state.boards);
 
   useEffect(() => {
     dispatch(boardsGetAll());
   }, []);
+
+  if (error || !isAuth) return <Navigate to={VIEW_PATH.ERROR} replace />;
 
   return (
     <Box className={styles.boardWrapper}>

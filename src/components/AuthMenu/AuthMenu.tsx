@@ -1,19 +1,19 @@
+import { AppRegistration, DashboardCustomize, Login } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
-import useAccessToken from 'hooks/useAccessToken';
+import { btnStyle, subtitleStyle } from 'components/header/headerStyles';
+import { useAppSelector } from 'hooks/redux';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { VIEW_PATH } from 'utils/variables';
-import { Login, AppRegistration, DashboardCustomize } from '@mui/icons-material';
-import { btnStyle, subtitleStyle } from 'components/header/headerStyles';
 
 function AuthMenu() {
-  const isAuth = useAccessToken();
+  const { token } = useAppSelector((state) => state.auth);
   const { t } = useTranslation();
 
   return (
     <>
-      {isAuth ? (
+      {token ? (
         <Button
           component={Link}
           sx={btnStyle}

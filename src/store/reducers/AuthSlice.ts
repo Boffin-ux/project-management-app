@@ -1,46 +1,21 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'api/axios';
-import { AxiosError } from 'axios';
-import { IAuthState, ISignInData, ISingUpData } from 'interfaces/auth';
-import { axiosErrorHandler } from 'utils/helpers';
-import { API_ENDPOINTS } from 'utils/variables';
+import { createSlice } from '@reduxjs/toolkit';
+import { IAuthState } from 'interfaces/auth';
+import { signIn, signUp } from './actions/auth';
 
 const initialState: IAuthState = {
   token: localStorage.getItem('pmAppToken') ?? '',
+  id: '',
   isLoading: false,
   error: null,
 };
-
-export const signIn = createAsyncThunk(
-  'auth/signIn',
-  async (signInData: ISignInData, { rejectWithValue }) => {
-    try {
-      const response = await axios.post(API_ENDPOINTS.SIGN_IN, signInData);
-      return response.data;
-    } catch (error) {
-      const err = error as AxiosError;
-      return rejectWithValue(axiosErrorHandler(err));
-    }
-  }
-);
-
-export const signUp = createAsyncThunk(
-  'auth/signUp',
-  async (signUpData: ISingUpData, { rejectWithValue }) => {
-    try {
-      const response = await axios.post(API_ENDPOINTS.SIGN_UP, signUpData);
-      return response.data;
-    } catch (error) {
-      const err = error as AxiosError;
-      return rejectWithValue(axiosErrorHandler(err));
-    }
-  }
-);
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    setUserId: (state, action) => {
+      state.id = action.payload;
+    },
     logout: () => ({ ...initialState, token: '' }),
   },
   extraReducers(builder) {
@@ -72,5 +47,5 @@ export const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { setUserId, logout } = authSlice.actions;
 export default authSlice.reducer;

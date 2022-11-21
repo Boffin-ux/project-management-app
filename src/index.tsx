@@ -9,7 +9,7 @@ export const store = setupStore();
 
 store.subscribe(() => {
   localStorage.setItem('pmAppToken', store.getState().auth.token);
-  console.log('Token is LS updated');
+  console.log('Token in LS updated');
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);

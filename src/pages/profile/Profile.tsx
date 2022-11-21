@@ -3,11 +3,9 @@ import { Avatar, Box, Button, Container, TextField, Typography } from '@mui/mate
 import Loader from 'components/universal/Loader/Loader';
 import { useFormik } from 'formik';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import useAccessToken from 'hooks/useAccessToken';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { deleteUser, updateUserInfo } from 'store/reducers/UsersSlice';
-import { parseJwt } from 'utils/helpers';
+import { deleteUser, updateUserInfo } from 'store/reducers/actions/users';
 import * as yup from 'yup';
 
 const validationSchema = yup.object({
@@ -20,8 +18,7 @@ function Profile() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { name, login, isLoading, error } = useAppSelector((state) => state.users);
-  const token = useAccessToken();
-  const { id } = parseJwt(token);
+  const { id } = useAppSelector((state) => state.auth);
 
   const initialValues = {
     name: name ?? '',

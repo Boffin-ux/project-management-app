@@ -1,19 +1,17 @@
+import { FormControlLabel, FormGroup, Switch } from '@mui/material';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import React, { useState } from 'react';
-import { FormGroup, FormControlLabel, Switch } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from 'hooks/redux';
 import { boardGetAllForUser, boardsGetAll } from 'store/reducers/actions/board';
-import useUserId from 'hooks/useUserData';
 
 export const PersonalizeView = () => {
   const { t } = useTranslation();
   const [viewOnlyMyBoard, setViewOnlyMyBoard] = useState<boolean>(false);
-
+  const { id } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const userId = useUserId();
 
   const toggleBoardView = () => {
-    viewOnlyMyBoard ? dispatch(boardsGetAll()) : dispatch(boardGetAllForUser(userId.id));
+    viewOnlyMyBoard ? dispatch(boardsGetAll()) : dispatch(boardGetAllForUser(id));
     setViewOnlyMyBoard(!viewOnlyMyBoard);
   };
 

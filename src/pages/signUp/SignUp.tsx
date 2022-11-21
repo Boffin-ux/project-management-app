@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { signIn, signUp } from 'store/user/users';
+import { signIn, signUp } from 'store/user/thnuks';
 import { VIEW_PATH } from 'utils/variables';
 import * as yup from 'yup';
 

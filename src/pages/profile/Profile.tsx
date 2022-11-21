@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { deleteUser, updateUserInfo } from 'store/user/users';
+import { deleteUser, updateUserInfo } from 'store/user/thnuks';
 import * as yup from 'yup';
 
 const validationSchema = yup.object({

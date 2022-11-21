@@ -12,7 +12,7 @@ import SignUp from 'pages/signUp/SignUp';
 import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { logout } from 'store/user/slice';
-import { getUserInfo } from 'store/user/users';
+import { getUserInfo } from 'store/user/thnuks';
 import { muiTheme } from 'utils/muiTheme';
 import { VIEW_PATH } from 'utils/variables';
 import '../../i18n/i18next';

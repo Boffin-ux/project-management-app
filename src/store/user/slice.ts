@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IUsersState } from 'interfaces/users';
-import { deleteUser, getUserInfo, signIn, signUp, updateUserInfo } from './users';
+import { deleteUser, getUserInfo, signIn, signUp, updateUserInfo } from './thnuks';
 
 const initialState: IUsersState = {
   token: localStorage.getItem('pmAppToken') ?? '',

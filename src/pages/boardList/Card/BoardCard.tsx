@@ -17,7 +17,7 @@ import { useAppDispatch } from 'hooks/redux';
 import { IBoard } from 'interfaces/boards';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { boardDelete } from 'store/reducers/BoardsSlice';
+import { deleteBoard } from 'store/reducers/actions/board';
 import styles from './BoardCard.module.scss';
 import { setRandomColor } from './utils';
 
@@ -26,7 +26,7 @@ export const BoardCard: FC<IBoard> = ({ _id: id, title, owner, users }) => {
   const dispatch = useAppDispatch();
 
   const removeBoardById = () => {
-    dispatch(boardDelete(id));
+    dispatch(deleteBoard(id));
   };
 
   return (

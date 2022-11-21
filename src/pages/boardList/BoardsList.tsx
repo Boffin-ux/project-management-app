@@ -3,7 +3,7 @@ import { Grid, Box } from '@mui/material';
 import { ControlUnit } from './controlUnit/ControlUnit';
 import { BoardCard } from './Card/BoardCard';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { boardGetAll } from 'store/reducers/BoardsSlice';
+import { getAllBoards } from 'store/reducers/actions/board';
 import { useNavigate } from 'react-router-dom';
 import Loader from 'components/universal/Loader/Loader';
 import { VIEW_PATH } from 'utils/variables';
@@ -13,7 +13,7 @@ export const Boards = () => {
   const { boards, error, isLoading } = useAppSelector((state) => state.boards);
 
   useEffect(() => {
-    dispatch(boardGetAll());
+    dispatch(getAllBoards());
   }, []);
 
   const navigate = useNavigate();

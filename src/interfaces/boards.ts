@@ -1,8 +1,4 @@
-export interface User {
-  id: string;
-  name: string;
-  login: string;
-}
+import { IUser } from './user';
 
 export interface IBoardState {
   boards: Array<IBoard>;
@@ -13,7 +9,7 @@ export interface IBoardState {
 export interface IRequestForBoard {
   title: string;
   owner: string;
-  users: Array<User>;
+  users: Array<IUser>;
 }
 
 export interface IBoard extends IRequestForBoard {
@@ -23,3 +19,5 @@ export interface IBoard extends IRequestForBoard {
 export interface BoardCardProps {
   board: IBoard;
 }
+
+export type ResponceBoard = Array<IBoard> | string;

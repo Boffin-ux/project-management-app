@@ -4,6 +4,7 @@ import { AxiosError } from 'axios';
 import { IupdateUserData } from 'interfaces/users';
 import { axiosErrorHandler } from 'utils/helpers';
 import { API_ENDPOINTS } from 'utils/variables';
+import { logout } from '../AuthSlice';
 
 export const getUserInfo = createAsyncThunk(
   'users/getUsersInfo',
@@ -34,9 +35,10 @@ export const updateUserInfo = createAsyncThunk(
 
 export const deleteUser = createAsyncThunk(
   'users/deleteUser',
-  async (userId: string, { rejectWithValue }) => {
+  async (userId: string, { rejectWithValue, dispatch }) => {
     try {
       const response = await axiosPrivate.delete(API_ENDPOINTS.USER_INFO + userId);
+      dispatch(logout());
       return response.data;
     } catch (error) {
       const err = error as AxiosError;

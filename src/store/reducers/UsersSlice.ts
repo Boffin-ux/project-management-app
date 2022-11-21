@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IUsersState } from 'interfaces/users';
 import { deleteUser, getUserInfo, updateUserInfo } from './actions/users';
-import { logout } from './AuthSlice';
 
 const initialState: IUsersState = {
   name: null,
@@ -50,7 +49,6 @@ export const usersSlice = createSlice({
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        logout();
       })
       .addCase(deleteUser.rejected, (state, action) => {
         state.isLoading = false;

@@ -1,13 +1,16 @@
+import { Box, Container } from '@mui/material';
 import React from 'react';
-import styles from './index.module.scss';
 import Project from './project/Project';
 import Team from './team/Team';
+import styles from './home.module.scss';
 
 export default function HomePage() {
   return (
-    <div className={`${styles.wrapper} container`}>
-      <Project />
-      <Team />
-    </div>
+    <Container className={styles.container}>
+      <Box className={styles.wrapper}>
+        <Project />
+        <Team />
+      </Box>
+    </Container>
   );
 }

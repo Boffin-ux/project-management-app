@@ -16,7 +16,8 @@
   "header": {
     "signIn": "Войти",
     "signUp": "Регистрация",
-    "mainPage": "Перейти на Главную",
+    "homeLink": "Главная",
+    "addBoard": "Добавить доску",
     "editProfile": "Редактировать профиль"
   },
   "profile": {

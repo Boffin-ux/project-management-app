@@ -13,7 +13,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { cleanUserData, getUserInfo } from 'store/reducers/UsersSlice';
 import { parseJwt } from 'utils/helpers';
 import { VIEW_PATH } from 'utils/variables';
-import '../../i18n';
+import { muiTheme } from 'utils/muiTheme';
+import { ThemeProvider } from '@emotion/react';
+import { CssBaseline } from '@mui/material';
+import '../../i18n/i18next';
+import './app.scss';
 
 export default function App() {
   const dispatch = useAppDispatch();

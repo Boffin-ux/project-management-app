@@ -9,14 +9,13 @@
     "authNoResponse": "No Server Response",
     "authWrongPassword": "Wrong Username or Password",
     "authLoginExist": "Login already exist",
-    "authLoginFailed": "Login Failed",
-    "invalidToken": "Invalid token",
-    "badRequest": "Bad request"
+    "authLoginFailed": "Login Failed"
   },
   "header": {
     "signIn": "Sign In",
     "signUp": "Sign Up",
-    "mainPage": "Go to Main Page",
+    "homeLink": "Home",
+    "addBoard": "Add Board",
     "editProfile": "Edit Profile"
   },
   "auth": {

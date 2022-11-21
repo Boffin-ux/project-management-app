@@ -21,10 +21,15 @@ const PAGES_TITLE = {
 const API_ENDPOINTS = {
   SIGN_IN: 'auth/signin',
   SIGN_UP: 'auth/signup',
+  BOARDS: 'boards',
+  BOARDS_SET: 'boardsSet',
   USER_INFO: 'users/',
 };
 
 const RESPONSE_CODES = {
+  BAD_REQUEST: 400,
+  AUTH_ERROR: 401,
+  INVALID_TOKEN: 403,
   BAD_REQUEST: 400,
   AUTH_ERROR: 401,
   INVALID_TOKEN: 403,

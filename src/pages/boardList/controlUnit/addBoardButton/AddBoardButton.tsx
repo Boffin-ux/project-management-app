@@ -8,6 +8,7 @@ import { useAppDispatch } from 'hooks/redux';
 import { IRequestForBoard } from 'interfaces/boards';
 import { createBoard } from 'store/reducers/actions/board';
 import { randomString } from 'utils/temputils';
+import { USERS } from 'pages/boardList/mockBoardList';
 
 export const AddBoardButton = () => {
   const { t } = useTranslation();

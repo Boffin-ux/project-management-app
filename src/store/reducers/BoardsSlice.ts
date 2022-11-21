@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { IBoardState } from 'interfaces/boards';
-import { getAllBoards, createBoard } from 'store/reducers/actions/board';
+import { getAllBoards, createBoard, deleteBoard } from 'store/reducers/actions/board';
 
 const initialState: IBoardState = {
   boards: [],
@@ -35,6 +35,18 @@ export const boardSlice = createSlice({
         state.boards.push(action.payload);
       })
       .addCase(createBoard.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(deleteBoard.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(deleteBoard.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.boards = state.boards.filter((board) => board._id !== action.payload._id);
+      })
+      .addCase(deleteBoard.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       });

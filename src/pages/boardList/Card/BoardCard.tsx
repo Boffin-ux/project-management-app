@@ -13,21 +13,28 @@ import {
   ListItem,
   Typography,
 } from '@mui/material';
+import { useAppDispatch } from 'hooks/redux';
 import { IBoard } from 'interfaces/boards';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import { deleteBoard } from 'store/reducers/actions/board';
 import styles from './BoardCard.module.scss';
 import { setRandomColor } from './utils';
 
-export const BoardCard: FC<IBoard> = ({ title, owner, users }) => {
+export const BoardCard: FC<IBoard> = ({ _id: id, title, owner, users }) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+
+  const removeBoardById = () => {
+    dispatch(deleteBoard(id));
+  };
 
   return (
     <Card className={styles.card} sx={{ width: { xs: '100%', sm: '400px' } }}>
       <CardHeader
         avatar={<Avatar sx={{ bgcolor: setRandomColor() }}>{title[0]}</Avatar>}
         action={
-          <IconButton>
+          <IconButton onClick={removeBoardById}>
             <DeleteIcon color="error" className={styles.iconButton} />
           </IconButton>
         }

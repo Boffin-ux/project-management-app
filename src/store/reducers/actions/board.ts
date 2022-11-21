@@ -33,3 +33,16 @@ export const createBoard = createAsyncThunk(
     }
   }
 );
+
+export const deleteBoard = createAsyncThunk(
+  'boards/delete',
+  async (boardId: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosPrivate.delete(`${API_ENDPOINTS.BOARDS}\\${boardId}`);
+      return response.data;
+    } catch (error) {
+      const err = error as AxiosError;
+      return rejectWithValue(axiosErrorHandler(err));
+    }
+  }
+);

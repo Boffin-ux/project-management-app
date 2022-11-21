@@ -11,10 +11,8 @@ import {
 } from '@hello-pangea/dnd';
 import { BreadCrumbs } from './Breadcrumbs/Breadcrumbs';
 import { Column, IColumn } from 'components/column/Column';
-import { TASKS } from 'MOCKDATA/tasks';
-import { ITask } from 'pages/boardItem/Task/Task';
 import styles from './BoardItem.module.scss';
-import { COLUMNS, BOARD, TASKSDEMO, TESTKEY } from 'MOCKDATA/column';
+import { BOARD, TASKSDEMO } from 'MOCKDATA/column';
 
 export const BoardItem = () => {
   const params = useParams();
@@ -61,12 +59,8 @@ export const BoardItem = () => {
       } else {
         const columnSourceIndex = Number(source.droppableId.slice(-1)) - 1;
         const columnDestIndex = Number(destination.droppableId.slice(-1));
-        console.log('Перенос в другую колонку ');
-        console.log(columnDestIndex);
         const items = Array.from(col[columnSourceIndex].tasks);
         const [newOrder] = items.splice(source.index, 1);
-        console.log(col);
-        // setCol((state) => [...state.map(el, index => )]);
         setCol((state) => [
           ...state.map((column, index) => {
             if (column.id === destination.droppableId) {
@@ -96,7 +90,7 @@ export const BoardItem = () => {
                   {...columnsProvided.droppableProps}
                   className={columnSnapshot.isDraggingOver ? styles.drag : styles.over}
                 >
-                  {col.map((column, index) => (
+                  {col.map((column) => (
                     <Column key={column.id} {...column} />
                   ))}
                   {columnsProvided.placeholder}

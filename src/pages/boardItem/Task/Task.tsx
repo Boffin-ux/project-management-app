@@ -1,4 +1,3 @@
-import { DraggableProvided, DraggableStateSnapshot } from '@hello-pangea/dnd';
 import React, { FC } from 'react';
 import { ListItem, Box, Divider, Typography } from '@mui/material';
 import { GroupOfAvatar } from 'components/avatarGroup/GroupOfAvatar';

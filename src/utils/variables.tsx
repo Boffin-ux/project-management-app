@@ -4,13 +4,13 @@ const LOCALES = {
 };
 
 const VIEW_PATH = {
-  MAIN: '/',
+  HOME: '/',
   ABOUT: 'about',
   ERROR: '404',
-  SIGNIN: 'signin',
-  SIGNUP: 'signup',
+  SIGN_IN: 'signin',
+  SIGN_UP: 'signup',
   BOARDS: 'boards',
-  BOARDSID: '/boards/:id',
+  BOARDS_ID: '/boards/:id',
   REST: '*',
 };
 
@@ -19,4 +19,18 @@ const PAGES_TITLE = {
   NOT_FOUND: '404',
 };
 
-export { LOCALES, VIEW_PATH, PAGES_TITLE };
+const API_ENDPOINTS = {
+  SIGN_IN: 'auth/signin',
+  SIGN_UP: 'auth/signup',
+  BOARDS: 'boards',
+  BOARDS_SET: 'boardsSet',
+};
+
+const RESPONSE_CODES = {
+  BAD_REQUEST: 400,
+  AUTH_ERROR: 401,
+  INVALID_TOKEN: 403,
+  ALREADY_EXIST: 409,
+};
+
+export { LOCALES, VIEW_PATH, PAGES_TITLE, API_ENDPOINTS, RESPONSE_CODES };

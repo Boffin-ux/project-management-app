@@ -1,7 +1,31 @@
 {
+  "errors": {
+    "NameValidationMin": "Name should be of minimum 2 characters length",
+    "NameValidationRequired": "Name is required",
+    "loginValidationMin": "Login should be of minimum 3 characters length",
+    "loginValidationRequired": "Login is required",
+    "passwordValidationMin": "Password should be of minimum 8 characters length",
+    "passwordValidationRequired": "Password is required",
+    "authNoResponse": "No Server Response",
+    "authWrongPassword": "Wrong Username or Password",
+    "authLoginExist": "Login already exist",
+    "authLoginFailed": "Login Failed"
+  },
   "header": {
     "signIn": "Sign In",
-    "signUp": "Sign Up"
+    "signUp": "Sign Up",
+    "homeLink": "Home",
+    "addBoard": "Add Board"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sing Up",
+    "signOut": "Sign Out",
+    "login": "Login",
+    "password": "Password",
+    "name": "Name",
+    "signUpLink": "Does not have an account? Sign up",
+    "signInLink": "Already have an account? Sign in"
   },
   "404": {
     "title": "Page not found",

@@ -17,7 +17,7 @@ import { useAppDispatch } from 'hooks/redux';
 import { IBoard } from 'interfaces/boards';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { deleteBoard, updateBoard } from 'store/reducers/actions/board';
+import { deleteBoard, updateBoard } from 'store/board/thunks';
 import { randomString } from 'utils/temputils';
 import styles from './BoardCard.module.scss';
 import { setRandomColor } from './utils';

@@ -11,10 +11,8 @@ import SignIn from 'pages/signIn/SignIn';
 import SignUp from 'pages/signUp/SignUp';
 import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { getUserInfo } from 'store/reducers/actions/users';
-import { setUserId } from 'store/reducers/AuthSlice';
-import { cleanUserData } from 'store/reducers/UsersSlice';
-import { parseJwt } from 'utils/helpers';
+import { logout } from 'store/user/slice';
+import { getUserInfo } from 'store/user/users';
 import { muiTheme } from 'utils/muiTheme';
 import { VIEW_PATH } from 'utils/variables';
 import '../../i18n/i18next';
@@ -22,19 +20,13 @@ import './app.scss';
 
 export default function App() {
   const dispatch = useAppDispatch();
-  const { token } = useAppSelector((state) => state.auth);
+  const { token } = useAppSelector((state) => state.user);
 
   useEffect(() => {
-    console.log('token: ', token);
     if (token) {
-      const { id } = parseJwt(token);
-      console.log('setUserData');
-      dispatch(setUserId(id));
-      dispatch(getUserInfo(id));
+      dispatch(getUserInfo(token));
     } else {
-      console.log('cleanUserData');
-      dispatch(setUserId(''));
-      dispatch(cleanUserData());
+      dispatch(logout());
     }
   }, [dispatch, token]);
 

@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { deleteUser, updateUserInfo } from 'store/reducers/actions/users';
+import { deleteUser, updateUserInfo } from 'store/user/users';
 import * as yup from 'yup';
 
 const validationSchema = yup.object({
@@ -17,8 +17,7 @@ const validationSchema = yup.object({
 function Profile() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { name, login, isLoading, error } = useAppSelector((state) => state.users);
-  const { id } = useAppSelector((state) => state.auth);
+  const { id, name, login, isLoading, error } = useAppSelector((state) => state.user);
 
   const initialValues = {
     name: name ?? '',

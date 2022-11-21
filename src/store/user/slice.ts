@@ -1,22 +1,51 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IUsersState } from 'interfaces/users';
-import { deleteUser, getUserInfo, updateUserInfo } from './actions/users';
+import { deleteUser, getUserInfo, signIn, signUp, updateUserInfo } from './users';
 
 const initialState: IUsersState = {
-  name: null,
-  login: null,
+  token: localStorage.getItem('pmAppToken') ?? '',
+  id: '',
   isLoading: false,
   error: null,
+  name: null,
+  login: null,
 };
 
 export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    cleanUserData: () => initialState,
+    setUserId: (state, action) => {
+      state.id = action.payload;
+    },
+    logout: () => ({ ...initialState, token: '' }),
   },
   extraReducers(builder) {
     builder
+      .addCase(signIn.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(signIn.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.token = action.payload.token;
+      })
+      .addCase(signIn.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(signUp.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(signUp.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.token = action.payload.token; // ???
+      })
+      .addCase(signUp.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
       .addCase(getUserInfo.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -57,5 +86,5 @@ export const usersSlice = createSlice({
   },
 });
 
-export const { cleanUserData } = usersSlice.actions;
+export const { setUserId, logout } = usersSlice.actions;
 export default usersSlice.reducer;

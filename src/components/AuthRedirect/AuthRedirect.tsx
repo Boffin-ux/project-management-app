@@ -4,7 +4,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { VIEW_PATH } from 'utils/variables';
 
 const AuthRedirect = ({ withAuth = true }) => {
-  const { token } = useAppSelector((state) => state.auth);
+  const { token } = useAppSelector((state) => state.user);
 
   if (withAuth) {
     return token ? <Outlet /> : <Navigate to={VIEW_PATH.HOME} replace />;

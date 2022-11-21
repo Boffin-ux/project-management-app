@@ -6,14 +6,13 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { logout } from 'store/reducers/AuthSlice';
+import { logout } from 'store/user/slice';
 import { VIEW_PATH } from 'utils/variables';
 import HeaderScroll from './HeaderScroll';
 import { btnStyle, navWrapStyle, titleStyle, toolbarStyle } from './headerStyles';
-
 export default function Header() {
   const { t } = useTranslation();
-  const { token } = useAppSelector((state) => state.auth);
+  const { token } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
   const handleLogout = () => {

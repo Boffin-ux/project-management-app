@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { VIEW_PATH } from 'utils/variables';
 
 function AuthMenu() {
-  const { token } = useAppSelector((state) => state.auth);
+  const { token } = useAppSelector((state) => state.user);
   const { t } = useTranslation();
 
   return (

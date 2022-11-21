@@ -8,7 +8,7 @@ import { Outlet } from 'react-router-dom';
 import styles from './Layout.module.scss';
 
 const Layout = () => {
-  const { isLoading } = useAppSelector((state) => state.users);
+  const { isLoading } = useAppSelector((state) => state.user);
 
   if (isLoading) return <Loader />;
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { store } from 'index';
-import { logout } from 'store/reducers/AuthSlice';
+import { logout } from 'store/user/slice';
 import { RESPONSE_CODES } from 'utils/variables';
 const BASE_URL = 'https://final-task-backend-production-4e60.up.railway.app/';
 
@@ -17,7 +17,7 @@ axiosPrivate.interceptors.request.use(
   (config) => {
     config.headers = config.headers ?? {};
     if (!config.headers['Authorization']) {
-      config.headers['Authorization'] = `Bearer ${store.getState().auth.token}`;
+      config.headers['Authorization'] = `Bearer ${store.getState().user.token}`;
     }
     return config;
   },

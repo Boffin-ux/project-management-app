@@ -8,8 +8,7 @@ import './styles/style.scss';
 export const store = setupStore();
 
 store.subscribe(() => {
-  localStorage.setItem('pmAppToken', store.getState().auth.token);
-  console.log('Token in LS updated');
+  localStorage.setItem('pmAppToken', store.getState().user.token);
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);

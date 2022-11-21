@@ -9,11 +9,15 @@ export interface ISingUpData extends ISignInData {
 export interface IupdateUserData extends ISingUpData {
   userId: string;
 }
-export interface IUsersState {
-  token: string;
+
+export interface IUser {
   id: string;
   name: string | null;
   login: string | null;
+}
+
+export interface IUsersState extends IUser {
+  token: string;
   isLoading: boolean;
   error: string | null;
 }

@@ -1,6 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IBoardState } from 'interfaces/boards';
-import { getAllBoards, createBoard, deleteBoard } from 'store/reducers/actions/board';
+import {
+  getAllBoards,
+  createBoard,
+  deleteBoard,
+  updateBoard,
+  boardGetAllForUser,
+} from 'store/reducers/actions/board';
 
 const initialState: IBoardState = {
   boards: [],
@@ -47,6 +53,32 @@ export const boardSlice = createSlice({
         state.boards = state.boards.filter((board) => board._id !== action.payload._id);
       })
       .addCase(deleteBoard.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(updateBoard.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateBoard.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.boards = state.boards.map((board) =>
+          board._id === action.payload._id ? action.payload : board
+        );
+      })
+      .addCase(updateBoard.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(boardGetAllForUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(boardGetAllForUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.boards = action.payload;
+      })
+      .addCase(boardGetAllForUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       });

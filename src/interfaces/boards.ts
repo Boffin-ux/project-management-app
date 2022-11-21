@@ -20,4 +20,4 @@ export interface BoardCardProps {
   board: IBoard;
 }
 
-export type ResponceBoard = Array<IBoard> | string;
+export type ResponseBoard = Array<IBoard> | string;

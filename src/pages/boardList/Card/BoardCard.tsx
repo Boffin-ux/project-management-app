@@ -17,16 +17,27 @@ import { useAppDispatch } from 'hooks/redux';
 import { IBoard } from 'interfaces/boards';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { deleteBoard } from 'store/reducers/actions/board';
+import { deleteBoard, updateBoard } from 'store/reducers/actions/board';
+import { randomString } from 'utils/temputils';
 import styles from './BoardCard.module.scss';
 import { setRandomColor } from './utils';
 
-export const BoardCard: FC<IBoard> = ({ _id: id, title, owner, users }) => {
+export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
   const removeBoardById = () => {
-    dispatch(deleteBoard(id));
+    dispatch(deleteBoard(_id));
+  };
+
+  const updateBoardData = () => {
+    const refreshBoardData: IBoard = {
+      _id,
+      users,
+      owner,
+      title: randomString(15),
+    };
+    dispatch(updateBoard(refreshBoardData));
   };
 
   return (
@@ -48,7 +59,7 @@ export const BoardCard: FC<IBoard> = ({ _id: id, title, owner, users }) => {
         <Typography variant="h5">{t('boards.members')}:</Typography>
         <List>
           {users.map((user) => (
-            <ListItem key={user.id} className={styles.membersList}>
+            <ListItem key={_id + user.id} className={styles.membersList}>
               {user.name}
             </ListItem>
           ))}
@@ -58,7 +69,7 @@ export const BoardCard: FC<IBoard> = ({ _id: id, title, owner, users }) => {
         <Button size="large" sx={{ fontSize: 16 }}>
           {t('boards.openBoard')}
         </Button>
-        <IconButton color="primary">
+        <IconButton color="primary" onClick={updateBoardData}>
           <EditIcon className={styles.iconButton} />
         </IconButton>
       </CardActions>

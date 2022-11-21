@@ -31,7 +31,6 @@ export default function App() {
             <Routes>
               <Route path="/" element={<Layout />}>
                 <Route index element={<HomePage />} />
-                <Route path={VIEW_PATH.BOARDS} element={<Boards />} />
                 <Route path={VIEW_PATH.REST} element={<PageNotFound />} />
                 <Route element={<AuthRedirect withAuth={false} />}>
                   <Route path={VIEW_PATH.SIGN_UP} element={<SignUp />} />

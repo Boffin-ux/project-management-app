@@ -8,11 +8,8 @@ import { Navigate } from 'react-router-dom';
 import Loader from 'components/universal/Loader/Loader';
 import { VIEW_PATH } from 'utils/variables';
 import styles from './BoardList.module.scss';
-import useAccessToken from 'hooks/useAccessToken';
 
 export const Boards = () => {
-  const isAuth = useAccessToken();
-
   const dispatch = useAppDispatch();
 
   const { boards, error, isLoading } = useAppSelector((state) => state.boards);
@@ -21,7 +18,7 @@ export const Boards = () => {
     dispatch(getAllBoards());
   }, []);
 
-  if (error || !isAuth) return <Navigate to={VIEW_PATH.ERROR} replace />;
+  if (error) return <Navigate to={VIEW_PATH.ERROR} replace />;
 
   return (
     <Box className={styles.boardWrapper}>

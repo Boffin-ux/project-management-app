@@ -2,7 +2,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {
   Avatar,
-  Button,
+  ButtonGroup,
   Card,
   CardActions,
   CardContent,
@@ -13,10 +13,12 @@ import {
   ListItem,
   Typography,
 } from '@mui/material';
+import Button from '@mui/material/Button';
 import { useAppDispatch } from 'hooks/redux';
 import { IBoard } from 'interfaces/boards';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link, Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { deleteBoard, updateBoard } from 'store/board/thunks';
 import { randomString } from 'utils/temputils';
 import { VIEW_PATH } from 'utils/variables';
@@ -26,6 +28,7 @@ import { setRandomColor } from './utils';
 export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const removeBoardById = () => {
     dispatch(deleteBoard(_id));
@@ -52,7 +55,6 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
         }
         title={title}
         titleTypographyProps={{ fontWeight: 500 }}
-        subheaderTypographyProps={{ fontSize: 14 }}
         subheader={`${t('boards.owner')}: ${owner}`}
       />
       <Divider variant="inset" component="p" />
@@ -67,7 +69,9 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
         </List>
       </CardContent>
       <CardActions className={styles.action}>
-        <Button href={VIEW_PATH.BOARDS + '/' + _id}>{t('boards.openBoard')}</Button>
+        <Button component={Link} to={_id} variant="contained">
+          {t('boards.openBoard')}
+        </Button>
         <IconButton color="primary" onClick={updateBoardData}>
           <EditIcon className={styles.iconButton} />
         </IconButton>

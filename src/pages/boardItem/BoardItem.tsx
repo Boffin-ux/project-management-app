@@ -30,6 +30,7 @@ export const BoardItem = () => {
   const [col, setCol] = useState(BOARD);
 
   useEffect(() => {
+    console.log(boards);
     boards.forEach((board) => console.log(board._id));
     const a = boards.find((board) => board._id === params.id) as IBoard;
     console.log(a);

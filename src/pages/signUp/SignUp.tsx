@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { signIn, signUp } from 'store/reducers/AuthSlice';
+import { signIn, signUp } from 'store/user/thnuks';
 import { VIEW_PATH } from 'utils/variables';
 import * as yup from 'yup';
 
@@ -24,7 +24,7 @@ const validationSchema = yup.object({
 function SignUp() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { isLoading, error } = useAppSelector((state) => state.auth);
+  const { isLoading, error } = useAppSelector((state) => state.user);
 
   const { values, touched, errors, handleSubmit, handleChange, dirty } = useFormik({
     initialValues,

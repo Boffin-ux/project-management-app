@@ -4,8 +4,8 @@ import EditIcon from '@mui/icons-material/Edit';
 
 export const ButtonEdit = () => {
   return (
-    <IconButton size="large" edge="end" color="inherit">
-      <EditIcon fontSize="large" />
+    <IconButton size="small" edge="end" color="inherit">
+      <EditIcon fontSize="small" />
     </IconButton>
   );
 };

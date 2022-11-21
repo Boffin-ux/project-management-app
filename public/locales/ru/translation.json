@@ -9,13 +9,21 @@
     "authNoResponse": "Нет связи с сервером",
     "authWrongPassword": "Неверный логин или пароль",
     "authLoginExist": "Такой логин уже существует",
-    "authLoginFailed": "Ошибка аутентификации"
+    "authLoginFailed": "Ошибка аутентификации",
+    "invalidToken": "Неверный токен авторизации",
+    "badRequest": "Некорректный запрос"
   },
   "header": {
     "signIn": "Войти",
     "signUp": "Регистрация",
     "homeLink": "Главная",
-    "addBoard": "Добавить доску"
+    "addBoard": "Добавить доску",
+    "editProfile": "Редактировать профиль"
+  },
+  "profile": {
+    "profileHeader": "Редактировать профиль",
+    "saveButton": "Сохранить",
+    "deleteUserButton": "Удалить пользователя"
   },
   "auth": {
     "signIn": "Войти",

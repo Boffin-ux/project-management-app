@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   DragDropContext,
@@ -13,11 +13,28 @@ import { BreadCrumbs } from './Breadcrumbs/Breadcrumbs';
 import { Column, IColumn } from 'components/column/Column';
 import styles from './BoardItem.module.scss';
 import { BOARD, TASKSDEMO } from 'MOCKDATA/column';
+import { useAppSelector } from 'hooks/redux';
+import { IBoard } from 'interfaces/boards';
 
 export const BoardItem = () => {
   const params = useParams();
-  const [currentBoard, setCurrentBoard] = useState(TASKSDEMO);
+  const boards = useAppSelector((state) => state.boards.boards);
+  const [boardName, setBoardName] = useState<string>('');
+  const [currentBoard, setCurrentBoard] = useState<IBoard>({
+    _id: '',
+    owner: '',
+    title: '',
+    users: [],
+  });
+
   const [col, setCol] = useState(BOARD);
+
+  useEffect(() => {
+    boards.forEach((board) => console.log(board._id));
+    const a = boards.find((board) => board._id === params.id) as IBoard;
+    console.log(a);
+    setCurrentBoard(a);
+  }, []);
 
   const onDragStart = (start: DragStart, provided: ResponderProvided) => {
     console.log(start);
@@ -78,7 +95,7 @@ export const BoardItem = () => {
 
   return (
     <Box className={styles.wrapper}>
-      <BreadCrumbs title={params.id || 'Task'} />
+      <BreadCrumbs title={currentBoard.title || 'Task'} />
       <Box className={styles.centering}>
         <Box className={styles.columns}>
           <DragDropContext onDragEnd={onDragEndColumn} onDragStart={onDragStart}>

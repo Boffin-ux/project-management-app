@@ -13,7 +13,7 @@ interface BreadCrumbsProps {
 
 export const BreadCrumbs = (boardName: BreadCrumbsProps) => {
   return (
-    <Breadcrumbs sx={{ m: 1, fontSize: 15 }}>
+    <Breadcrumbs sx={{ m: 1 }}>
       <Link underline="hover" className={styles.link} href="/">
         <HomeIcon sx={{ mr: 0.5 }} fontSize="large" />
         Home
@@ -22,7 +22,7 @@ export const BreadCrumbs = (boardName: BreadCrumbsProps) => {
         <DashboardIcon sx={{ mr: 0.5 }} fontSize="large" />
         Boards List
       </Link>
-      <Typography className={styles.link} variant="h3">
+      <Typography className={styles.link} variant="h5">
         <PlaylistAddCheckIcon sx={{ mr: 0.5 }} fontSize="large" />
         {boardName.title}
       </Typography>

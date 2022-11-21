@@ -1,15 +1,15 @@
-import useAccessToken from 'hooks/useAccessToken';
+import { useAppSelector } from 'hooks/redux';
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { VIEW_PATH } from 'utils/variables';
 
 const AuthRedirect = ({ withAuth = true }) => {
-  const isAuth = useAccessToken();
+  const { token } = useAppSelector((state) => state.user);
 
   if (withAuth) {
-    return isAuth ? <Outlet /> : <Navigate to={VIEW_PATH.SIGN_IN} replace />;
+    return token ? <Outlet /> : <Navigate to={VIEW_PATH.HOME} replace />;
   } else {
-    return isAuth ? <Navigate to={VIEW_PATH.BOARDS} replace /> : <Outlet />;
+    return token ? <Navigate to={VIEW_PATH.BOARDS} replace /> : <Outlet />;
   }
 };
 export default AuthRedirect;

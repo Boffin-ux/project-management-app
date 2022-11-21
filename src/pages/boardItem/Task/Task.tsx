@@ -38,13 +38,13 @@ export const Task: FC<TaskProps> = ({ task, index }) => {
         >
           <Box className={styles.fullWidth}>
             <Box className={styles.taskSubArea}>
-              <Typography component={Box} variant="h5" sx={{ fontWeight: 600 }}>
+              <Typography component={Box} variant="caption" sx={{ fontWeight: 600 }}>
                 {task.title}
               </Typography>
               <ButtonEdit />
             </Box>
             <Divider />
-            <Typography component={Box} variant="body2" sx={{ mt: 1 }}>
+            <Typography component={Box} variant="inherit" sx={{ mt: 1 }}>
               {task.description}
             </Typography>
             <Box className={styles.taskSubArea}>

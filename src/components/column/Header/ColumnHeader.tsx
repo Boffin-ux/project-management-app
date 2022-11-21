@@ -12,7 +12,7 @@ export const ColumnHeader: FC<ColumnHeaderProps> = ({ title }) => {
     <AppBar position="static" sx={{ borderRadius: 2 }}>
       <Toolbar variant="dense">
         <ButtonEdit />
-        <Typography variant="h5" sx={{ flexGrow: 1, textAlign: 'center' }}>
+        <Typography variant="subtitle1" sx={{ flexGrow: 1, textAlign: 'center' }}>
           {title}
         </Typography>
         <ButtonDelete />

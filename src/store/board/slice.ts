@@ -6,7 +6,7 @@ import {
   deleteBoard,
   updateBoard,
   boardGetAllForUser,
-} from 'store/reducers/actions/board';
+} from 'store/board/thunks';
 
 const initialState: IBoardState = {
   boards: [],

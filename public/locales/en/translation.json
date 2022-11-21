@@ -15,7 +15,8 @@
     "signIn": "Sign In",
     "signUp": "Sign Up",
     "homeLink": "Home",
-    "addBoard": "Add Board"
+    "addBoard": "Add Board",
+    "editProfile": "Edit Profile"
   },
   "auth": {
     "signIn": "Sign In",
@@ -26,6 +27,11 @@
     "name": "Name",
     "signUpLink": "Does not have an account? Sign up",
     "signInLink": "Already have an account? Sign in"
+  },
+  "profile": {
+    "profileHeader": "Edit profile",
+    "saveButton": "Save",
+    "deleteUserButton": "Delete user"
   },
   "404": {
     "title": "Page not found",

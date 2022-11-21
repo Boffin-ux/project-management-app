@@ -1,20 +1,18 @@
-import React from 'react';
-import SelectionLang from 'components/selectionLang/SelectionLang';
-import { useTranslation } from 'react-i18next';
+import { Home, Logout } from '@mui/icons-material';
+import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
 import AuthMenu from 'components/AuthMenu/AuthMenu';
-import { useAppDispatch } from 'hooks/redux';
-import { logout } from 'store/reducers/AuthSlice';
-import useAccessToken from 'hooks/useAccessToken';
+import SelectionLang from 'components/selectionLang/SelectionLang';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { logout } from 'store/user/slice';
 import { VIEW_PATH } from 'utils/variables';
 import HeaderScroll from './HeaderScroll';
-import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
-import { Home, Logout } from '@mui/icons-material';
 import { btnStyle, navWrapStyle, titleStyle, toolbarStyle } from './headerStyles';
-
 export default function Header() {
   const { t } = useTranslation();
-  const isAuth = useAccessToken();
+  const { token } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
   const handleLogout = () => {
@@ -35,12 +33,17 @@ export default function Header() {
           <Box sx={navWrapStyle}>
             <Box component="nav">
               <AuthMenu />
-              {isAuth && (
-                <Button sx={btnStyle} onClick={handleLogout} startIcon={<Logout />}>
-                  <Typography variant="subtitle1" sx={{ display: { xs: 'none', sm: 'flex' } }}>
-                    {t('auth.signOut')}
-                  </Typography>
-                </Button>
+              {token && (
+                <>
+                  <Button sx={btnStyle} onClick={handleLogout} startIcon={<Logout />}>
+                    <Typography variant="subtitle1" sx={{ display: { xs: 'none', sm: 'flex' } }}>
+                      {t('auth.signOut')}
+                    </Typography>
+                  </Button>
+                  <Button component={Link} to={VIEW_PATH.PROFILE} variant="contained">
+                    {t('header.editProfile')}
+                  </Button>
+                </>
               )}
             </Box>
             <SelectionLang />

@@ -5,11 +5,11 @@ const LOCALES = {
 
 const VIEW_PATH = {
   HOME: '/',
-  ABOUT: 'about',
   ERROR: '404',
   SIGN_IN: 'signin',
   SIGN_UP: 'signup',
   BOARDS: 'boards',
+  PROFILE: 'profile',
   REST: '*',
 };
 
@@ -23,6 +23,7 @@ const API_ENDPOINTS = {
   SIGN_UP: 'auth/signup',
   BOARDS: 'boards',
   BOARDS_SET: 'boardsSet',
+  USER_INFO: 'users/',
 };
 
 const RESPONSE_CODES = {

@@ -4,12 +4,19 @@ import { RESPONSE_CODES } from './variables';
 export const axiosErrorHandler = (err: AxiosError) => {
   if (!err?.response) {
     return 'authNoResponse';
-  } else if (err.response?.status === RESPONSE_CODES.AUTH_ERROR) {
-    return 'authWrongPassword';
-  } else if (err.response?.status === RESPONSE_CODES.ALREADY_EXIST) {
-    return 'authLoginExist';
   } else {
-    return 'authLoginFailed';
+    switch (err.response?.status) {
+      case RESPONSE_CODES.AUTH_ERROR:
+        return 'authWrongPassword';
+      case RESPONSE_CODES.ALREADY_EXIST:
+        return 'authLoginExist';
+      case RESPONSE_CODES.INVALID_TOKEN:
+        return 'invalidToken';
+      case RESPONSE_CODES.BAD_REQUEST:
+        return 'badRequest';
+      default:
+        return 'authLoginFailed';
+    }
   }
 };
 

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { FormGroup, FormControlLabel, Switch } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'hooks/redux';
-import { boardGetAllForUser, boardsGetAll } from 'store/reducers/BoardsSlice';
-import useUserId from 'hooks/useUserId';
+import { boardGetAllForUser, boardsGetAll } from 'store/reducers/actions/board';
+import useUserId from 'hooks/useUserData';
 
 export const PersonalizeView = () => {
   const { t } = useTranslation();
@@ -13,7 +13,7 @@ export const PersonalizeView = () => {
   const userId = useUserId();
 
   const toggleBoardView = () => {
-    viewOnlyMyBoard ? dispatch(boardsGetAll()) : dispatch(boardGetAllForUser(userId));
+    viewOnlyMyBoard ? dispatch(boardsGetAll()) : dispatch(boardGetAllForUser(userId.id));
     setViewOnlyMyBoard(!viewOnlyMyBoard);
   };
 

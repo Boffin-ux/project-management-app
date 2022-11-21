@@ -17,7 +17,7 @@ import { useAppDispatch } from 'hooks/redux';
 import { IBoard } from 'interfaces/boards';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { boardDelete, boardUpdate } from 'store/reducers/BoardsSlice';
+import { deleteBoard, updateBoard } from 'store/reducers/actions/board';
 import { randomString } from 'utils/temputils';
 import styles from './BoardCard.module.scss';
 import { setRandomColor } from './utils';
@@ -26,8 +26,8 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
-  const removeBoardWithId = () => {
-    dispatch(boardDelete(_id));
+  const removeBoardById = () => {
+    dispatch(deleteBoard(_id));
   };
 
   const updateBoardData = () => {
@@ -37,7 +37,7 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
       owner,
       title: randomString(15),
     };
-    dispatch(boardUpdate(refreshBoardData));
+    dispatch(updateBoard(refreshBoardData));
   };
 
   return (
@@ -45,7 +45,7 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
       <CardHeader
         avatar={<Avatar sx={{ bgcolor: setRandomColor() }}>{title[0]}</Avatar>}
         action={
-          <IconButton onClick={removeBoardWithId}>
+          <IconButton onClick={removeBoardById}>
             <DeleteIcon color="error" className={styles.iconButton} />
           </IconButton>
         }

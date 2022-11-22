@@ -3,4 +3,9 @@ interface IModalProps {
   children: React.ReactNode;
 }
 
-export { IModalProps };
+interface IPropsConfirm {
+  modalTitle: string;
+  action: () => void;
+}
+
+export { IModalProps, IPropsConfirm };

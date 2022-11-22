@@ -1,9 +1,12 @@
 import { ITask } from './task';
 
-export interface IColumn {
+export interface IColumnSet {
   _id: string;
-  title: string;
   order: number;
+}
+
+export interface IColumn extends IColumnSet {
+  title: string;
   boardId: string;
   tasks: Array<ITask>;
 }

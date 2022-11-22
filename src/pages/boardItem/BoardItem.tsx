@@ -4,61 +4,46 @@ import { Navigate, useParams } from 'react-router-dom';
 import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd';
 import { BreadCrumbs } from './Breadcrumbs/Breadcrumbs';
 import { Column } from 'components/column/Column';
-// import { BOARD } from 'MOCKDATA/column';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { IBoard, INITIAL_IBOARD } from 'interfaces/boards';
 import { VIEW_PATH } from 'utils/variables';
 import ViewWeekIcon from '@mui/icons-material/ViewWeek';
 import styles from './BoardItem.module.scss';
-import { createColumn, getColumnsByBoardId } from 'store/column/thunks';
+import { createColumn, getColumnsByBoardId, updateColumnsSet } from 'store/column/thunks';
 import { IRequestForCreateColumns } from 'interfaces/columns';
 import { randomString } from 'utils/temputils';
 import Loader from 'components/universal/Loader/Loader';
+import { getNewColumnsSet } from 'utils/dragdrop';
 
 export const BoardItem = () => {
   const params = useParams();
-  const [isErrorLoadBoardName, setIsErrorLoadBoardName] = useState<boolean>(false);
+
   const [currentBoard, setCurrentBoard] = useState<IBoard>(INITIAL_IBOARD);
   const boards = useAppSelector((state) => state.boards.boards);
-  const dispatch = useAppDispatch();
-
   const { columns, error, isLoading } = useAppSelector((state) => state.columns);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const foundBoard = boards.find((board) => board._id === params.id);
-    foundBoard === undefined ? setIsErrorLoadBoardName(true) : setCurrentBoard(foundBoard);
-    dispatch(getColumnsByBoardId(params.id as string));
+    if (foundBoard) {
+      setCurrentBoard(foundBoard);
+      dispatch(getColumnsByBoardId(params.id as string));
+    }
   }, []);
 
-  // const foundBoard = boards.find((board) => board._id === params.id);
-  // foundBoard === undefined ? setIsErrorLoadBoardName(true) : setCurrentBoard(foundBoard);
-  // if (foundBoard) dispatch(getColumnsByBoardId(foundBoard._id));
-
-  // const columnsState = useAppSelector((state) => state.columns);
-
-  // const [columns, setColumns] = useState(BOARD);
-
-  // useEffect(() => {
-  //   const foundBoard = boards.find((board) => board._id === params.id);
-  //   foundBoard === undefined ? setIsErrorLoadBoardName(true) : setCurrentBoard(foundBoard);
-  //   if (foundBoard) dispatch(getColumnsByBoardId(foundBoard._id));
-  // }, []);
-
-  if (isErrorLoadBoardName) return <Navigate to={VIEW_PATH.ERROR} replace />;
+  if (error) return <Navigate to={VIEW_PATH.ERROR} replace />;
 
   // в дальнешем декомпозировать и вынести из компонента
   const onDragEndColumn = (result: DropResult) => {
-    // const { source, destination } = result;
-    // if (!destination) return;
-    // if (!source) return;
-    // if (source.droppableId === 'all-columns') {
-    //   console.log('перенос колонок');
-    //   console.log(source);
-    //   console.log(destination);
-    //   const items = Array.from(columns);
-    //   const [newOrder] = items.splice(source.index, 1);
-    //   items.splice(destination.index, 0, newOrder);
-    //   setColumns(items);
+    const { source, destination } = result;
+    if (!destination) return;
+    if (!source) return;
+    if (source.droppableId === 'all-columns') {
+      const items = Array.from(columns);
+      const [newOrder] = items.splice(source.index, 1);
+      items.splice(destination.index, 0, newOrder);
+      dispatch(updateColumnsSet(getNewColumnsSet(items)));
+    }
     // } else {
     //   if (destination.droppableId === source.droppableId) {
     //     const columnIndex = Number(source.droppableId.slice(-1)) - 1;
@@ -94,7 +79,7 @@ export const BoardItem = () => {
   };
 
   const addColumn = () => {
-    // dispatch(getColumnsByBoardId(currentBoard._id));
+    //TODO заменить диалогом
     const columnTemp: IRequestForCreateColumns = {
       borderId: currentBoard._id,
       order: columns.length,
@@ -108,9 +93,7 @@ export const BoardItem = () => {
       {isLoading && <Loader />}
       {!isLoading && (
         <Box className={styles.wrapper}>
-          <Box
-            sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', m: 2 }}
-          >
+          <Box className={styles.controlPanel}>
             <BreadCrumbs title={currentBoard.title} />
             <Button startIcon={<ViewWeekIcon />} variant="contained" onClick={addColumn}>
               Add Column

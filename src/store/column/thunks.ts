@@ -3,7 +3,7 @@ import { axiosPrivate } from 'api/axios';
 import { AxiosError } from 'axios';
 import { axiosErrorHandler } from 'utils/helpers';
 import { API_ENDPOINTS } from 'utils/variables';
-import { IRequestForCreateColumns } from 'interfaces/columns';
+import { IColumnSet, IRequestForCreateColumns } from 'interfaces/columns';
 
 export const getColumnsByBoardId = createAsyncThunk(
   'columns/byBoardId',
@@ -29,6 +29,19 @@ export const createColumn = createAsyncThunk(
         API_ENDPOINTS.BOARDS + '/' + borderId + '/' + API_ENDPOINTS.COLUMNS,
         createColumnProps
       );
+      return response.data;
+    } catch (error) {
+      const err = error as AxiosError;
+      return rejectWithValue(axiosErrorHandler(err));
+    }
+  }
+);
+
+export const updateColumnsSet = createAsyncThunk(
+  'columns/columnsSet',
+  async (dataColumnSet: IColumnSet[], { rejectWithValue }) => {
+    try {
+      const response = await axiosPrivate.patch(API_ENDPOINTS.COLUMNS_SET, dataColumnSet);
       return response.data;
     } catch (error) {
       const err = error as AxiosError;

@@ -7,17 +7,6 @@ import { Draggable } from '@hello-pangea/dnd';
 import styles from './Task.module.scss';
 import { ITask } from 'interfaces/task';
 
-// export interface ITask {
-//   id: string;
-//   title: string;
-//   order: number;
-//   boardId: string;
-//   columnId: string;
-//   description: string;
-//   userId: number;
-//   users: Array<string>;
-// }
-
 export interface TaskProps {
   task: ITask;
   index: number;

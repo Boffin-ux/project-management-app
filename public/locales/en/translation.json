@@ -68,6 +68,7 @@
     ]
   },
   "boards": {
+    "boardsList": "Boards List",
     "owner": "Owner",
     "openBoard": "Open Board",
     "members": "Members",

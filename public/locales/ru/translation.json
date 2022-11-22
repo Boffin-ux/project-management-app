@@ -70,6 +70,7 @@
     ]
   },
   "boards": {
+    "boardsList": "Список досок",
     "owner": "Автор",
     "openBoard": "Открыть доску",
     "members": "Участники",

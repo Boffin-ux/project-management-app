@@ -1,26 +1,10 @@
 import { Box, List, Button } from '@mui/material';
 import React, { useState, FC } from 'react';
-import {
-  DragDropContext,
-  Draggable,
-  DraggableProvided,
-  DraggableStateSnapshot,
-  Droppable,
-  DropResult,
-} from '@hello-pangea/dnd';
+import { Draggable, Droppable, DropResult } from '@hello-pangea/dnd';
 import AddTaskIcon from '@mui/icons-material/AddTask';
-import { Task } from 'pages/boardItem/Task/Task';
 import { ColumnHeader } from './Header/ColumnHeader';
 import styles from './Column.module.scss';
 import { IColumn } from 'interfaces/columns';
-
-// export interface IColumn {
-//   id: string;
-//   title: string;
-//   order: number;
-//   boardId: string;
-//   tasks: Array<ITask>;
-// }
 
 export const Column: FC<IColumn> = ({ _id, title, tasks, order }) => {
   const [btnCapture, setBtnCapture] = useState<boolean>(false);
@@ -75,7 +59,8 @@ export const Column: FC<IColumn> = ({ _id, title, tasks, order }) => {
                     }}
                     className={snapshot.isDraggingOver ? styles.over : styles.drag}
                   >
-                    {/* {tasks.map((task, index) => (
+                    {/* Реализация отдельным PR
+                     {tasks.map((task, index) => (
                       <Task key={task._id} task={task} index={index} />
                     ))} */}
                     {listProvided.placeholder}

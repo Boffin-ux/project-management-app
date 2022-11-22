@@ -1,9 +1,21 @@
+@mixin droppedArea {
+  display: flex;
+  justify-content: center;
+}
+
 .wrapper {
   width: 100%;
 
   .centering {
     display: flex;
     justify-content: center;
+  }
+
+  .controlPanel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 2rem;
   }
 
   .columns {
@@ -20,9 +32,11 @@
 }
 
 .over {
-  border: 0.1rem dotted white;
+  border: 0.1rem dotted rgba(63, 191, 195, 0.8);
+  @include droppedArea();
 }
 
 .drag {
   border: 0.1rem dotted black;
+  @include droppedArea();
 }

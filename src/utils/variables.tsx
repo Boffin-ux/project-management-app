@@ -24,6 +24,7 @@ const API_ENDPOINTS = {
   BOARDS: 'boards',
   BOARDS_SET: 'boardsSet',
   USER_INFO: 'users/',
+  USERS: 'users',
 };
 
 const RESPONSE_CODES = {

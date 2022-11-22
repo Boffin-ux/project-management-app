@@ -21,3 +21,10 @@ export interface BoardCardProps {
 }
 
 export type ResponseBoard = Array<IBoard> | string;
+
+export const INITIAL_IBOARD = {
+  _id: '',
+  owner: '',
+  title: '',
+  users: [],
+};

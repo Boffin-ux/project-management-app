@@ -9,48 +9,24 @@ import {
   DropResult,
 } from '@hello-pangea/dnd';
 import AddTaskIcon from '@mui/icons-material/AddTask';
-import { ITask, Task } from 'pages/boardItem/Task/Task';
+import { Task } from 'pages/boardItem/Task/Task';
 import { ColumnHeader } from './Header/ColumnHeader';
-import { TASKS } from 'MOCKDATA/tasks';
 import styles from './Column.module.scss';
+import { IColumn } from 'interfaces/columns';
 
-export interface IColumn {
-  id: string;
-  title: string;
-  order: number;
-  boardId: string;
-  tasks: Array<ITask>;
-}
+// export interface IColumn {
+//   id: string;
+//   title: string;
+//   order: number;
+//   boardId: string;
+//   tasks: Array<ITask>;
+// }
 
-// export interface ColumnProps extends IColumn {}
-// export const Column = React.forwardRef<ColumnProps>((props, ref) => {
-//   return (
-//     <Box
-//       sx={{ m: 2, p: 0.2, minWidth: '320px', backgroundColor: '#eeeeee', borderRadius: 2 }}
-//       component="div"
-//       ref={ref}
-//     ></Box>
-//   );
-// });
-
-export const Column: FC<IColumn> = ({ id, title, tasks, order }) => {
+export const Column: FC<IColumn> = ({ _id, title, tasks, order }) => {
   const [btnCapture, setBtnCapture] = useState<boolean>(false);
-  // const [tasks, setTasks] = useState<Array<ITask>>(TASKS);
-
-  // const onDragEnd = (result: DropResult) => {
-  //   const { source, destination } = result;
-  //   if (!destination) return;
-  //   console.log(destination.droppableId);
-  //   const items = Array.from(tasks);
-  //   const [newOrder] = items.splice(source.index, 1);
-
-  //   items.splice(destination.index, 0, newOrder);
-
-  //   setTasks(items);
-  // };
 
   return (
-    <Draggable draggableId={id} index={order}>
+    <Draggable draggableId={_id} index={order}>
       {(columnProvided, snapshot) => (
         <Box
           sx={{
@@ -86,7 +62,7 @@ export const Column: FC<IColumn> = ({ id, title, tasks, order }) => {
               </Button>
             </Box>
             <Box sx={{ mt: 2, flexGrow: 1 }}>
-              <Droppable droppableId={id}>
+              <Droppable droppableId={_id}>
                 {(listProvided, snapshot) => (
                   <List
                     ref={listProvided.innerRef}
@@ -99,9 +75,9 @@ export const Column: FC<IColumn> = ({ id, title, tasks, order }) => {
                     }}
                     className={snapshot.isDraggingOver ? styles.over : styles.drag}
                   >
-                    {tasks.map((task, index) => (
-                      <Task key={task.id} task={task} index={index} />
-                    ))}
+                    {/* {tasks.map((task, index) => (
+                      <Task key={task._id} task={task} index={index} />
+                    ))} */}
                     {listProvided.placeholder}
                   </List>
                 )}
@@ -113,17 +89,3 @@ export const Column: FC<IColumn> = ({ id, title, tasks, order }) => {
     </Draggable>
   );
 };
-
-/*
-// <Task key={task.id} task={task} />
-                  <Draggable index={index} key={task.id} draggableId={id}>
-                    {(taskProvided, taskSnapshot) => (
-                      <Task
-                        key={task.id}
-                        task={task}
-                        dropProvider={taskProvided}
-                        snapshot={taskSnapshot}
-                      />
-                    )}
-                  </Draggable>
-                  */

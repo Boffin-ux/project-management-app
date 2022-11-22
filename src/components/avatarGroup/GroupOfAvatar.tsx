@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
 import { Box, Avatar, AvatarGroup } from '@mui/material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { IUser } from 'interfaces/user';
 
 export interface GroupOfAvatarProps {
   userId: number;
-  users: Array<string>;
+  users: Array<IUser>;
 }
 
 export const GroupOfAvatar: FC<GroupOfAvatarProps> = ({ userId, users }) => {

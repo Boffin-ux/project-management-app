@@ -18,17 +18,15 @@ import { useAppDispatch } from 'hooks/redux';
 import { IBoard } from 'interfaces/boards';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, Navigate, NavLink, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { deleteBoard, updateBoard } from 'store/board/thunks';
 import { randomString } from 'utils/temputils';
-import { VIEW_PATH } from 'utils/variables';
 import styles from './BoardCard.module.scss';
 import { setRandomColor } from './utils';
 
 export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const removeBoardById = () => {
     dispatch(deleteBoard(_id));

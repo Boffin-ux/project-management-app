@@ -3,30 +3,29 @@ import { ListItem, Box, Divider, Typography } from '@mui/material';
 import { GroupOfAvatar } from 'components/avatarGroup/GroupOfAvatar';
 import { ButtonEdit } from 'components/buttons/Edit/ButtonEdit';
 import { ButtonDelete } from 'components/buttons/Delete/ButtonDelete';
-import { DragDropContext, Draggable } from '@hello-pangea/dnd';
+import { Draggable } from '@hello-pangea/dnd';
 import styles from './Task.module.scss';
+import { ITask } from 'interfaces/task';
 
-export interface ITask {
-  id: string;
-  title: string;
-  order: number;
-  boardId: string;
-  columnId: string;
-  description: string;
-  userId: number;
-  users: Array<string>;
-}
+// export interface ITask {
+//   id: string;
+//   title: string;
+//   order: number;
+//   boardId: string;
+//   columnId: string;
+//   description: string;
+//   userId: number;
+//   users: Array<string>;
+// }
 
 export interface TaskProps {
-  // dropProvider: DraggableProvided;
-  // snapshot: DraggableStateSnapshot;
   task: ITask;
   index: number;
 }
 
 export const Task: FC<TaskProps> = ({ task, index }) => {
   return (
-    <Draggable draggableId={task.id} index={index}>
+    <Draggable draggableId={task._id} index={index}>
       {(taskProvided, taskSnapshot) => (
         <ListItem
           {...taskProvided.draggableProps}
@@ -34,7 +33,6 @@ export const Task: FC<TaskProps> = ({ task, index }) => {
           ref={taskProvided.innerRef}
           sx={{ flexGrow: 0 }}
           className={taskSnapshot.isDragging ? styles.drag : styles.rest}
-          // className={styles.rest}
         >
           <Box className={styles.fullWidth}>
             <Box className={styles.taskSubArea}>

@@ -2,7 +2,7 @@ import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { boardGetAllForUser, boardsGetAll } from 'store/board/thunks';
+import { boardGetAllForUser, getAllBoards } from 'store/board/thunks';
 
 export const PersonalizeView = () => {
   const { t } = useTranslation();
@@ -11,7 +11,7 @@ export const PersonalizeView = () => {
   const dispatch = useAppDispatch();
 
   const toggleBoardView = () => {
-    viewOnlyMyBoard ? dispatch(boardsGetAll()) : dispatch(boardGetAllForUser(id));
+    viewOnlyMyBoard ? dispatch(getAllBoards()) : dispatch(boardGetAllForUser(id));
     setViewOnlyMyBoard(!viewOnlyMyBoard);
   };
 

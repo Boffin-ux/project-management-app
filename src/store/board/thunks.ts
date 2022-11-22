@@ -45,16 +45,6 @@ export const deleteBoard = createAsyncThunk(
   }
 );
 
-export const boardsGetAll = createAsyncThunk('boards/all', async (_, { rejectWithValue }) => {
-  try {
-    const response = await axiosPrivate.get(API_ENDPOINTS.BOARDS);
-    return response.data;
-  } catch (error) {
-    const err = error as AxiosError;
-    return rejectWithValue(axiosErrorHandler(err));
-  }
-});
-
 export const updateBoard = createAsyncThunk(
   'boards/update',
   async (dataBoardUpdater: IBoard, { rejectWithValue }) => {

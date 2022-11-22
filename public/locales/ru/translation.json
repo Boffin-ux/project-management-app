@@ -31,7 +31,8 @@
     "profileHeader": "Редактировать профиль",
     "saveButton": "Сохранить",
     "deleteUserButton": "Удалить пользователя",
-    "deleteProfile": "Вы уверены, что хотите удалить профиль?"
+    "deleteProfile": "Вы хотите удалить профиль?",
+    "editProfile": "Вы хотите изменить данные?"
   },
   "auth": {
     "signIn": "Войти",
@@ -85,7 +86,9 @@
     "addBoard": "Добавить доску",
     "onlyMy": "Только мои доски",
     "boardModalTitle": "Добавить доску",
+    "editModalTitle": "Изменить доску",
     "submitBtnForm": "Создать новую доску",
+    "editSubmitBtnForm": "Изменить",
     "titleLabelForm": "Название доски",
     "descriptionLabelForm": "Описание доски",
     "editeBoard": "Редактировать доску",
@@ -93,7 +96,9 @@
   },
     "tasks": {
     "modalTitle": "Добавить задачу",
+    "editModalTitle": "Изменить задачу",
     "submitBtnForm": "Добавить новую задачу",
+    "editSubmitBtnForm": "Изменить",
     "titleLabelForm": "Название задачи",
     "descLabelForm": "Описание задачи",
     "deleteTask": "Вы уверены, что хотите удалить эту задачу?"
@@ -110,5 +115,9 @@
   },
   "selectUser": {
     "userLabelForm": "Пользователь"
+  },
+  "editForm": {
+    "editModalTitle": "Изменить название",
+    "editSubmitBtnForm": "Изменить"
   }
 }

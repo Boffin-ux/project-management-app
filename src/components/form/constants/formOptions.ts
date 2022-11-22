@@ -48,9 +48,16 @@ const addBoardForm = {
   fields: newBoardFields,
   modalTitle: 'boards.boardModalTitle',
   btnTitle: 'boards.submitBtnForm',
-  action: (formData: IFormValues) => {
-    console.log('formData: ', formData);
-  },
+  action: 'addBoard(formData: IFormValues)',
+  schema: boardSchema,
+};
+
+const editBoardForm = {
+  initialValues: initialBoardValues,
+  fields: newBoardFields,
+  modalTitle: 'boards.editModalTitle',
+  btnTitle: 'boards.editSubmitBtnForm',
+  action: 'editBoard(formData: IFormValues)',
   schema: boardSchema,
 };
 
@@ -59,9 +66,16 @@ const addTaskForm = {
   fields: newTaskFields,
   modalTitle: 'tasks.modalTitle',
   btnTitle: 'tasks.submitBtnForm',
-  action: (formData: IFormValues) => {
-    console.log('formData: ', formData);
-  },
+  action: 'addTask(formData: IFormValues)',
+  schema: taskSchema,
+};
+
+const editTaskForm = {
+  initialValues: initialTaskValues,
+  fields: 'editTaskFields',
+  modalTitle: 'tasks.editModalTitle',
+  btnTitle: 'tasks.editSubmitBtnForm',
+  action: 'editTask(formData: IFormValues)',
   schema: taskSchema,
 };
 
@@ -78,39 +92,39 @@ const addColumnForm = {
 
 const deleteBoardForm = {
   modalTitle: 'boards.deleteBoard',
-  action: () => {
-    console.log('deleteBoard');
-  },
+  action: 'deleteBoard',
 };
 
 const deleteTaskForm = {
   modalTitle: 'tasks.deleteTask',
-  action: () => {
-    console.log('deleteTask');
-  },
+  action: 'deleteTask',
 };
 
 const deleteColumnForm = {
   modalTitle: 'columns.deleteColumn',
-  action: () => {
-    console.log('deleteColumn');
-  },
+  action: 'deleteColumn',
 };
 
 const deleteProfileForm = {
   modalTitle: 'profile.deleteProfile',
-  action: () => {
-    console.log('deleteProfile');
-  },
+  action: 'deleteProfile',
+};
+
+const editProfileForm = {
+  modalTitle: 'profile.editProfile',
+  action: 'editProfile',
 };
 
 export {
   defaultValues,
   addBoardForm,
+  editBoardForm,
   addTaskForm,
+  editTaskForm,
   addColumnForm,
   deleteBoardForm,
   deleteTaskForm,
   deleteColumnForm,
   deleteProfileForm,
+  editProfileForm,
 };

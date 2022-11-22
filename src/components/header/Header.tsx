@@ -1,4 +1,4 @@
-import { Home, Logout } from '@mui/icons-material';
+import { Home, Logout, ManageAccounts } from '@mui/icons-material';
 import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
 import AuthMenu from 'components/AuthMenu/AuthMenu';
 import SelectionLang from 'components/selectionLang/SelectionLang';
@@ -35,13 +35,20 @@ export default function Header() {
               <AuthMenu />
               {token && (
                 <>
+                  <Button
+                    component={Link}
+                    sx={btnStyle}
+                    to={VIEW_PATH.PROFILE}
+                    startIcon={<ManageAccounts />}
+                  >
+                    <Typography variant="subtitle1" sx={{ display: { xs: 'none', sm: 'flex' } }}>
+                      {t('header.editProfile')}
+                    </Typography>
+                  </Button>
                   <Button sx={btnStyle} onClick={handleLogout} startIcon={<Logout />}>
                     <Typography variant="subtitle1" sx={{ display: { xs: 'none', sm: 'flex' } }}>
                       {t('auth.signOut')}
                     </Typography>
-                  </Button>
-                  <Button component={Link} to={VIEW_PATH.PROFILE} variant="contained">
-                    {t('header.editProfile')}
                   </Button>
                 </>
               )}

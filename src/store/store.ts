@@ -4,7 +4,7 @@ import commonReducer from './main/slice';
 import usersReducer from './user/slice';
 
 const rootReducer = combineReducers({
-  main: commonReducer,
+  commonReducer,
   boards: boardsReducer,
   user: usersReducer,
 });

@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface IState {
-  isOpen: boolean;
+  isModalOpen: boolean;
 }
 
 const initialState: IState = {
-  isOpen: true,
+  isModalOpen: false,
 };
 
 export const commonSlice = createSlice({
@@ -13,10 +13,13 @@ export const commonSlice = createSlice({
   initialState,
   reducers: {
     closeModal: (state) => {
-      state.isOpen = false;
+      state.isModalOpen = false;
+    },
+    openModal: (state) => {
+      state.isModalOpen = true;
     },
   },
 });
 
-export const { closeModal } = commonSlice.actions;
+export const { openModal, closeModal } = commonSlice.actions;
 export default commonSlice.reducer;

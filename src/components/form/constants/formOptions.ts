@@ -53,7 +53,7 @@ const addBoardForm = {
 };
 
 const editBoardForm = {
-  initialValues: initialBoardValues,
+  initialValues: 'getBoardValues',
   fields: newBoardFields,
   modalTitle: 'boards.editModalTitle',
   btnTitle: 'boards.editSubmitBtnForm',
@@ -71,8 +71,8 @@ const addTaskForm = {
 };
 
 const editTaskForm = {
-  initialValues: initialTaskValues,
-  fields: 'editTaskFields',
+  initialValues: 'getTaskValues',
+  fields: newTaskFields,
   modalTitle: 'tasks.editModalTitle',
   btnTitle: 'tasks.editSubmitBtnForm',
   action: 'editTask(formData: IFormValues)',

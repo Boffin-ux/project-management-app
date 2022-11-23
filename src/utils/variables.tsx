@@ -10,7 +10,7 @@ const VIEW_PATH = {
   SIGN_UP: 'signup',
   BOARDS: 'boards',
   PROFILE: 'profile',
-  BOARDS_ID: '/boards/:id',
+  BOARD: '/boards/:id',
   REST: '*',
 };
 

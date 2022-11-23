@@ -17,7 +17,6 @@ export const Column: FC<IColumn> = ({ _id, title, tasks, order, boardId }) => {
       {(columnProvided) => (
         <Box
           className={styles.column}
-          component="div"
           ref={columnProvided.innerRef}
           {...columnProvided.draggableProps}
           {...columnProvided.dragHandleProps}

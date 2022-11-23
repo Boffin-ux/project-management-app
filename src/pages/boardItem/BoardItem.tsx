@@ -16,21 +16,18 @@ import Loader from 'components/universal/Loader/Loader';
 import { getNewColumnsSet } from 'utils/dragdrop';
 import { useTranslation } from 'react-i18next';
 
-export const BoardItem = () => {
+export const Board = () => {
   const params = useParams();
   const { t } = useTranslation();
 
-  const [currentBoard, setCurrentBoard] = useState<IBoard>(INITIAL_IBOARD);
-  const boards = useAppSelector((state) => state.boards.boards);
+  const currentBoard = useAppSelector(
+    (state) => state.boards.boards.filter((board) => board._id === params.id)[0]
+  );
   const { columns, error, isLoading } = useAppSelector((state) => state.columns);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const foundBoard = boards.find((board) => board._id === params.id);
-    if (foundBoard) {
-      setCurrentBoard(foundBoard);
-      dispatch(getColumnsByBoardId(params.id as string));
-    }
+    dispatch(getColumnsByBoardId(params.id as string));
   }, []);
 
   if (error) return <Navigate to={VIEW_PATH.ERROR} replace />;
@@ -91,39 +88,37 @@ export const BoardItem = () => {
   };
 
   return (
-    <>
-      {isLoading && <Loader />}
-      {!isLoading && (
-        <Box className={styles.wrapper}>
-          <Box className={styles.controlPanel}>
-            <BreadCrumbs title={currentBoard.title} />
-            <Button startIcon={<ViewWeekIcon />} variant="contained" onClick={addColumn}>
-              {t('boards.addColumn')}
-            </Button>
-          </Box>
-          <Box className={styles.centering}>
-            <Box className={styles.columns}>
-              <DragDropContext onDragEnd={onDragEndColumn}>
-                <Droppable droppableId="all-columns" direction="horizontal" type="column">
-                  {(columnsProvided, columnSnapshot) => (
-                    <Box
-                      sx={{ display: 'flex', justifyContent: 'center' }}
-                      ref={columnsProvided.innerRef}
-                      {...columnsProvided.droppableProps}
-                      className={columnSnapshot.isDraggingOver ? styles.drag : styles.over}
-                    >
-                      {columns.map((column) => (
-                        <Column key={column._id} {...column} />
-                      ))}
-                      {columnsProvided.placeholder}
-                    </Box>
-                  )}
-                </Droppable>
-              </DragDropContext>
-            </Box>
-          </Box>
+    <Box className={styles.wrapper}>
+      <Box className={styles.controlPanel}>
+        <BreadCrumbs title={currentBoard.title} />
+        <Button startIcon={<ViewWeekIcon />} variant="contained" onClick={addColumn}>
+          {t('boards.addColumn')}
+        </Button>
+      </Box>
+      <Box className={styles.centering}>
+        <Box className={styles.columns}>
+          {isLoading && <Loader />}
+          {!isLoading && (
+            <DragDropContext onDragEnd={onDragEndColumn}>
+              <Droppable droppableId="all-columns" direction="horizontal" type="column">
+                {(columnsProvided, columnSnapshot) => (
+                  <Box
+                    sx={{ display: 'flex', justifyContent: 'center' }}
+                    ref={columnsProvided.innerRef}
+                    {...columnsProvided.droppableProps}
+                    className={columnSnapshot.isDraggingOver ? styles.drag : styles.over}
+                  >
+                    {columns.map((column) => (
+                      <Column key={column._id} {...column} />
+                    ))}
+                    {columnsProvided.placeholder}
+                  </Box>
+                )}
+              </Droppable>
+            </DragDropContext>
+          )}
         </Box>
-      )}
-    </>
+      </Box>
+    </Box>
   );
 };

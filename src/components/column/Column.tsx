@@ -1,62 +1,46 @@
-import { Box, List, Button } from '@mui/material';
+import { Box, List } from '@mui/material';
 import React, { useState, FC } from 'react';
-import { Draggable, Droppable, DropResult } from '@hello-pangea/dnd';
-import AddTaskIcon from '@mui/icons-material/AddTask';
+import { Draggable, Droppable } from '@hello-pangea/dnd';
+
 import { ColumnHeader } from './Header/ColumnHeader';
 import styles from './Column.module.scss';
 import { IColumn } from 'interfaces/columns';
+import { ButtonAddTask } from './ButtonAddTask/ButtonAddTask';
+import { useTranslation } from 'react-i18next';
 
-export const Column: FC<IColumn> = ({ _id, title, tasks, order }) => {
+export const Column: FC<IColumn> = ({ _id, title, tasks, order, boardId }) => {
   const [btnCapture, setBtnCapture] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   return (
     <Draggable draggableId={_id} index={order}>
-      {(columnProvided, snapshot) => (
+      {(columnProvided) => (
         <Box
-          sx={{
-            m: 2,
-            p: 0.2,
-            minWidth: '320px',
-            backgroundColor: '#eeeeee',
-            borderRadius: 2,
-            display: 'flex',
-            justifyContent: 'end',
-            flexDirection: 'column',
-          }}
+          className={styles.column}
           component="div"
           ref={columnProvided.innerRef}
           {...columnProvided.draggableProps}
           {...columnProvided.dragHandleProps}
         >
-          <ColumnHeader title={title} {...columnProvided.dragHandleProps} />
+          <ColumnHeader
+            title={title}
+            boardId={boardId}
+            columnId={_id}
+            {...columnProvided.dragHandleProps}
+          />
           <Box
             component="div"
-            sx={{ height: '95%', display: 'flex', flexDirection: 'column' }}
+            className={styles.columnContent}
             onMouseOver={() => setBtnCapture(true)}
             onMouseOut={() => setBtnCapture(false)}
           >
-            <Box sx={{ height: 20, justifyContent: 'center', display: 'flex', pt: 1 }}>
-              <Button
-                variant={btnCapture ? 'contained' : 'text'}
-                sx={{ fontSize: '13', height: 25 }}
-                fullWidth
-                startIcon={<AddTaskIcon />}
-              >
-                {btnCapture && 'Add Task'}
-              </Button>
-            </Box>
+            <ButtonAddTask isCapture={btnCapture} title={t('boards.addTask')} />
             <Box sx={{ mt: 2, flexGrow: 1 }}>
               <Droppable droppableId={_id}>
                 {(listProvided, snapshot) => (
                   <List
                     ref={listProvided.innerRef}
                     {...listProvided.droppableProps}
-                    sx={{
-                      display: 'flex',
-                      height: '100%',
-                      flexGrow: 2,
-                      flexDirection: 'column',
-                    }}
                     className={snapshot.isDraggingOver ? styles.over : styles.drag}
                   >
                     {/* Реализация отдельным PR

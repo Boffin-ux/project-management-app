@@ -1,7 +1,33 @@
+@mixin taskList {
+  display: flex;
+  height: 100%;
+  flex-grow: 2;
+  flex-direction: column;
+}
+
+.column {
+  margin: 0.5rem;
+  padding: 0.2rem;
+  min-width: 320px;
+  background-color: #eeeeee;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: end;
+  flex-direction: column;
+
+  .columnContent {
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 .drog {
   background-color: aqua;
+  @include taskList();
 }
 
 .over {
   background-color: lightgrey;
+  @include taskList();
 }

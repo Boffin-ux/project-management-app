@@ -14,9 +14,11 @@ import { IRequestForCreateColumns } from 'interfaces/columns';
 import { randomString } from 'utils/temputils';
 import Loader from 'components/universal/Loader/Loader';
 import { getNewColumnsSet } from 'utils/dragdrop';
+import { useTranslation } from 'react-i18next';
 
 export const BoardItem = () => {
   const params = useParams();
+  const { t } = useTranslation();
 
   const [currentBoard, setCurrentBoard] = useState<IBoard>(INITIAL_IBOARD);
   const boards = useAppSelector((state) => state.boards.boards);
@@ -96,7 +98,7 @@ export const BoardItem = () => {
           <Box className={styles.controlPanel}>
             <BreadCrumbs title={currentBoard.title} />
             <Button startIcon={<ViewWeekIcon />} variant="contained" onClick={addColumn}>
-              Add Column
+              {t('boards.addColumn')}
             </Button>
           </Box>
           <Box className={styles.centering}>

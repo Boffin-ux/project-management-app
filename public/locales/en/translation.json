@@ -74,6 +74,8 @@
     "members": "Members",
     "search": "Search",
     "addBoard": "Add Board",
-    "onlyMy": "Only my boards"
+    "onlyMy": "Only my boards",
+    "addColumn": "Add Column",
+    "addTask": "Add Task"
   }
 }

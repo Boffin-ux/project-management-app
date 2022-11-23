@@ -80,7 +80,7 @@ export const Board = () => {
   const addColumn = () => {
     //TODO заменить диалогом
     const columnTemp: IRequestForCreateColumns = {
-      borderId: currentBoard._id,
+      boardId: currentBoard._id,
       order: columns.length,
       title: randomString(10),
     };

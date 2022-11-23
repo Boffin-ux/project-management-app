@@ -24,5 +24,5 @@ export interface IColumnState {
 export interface IRequestForCreateColumns {
   title: string;
   order: number;
-  borderId: string;
+  boardId: string;
 }

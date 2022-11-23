@@ -3,7 +3,7 @@ import { axiosPrivate } from 'api/axios';
 import { AxiosError } from 'axios';
 import { axiosErrorHandler } from 'utils/helpers';
 import { API_ENDPOINTS } from 'utils/variables';
-import { IColumn, IColumnSet, IRequestForCreateColumns } from 'interfaces/columns';
+import { IColumnSet, IRequestForCreateColumns } from 'interfaces/columns';
 import { ColumnHeaderProps } from 'components/column/Header/ColumnHeader';
 
 export const getColumnsByBoardId = createAsyncThunk(

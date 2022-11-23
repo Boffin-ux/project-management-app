@@ -14,12 +14,12 @@ export const MappingSpaces = () => {
   };
 
   return (
-    <ToggleButtonGroup size="large" value={currentView} onChange={toggleView}>
+    <ToggleButtonGroup value={currentView} onChange={toggleView}>
       <ToggleButton value={CardDisplayType.grid} key={CardDisplayType.grid}>
-        <GridViewIcon fontSize="large" />
+        <GridViewIcon />
       </ToggleButton>
       <ToggleButton value={CardDisplayType.rows} key={CardDisplayType.rows}>
-        <SplitscreenIcon fontSize="large" />
+        <SplitscreenIcon />
       </ToggleButton>
     </ToggleButtonGroup>
   );

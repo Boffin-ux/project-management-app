@@ -50,7 +50,7 @@ export const columnSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as string;
       })
-      .addCase(deleteColumn.pending, (state, action) => {
+      .addCase(deleteColumn.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })

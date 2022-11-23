@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
 import { ListItem, Box, Divider, Typography } from '@mui/material';
 import { GroupOfAvatar } from 'components/avatarGroup/GroupOfAvatar';
-import { ButtonEdit } from 'components/buttons/Edit/ButtonEdit';
-import { ButtonDelete } from 'components/buttons/Delete/ButtonDelete';
 import { Draggable } from '@hello-pangea/dnd';
 import styles from './Task.module.scss';
 import { ITask } from 'interfaces/task';
+import { ButtonWithIcon } from 'components/buttons/ButtonWithIcon/ButtonWithIcon';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 export interface TaskProps {
   task: ITask;
@@ -28,7 +29,7 @@ export const Task: FC<TaskProps> = ({ task, index }) => {
               <Typography component={Box} variant="caption" sx={{ fontWeight: 600 }}>
                 {task.title}
               </Typography>
-              <ButtonEdit />
+              <ButtonWithIcon clickAction={() => {}} icon={<EditIcon />} />
             </Box>
             <Divider />
             <Typography component={Box} variant="inherit" sx={{ mt: 1 }}>
@@ -36,7 +37,10 @@ export const Task: FC<TaskProps> = ({ task, index }) => {
             </Typography>
             <Box className={styles.taskSubArea}>
               <GroupOfAvatar {...task} />
-              <ButtonDelete clickAction={() => console.log('Delete Task')} />
+              <ButtonWithIcon
+                clickAction={() => console.log('Delete Task')}
+                icon={<DeleteIcon />}
+              />
             </Box>
           </Box>
         </ListItem>

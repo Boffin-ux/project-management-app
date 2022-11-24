@@ -98,25 +98,23 @@ export const Board = () => {
       <Box className={styles.centering}>
         <Box className={styles.columns}>
           {isLoading && <Loader />}
-          {!isLoading && (
-            <DragDropContext onDragEnd={onDragEndColumn}>
-              <Droppable droppableId="all-columns" direction="horizontal" type="column">
-                {(columnsProvided, columnSnapshot) => (
-                  <Box
-                    sx={{ display: 'flex', justifyContent: 'center' }}
-                    ref={columnsProvided.innerRef}
-                    {...columnsProvided.droppableProps}
-                    className={columnSnapshot.isDraggingOver ? styles.drag : styles.over}
-                  >
-                    {columns.map((column) => (
-                      <Column key={column._id} {...column} />
-                    ))}
-                    {columnsProvided.placeholder}
-                  </Box>
-                )}
-              </Droppable>
-            </DragDropContext>
-          )}
+          <DragDropContext onDragEnd={onDragEndColumn}>
+            <Droppable droppableId="all-columns" direction="horizontal" type="column">
+              {(columnsProvided, columnSnapshot) => (
+                <Box
+                  sx={{ display: 'flex', justifyContent: 'center' }}
+                  ref={columnsProvided.innerRef}
+                  {...columnsProvided.droppableProps}
+                  className={columnSnapshot.isDraggingOver ? styles.drag : styles.over}
+                >
+                  {columns.map((column) => (
+                    <Column key={column._id} {...column} />
+                  ))}
+                  {columnsProvided.placeholder}
+                </Box>
+              )}
+            </Droppable>
+          </DragDropContext>
         </Box>
       </Box>
     </Box>

@@ -1,27 +1,32 @@
 import { boardSchema, taskSchema, columnSchema } from 'schemas/boardsSchema';
 
-interface IModalProps {
+interface IModalState {
+  closeModal: () => void;
+  isModalActive: boolean;
+}
+
+interface IModalProps extends IModalState {
   modalTitle: string;
   children: React.ReactNode;
 }
 
 interface IPropsConfirm {
-  modalTitle: string;
   action: () => void;
+  closeModal: () => void;
 }
 
-interface IFormProps {
+interface IFormProps extends IModalState {
   modalTitle: string;
-  action: (values: IFormValues) => void;
+  action: (formData?: IFormValues) => void;
   initialValues?: IFormValues;
   btnTitle?: string;
   fields?: IFormField[];
-  usersData?: IUserData[];
-  schema: typeof boardSchema | typeof columnSchema | typeof taskSchema;
+  isUsers?: boolean;
+  schema?: typeof boardSchema | typeof columnSchema | typeof taskSchema;
 }
 
 interface IUserData {
-  id: string;
+  _id: string;
   login: string;
 }
 
@@ -34,6 +39,7 @@ interface IFormValues {
 interface IFormField {
   name: string;
   label: string;
+  multiline: boolean;
 }
 
-export { IModalProps, IFormValues, IFormProps, IPropsConfirm };
+export { IModalProps, IFormValues, IFormProps, IPropsConfirm, IUserData, IFormField };

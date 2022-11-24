@@ -1,3 +1,9 @@
+const initialValues = {
+  title: '',
+  description: '',
+  users: [],
+};
+
 const LOCALES = {
   ENGLISH: 'en',
   RUSSIAN: 'ru',
@@ -55,4 +61,5 @@ export {
   RESPONSE_CODES,
   FIELD_OPTIONS,
   VALUE_VALID,
+  initialValues,
 };

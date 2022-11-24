@@ -17,7 +17,7 @@ export interface IUser {
 }
 
 export interface IUsersData {
-  id: string;
+  _id: string;
   name: string;
   login: string;
 }

@@ -1,4 +1,3 @@
-import { IFormValues } from 'interfaces/modal';
 import { boardSchema, columnSchema, taskSchema } from 'schemas/boardsSchema';
 import { FIELD_OPTIONS } from 'utils/variables';
 const { NAME, DESC } = FIELD_OPTIONS;
@@ -22,6 +21,7 @@ const newBoardFields = [
   {
     name: NAME,
     label: 'boards.titleLabelForm',
+    multiline: false,
   },
 ];
 
@@ -29,10 +29,12 @@ const newTaskFields = [
   {
     name: NAME,
     label: 'tasks.titleLabelForm',
+    multiline: false,
   },
   {
     name: DESC,
     label: 'tasks.descLabelForm',
+    multiline: true,
   },
 ];
 
@@ -40,6 +42,7 @@ const newColumnfields = [
   {
     name: NAME,
     label: 'columns.titleLabelForm',
+    multiline: false,
   },
 ];
 
@@ -48,8 +51,8 @@ const addBoardForm = {
   fields: newBoardFields,
   modalTitle: 'boards.boardModalTitle',
   btnTitle: 'boards.submitBtnForm',
-  action: 'addBoard(formData: IFormValues)',
   schema: boardSchema,
+  isUsers: true,
 };
 
 const editBoardForm = {
@@ -59,6 +62,7 @@ const editBoardForm = {
   btnTitle: 'boards.editSubmitBtnForm',
   action: 'editBoard(formData: IFormValues)',
   schema: boardSchema,
+  isUsers: true,
 };
 
 const addTaskForm = {
@@ -66,8 +70,8 @@ const addTaskForm = {
   fields: newTaskFields,
   modalTitle: 'tasks.modalTitle',
   btnTitle: 'tasks.submitBtnForm',
-  action: 'addTask(formData: IFormValues)',
   schema: taskSchema,
+  isUsers: true,
 };
 
 const editTaskForm = {
@@ -75,8 +79,8 @@ const editTaskForm = {
   fields: newTaskFields,
   modalTitle: 'tasks.editModalTitle',
   btnTitle: 'tasks.editSubmitBtnForm',
-  action: 'editTask(formData: IFormValues)',
   schema: taskSchema,
+  isUsers: true,
 };
 
 const addColumnForm = {
@@ -84,10 +88,8 @@ const addColumnForm = {
   fields: newColumnfields,
   modalTitle: 'columns.modalTitle',
   btnTitle: 'columns.submitBtnForm',
-  action: (formData: IFormValues) => {
-    console.log('formData: ', formData);
-  },
   schema: columnSchema,
+  isUsers: false,
 };
 
 const deleteBoardForm = {
@@ -107,12 +109,10 @@ const deleteColumnForm = {
 
 const deleteProfileForm = {
   modalTitle: 'profile.deleteProfile',
-  action: 'deleteProfile',
 };
 
 const editProfileForm = {
   modalTitle: 'profile.editProfile',
-  action: 'editProfile',
 };
 
 export {

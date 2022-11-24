@@ -19,8 +19,8 @@ export const Board = () => {
   const params = useParams();
   const { t } = useTranslation();
 
-  const currentBoard = useAppSelector(
-    (state) => state.boards.boards.filter((board) => board._id === params.id)[0]
+  const currentBoard = useAppSelector((state) =>
+    state.boards.boards.find((board) => board._id === params.id)
   );
   const { columns, error, isLoading } = useAppSelector((state) => state.columns);
   const dispatch = useAppDispatch();
@@ -29,7 +29,7 @@ export const Board = () => {
     dispatch(getColumnsByBoardId(params.id as string));
   }, []);
 
-  if (error) return <Navigate to={VIEW_PATH.ERROR} replace />;
+  if (error || !currentBoard) return <Navigate to={VIEW_PATH.ERROR} replace />;
 
   const onDragEndColumn = (result: DropResult) => {
     const { source, destination } = result;

@@ -21,3 +21,9 @@ export interface IUsersState extends IUser {
   isLoading: boolean;
   error: string | null;
 }
+
+export interface IUsers {
+  _id: string;
+  name: string;
+  login: string;
+}

@@ -1,4 +1,4 @@
-import { IUser } from './user';
+import { IUser } from './users';
 
 export interface ITask {
   _id: string;

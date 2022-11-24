@@ -8,6 +8,7 @@ import { Navigate } from 'react-router-dom';
 import Loader from 'components/universal/Loader/Loader';
 import { VIEW_PATH } from 'utils/variables';
 import styles from './BoardList.module.scss';
+import { getUsers } from 'store/users/thunks';
 
 export const Boards = () => {
   const dispatch = useAppDispatch();
@@ -16,6 +17,7 @@ export const Boards = () => {
 
   useEffect(() => {
     dispatch(getAllBoards());
+    dispatch(getUsers());
   }, []);
 
   if (error) return <Navigate to={VIEW_PATH.ERROR} replace />;

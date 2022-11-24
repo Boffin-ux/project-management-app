@@ -33,7 +33,7 @@ export const signUp = createAsyncThunk(
 );
 
 export const getUserInfo = createAsyncThunk(
-  'users/getUsersInfo',
+  'user/getUsersInfo',
   async (token: string, { rejectWithValue, dispatch }) => {
     const { id } = parseJwt(token);
     try {
@@ -48,7 +48,7 @@ export const getUserInfo = createAsyncThunk(
 );
 
 export const updateUserInfo = createAsyncThunk(
-  'users/updateUsersInfo',
+  'user/updateUsersInfo',
   async (updateUserData: IupdateUserData, { rejectWithValue }) => {
     const { userId, ...otherData } = updateUserData;
     try {
@@ -62,7 +62,7 @@ export const updateUserInfo = createAsyncThunk(
 );
 
 export const deleteUser = createAsyncThunk(
-  'users/deleteUser',
+  'user/deleteUser',
   async (userId: string, { rejectWithValue, dispatch }) => {
     try {
       const response = await axiosPrivate.delete(API_ENDPOINTS.USER_INFO + userId);

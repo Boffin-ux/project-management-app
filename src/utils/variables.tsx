@@ -24,6 +24,7 @@ const API_ENDPOINTS = {
   SIGN_UP: 'auth/signup',
   BOARDS: 'boards',
   USER_INFO: 'users/',
+  USERS: 'users',
   COLUMNS_SET: 'columnsSet',
   BOARD(boardId: string): string {
     return `${this.BOARDS}/${boardId}`;

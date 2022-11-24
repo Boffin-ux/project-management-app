@@ -3,12 +3,14 @@ import boardsReducer from './board/slice';
 import columnReducer from './column/slice';
 import commonReducer from './main/slice';
 import usersReducer from './user/slice';
+import allUsersSlice from './users/slice';
 
 const rootReducer = combineReducers({
   main: commonReducer,
   boards: boardsReducer,
   user: usersReducer,
   columns: columnReducer,
+  users: allUsersSlice,
 });
 
 export const setupStore = () => {

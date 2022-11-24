@@ -59,8 +59,8 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
         <Typography variant="caption">{t('boards.members')}:</Typography>
         <List>
           {users.map((user) => (
-            <ListItem key={_id + user.id} className={styles.membersList}>
-              {user.name}
+            <ListItem key={_id + user} className={styles.membersList}>
+              {user}
             </ListItem>
           ))}
         </List>

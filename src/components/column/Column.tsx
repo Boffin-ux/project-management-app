@@ -42,10 +42,7 @@ export const Column: FC<IColumn> = ({ _id, title, tasks, order, boardId }) => {
                     {...listProvided.droppableProps}
                     className={snapshot.isDraggingOver ? styles.over : styles.drag}
                   >
-                    {/* Реализация отдельным PR
-                     {tasks.map((task, index) => (
-                      <Task key={task._id} task={task} index={index} />
-                    ))} */}
+                    <Box></Box>
                     {listProvided.placeholder}
                   </List>
                 )}

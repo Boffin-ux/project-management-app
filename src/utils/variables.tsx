@@ -27,6 +27,18 @@ const API_ENDPOINTS = {
   USER_INFO: 'users/',
   COLUMNS: 'columns',
   COLUMNS_SET: 'columnsSet',
+  URL_BOARD_BY_ID: function (boardId: string): string {
+    return this.BOARDS + '/' + boardId;
+  },
+  URL_COLUMN_GET: function (boardId: string): string {
+    return this.BOARDS + '/' + boardId + '/' + this.COLUMNS;
+  },
+  URL_COLUMN_POST: function (boardId: string): string {
+    return this.BOARDS + '/' + boardId + '/' + this.COLUMNS;
+  },
+  URL_COLUMN_DELETE: function (boardId: string, columnId: string) {
+    return this.BOARDS + '/' + boardId + '/' + this.COLUMNS + '/' + columnId;
+  },
 };
 
 const RESPONSE_CODES = {

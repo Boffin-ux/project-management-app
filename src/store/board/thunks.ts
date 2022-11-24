@@ -36,7 +36,7 @@ export const deleteBoard = createAsyncThunk(
   'boards/delete',
   async (boardId: string, { rejectWithValue }) => {
     try {
-      const response = await axiosPrivate.delete(`${API_ENDPOINTS.BOARDS}\\${boardId}`);
+      const response = await axiosPrivate.delete(API_ENDPOINTS.URL_BOARD_BY_ID(boardId));
       return response.data;
     } catch (error) {
       const err = error as AxiosError;
@@ -50,7 +50,7 @@ export const updateBoard = createAsyncThunk(
   async (dataBoardUpdater: IBoard, { rejectWithValue }) => {
     try {
       const { _id, ...requestPayload } = dataBoardUpdater;
-      const response = await axiosPrivate.put(`${API_ENDPOINTS.BOARDS}\\${_id}`, requestPayload);
+      const response = await axiosPrivate.put(API_ENDPOINTS.URL_BOARD_BY_ID(_id), requestPayload);
       return response.data;
     } catch (error) {
       const err = error as AxiosError;
@@ -77,7 +77,7 @@ export const boardGetById = createAsyncThunk(
   'boards/getById',
   async (boardId: string, { rejectWithValue }) => {
     try {
-      const response = await axiosPrivate.get(`${API_ENDPOINTS.BOARDS}\${boardId}`);
+      const response = await axiosPrivate.get(API_ENDPOINTS.URL_BOARD_BY_ID(boardId));
       return response.data;
     } catch (error) {
       const err = error as AxiosError;

@@ -5,13 +5,12 @@ import { axiosErrorHandler } from 'utils/helpers';
 import { API_ENDPOINTS } from 'utils/variables';
 import { IColumnSet, IRequestForCreateColumns } from 'interfaces/columns';
 import { ColumnHeaderProps } from 'components/column/Header/ColumnHeader';
-import { URLColumnDelete, URLColumnPost, URLColumnsGet } from 'utils/urlCreator';
 
 export const getColumnsByBoardId = createAsyncThunk(
   'columns/byBoardId',
   async (boardId: string, { rejectWithValue }) => {
     try {
-      const response = await axiosPrivate.get(URLColumnsGet(boardId));
+      const response = await axiosPrivate.get(API_ENDPOINTS.URL_COLUMN_GET(boardId));
       return response.data;
     } catch (error) {
       const err = error as AxiosError;
@@ -25,7 +24,10 @@ export const createColumn = createAsyncThunk(
   async (dataColumnCreator: IRequestForCreateColumns, { rejectWithValue }) => {
     try {
       const { boardId, ...createColumnProps } = dataColumnCreator;
-      const response = await axiosPrivate.post(URLColumnPost(boardId), createColumnProps);
+      const response = await axiosPrivate.post(
+        API_ENDPOINTS.URL_COLUMN_POST(boardId),
+        createColumnProps
+      );
       return response.data;
     } catch (error) {
       const err = error as AxiosError;
@@ -52,7 +54,9 @@ export const deleteColumn = createAsyncThunk(
   async (column: ColumnHeaderProps, { rejectWithValue }) => {
     try {
       const { boardId, columnId } = column;
-      const response = await axiosPrivate.delete(URLColumnDelete(boardId, columnId));
+      const response = await axiosPrivate.delete(
+        API_ENDPOINTS.URL_COLUMN_DELETE(boardId, columnId)
+      );
       return response.data;
     } catch (error) {
       const err = error as AxiosError;

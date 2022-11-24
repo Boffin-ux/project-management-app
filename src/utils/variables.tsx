@@ -25,19 +25,15 @@ const API_ENDPOINTS = {
   BOARDS: 'boards',
   BOARDS_SET: 'boardsSet',
   USER_INFO: 'users/',
-  COLUMNS: 'columns',
   COLUMNS_SET: 'columnsSet',
-  URL_BOARD_BY_ID: function (boardId: string): string {
-    return this.BOARDS + '/' + boardId;
+  BOARD(boardId: string): string {
+    return `${this.BOARDS}/${boardId}`;
   },
-  URL_COLUMN_GET: function (boardId: string): string {
-    return this.BOARDS + '/' + boardId + '/' + this.COLUMNS;
+  COLUMNS(boardId: string): string {
+    return `${this.BOARDS}/${boardId}/columns`;
   },
-  URL_COLUMN_POST: function (boardId: string): string {
-    return this.BOARDS + '/' + boardId + '/' + this.COLUMNS;
-  },
-  URL_COLUMN_DELETE: function (boardId: string, columnId: string) {
-    return this.BOARDS + '/' + boardId + '/' + this.COLUMNS + '/' + columnId;
+  COLUMN(boardId: string, columnId: string) {
+    return `${this.COLUMNS(boardId)}/${columnId}`;
   },
 };
 

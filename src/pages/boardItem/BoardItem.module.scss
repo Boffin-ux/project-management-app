@@ -1,0 +1,42 @@
+@mixin droppedArea {
+  display: flex;
+  justify-content: center;
+}
+
+.wrapper {
+  width: 100%;
+
+  .centering {
+    display: flex;
+    justify-content: center;
+  }
+
+  .controlPanel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 2rem;
+  }
+
+  .columns {
+    margin: 1rem;
+    min-width: 80vw;
+    min-height: 72vh;
+    max-height: 100vh;
+    flex-grow: 1;
+    overflow: auto;
+    direction: row;
+    display: inline-flex;
+    padding: 0rem;
+  }
+}
+
+.over {
+  border: 0.1rem dotted rgba(63, 191, 195, 0.8);
+  @include droppedArea();
+}
+
+.drag {
+  border: 0.1rem dotted black;
+  @include droppedArea();
+}

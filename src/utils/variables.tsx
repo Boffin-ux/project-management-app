@@ -10,6 +10,7 @@ const VIEW_PATH = {
   SIGN_UP: 'signup',
   BOARDS: 'boards',
   PROFILE: 'profile',
+  BOARD: '/boards/:id',
   REST: '*',
 };
 
@@ -22,8 +23,23 @@ const API_ENDPOINTS = {
   SIGN_IN: 'auth/signin',
   SIGN_UP: 'auth/signup',
   BOARDS: 'boards',
-  BOARDS_SET: 'boardsSet',
   USER_INFO: 'users/',
+  COLUMNS_SET: 'columnsSet',
+  BOARD(boardId: string): string {
+    return `${this.BOARDS}/${boardId}`;
+  },
+  BOARDS_SET(listBoardIds: string[]): string {
+    return `boardsSet/?ids=${listBoardIds.join(',')}`;
+  },
+  BOARD_SET(userId: string): string {
+    return `boardsSet/${userId}`;
+  },
+  COLUMNS(boardId: string): string {
+    return `${this.BOARDS}/${boardId}/columns`;
+  },
+  COLUMN(boardId: string, columnId: string) {
+    return `${this.COLUMNS(boardId)}/${columnId}`;
+  },
 };
 
 const RESPONSE_CODES = {

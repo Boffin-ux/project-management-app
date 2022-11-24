@@ -17,6 +17,7 @@ import { muiTheme } from 'utils/muiTheme';
 import { VIEW_PATH } from 'utils/variables';
 import '../../i18n/i18next';
 import './app.scss';
+import { Board } from 'pages/boardItem/BoardItem';
 
 export default function App() {
   const dispatch = useAppDispatch();
@@ -44,6 +45,7 @@ export default function App() {
               </Route>
               <Route element={<AuthRedirect withAuth />}>
                 <Route path={VIEW_PATH.BOARDS} element={<Boards />} />
+                <Route path={VIEW_PATH.BOARD} element={<Board />} />
                 <Route path={VIEW_PATH.PROFILE} element={<Profile />} />
               </Route>
             </Route>

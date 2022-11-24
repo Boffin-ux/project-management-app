@@ -1,18 +1,6 @@
-import { IUser } from 'interfaces/user';
 import { IBoard } from '../../interfaces/boards';
 
-export const USERS: Array<IUser> = [
-  {
-    id: '1',
-    name: 'user1',
-    login: 'user1',
-  },
-  {
-    id: '2',
-    name: 'user2',
-    login: 'user2',
-  },
-];
+export const USERS: Array<string> = ['1', '2'];
 
 export const BOARDS: Array<IBoard> = [
   {

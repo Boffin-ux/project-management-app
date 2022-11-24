@@ -9,7 +9,7 @@ export interface IBoardState {
 export interface IRequestForBoard {
   title: string;
   owner: string;
-  users: Array<IUser>;
+  users: Array<string>;
 }
 
 export interface IBoard extends IRequestForBoard {

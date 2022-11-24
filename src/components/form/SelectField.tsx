@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormikContext } from 'formik';
 import {
   Checkbox,
@@ -20,6 +20,13 @@ interface IFormData {
 export default function SelectField({ users }: IFormData) {
   const { t } = useTranslation();
   const { values, handleChange, errors, touched } = useFormikContext<IFormData>();
+  const [userLogin, setUserLogin] = useState([] as Array<string>);
+
+  const selectedLogin = (login: string) => {
+    userLogin.includes(login)
+      ? setUserLogin(userLogin.filter((item) => item !== login))
+      : setUserLogin([...userLogin, login]);
+  };
 
   return (
     <FormControl margin="normal" fullWidth>
@@ -31,14 +38,16 @@ export default function SelectField({ users }: IFormData) {
         name={'users'}
         onChange={handleChange}
         input={<OutlinedInput label={t('selectUser.userLabelForm')} />}
-        renderValue={(selected) => selected.join(', ')}
+        renderValue={() => {
+          return userLogin.join(', ');
+        }}
         error={touched.users && !!errors.users}
       >
-        {users.map((user: IUserData) => (
-          <MenuItem key={user._id} value={user.login}>
+        {users.map((user) => (
+          <MenuItem key={user._id} value={user._id} onClick={() => selectedLogin(user.login)}>
             <Checkbox
               checked={
-                values.users && values.users.indexOf(user.login as unknown as typeof user) > -1
+                values.users && values.users.indexOf(user._id as unknown as typeof user) > -1
               }
             />
             <ListItemText primary={user.login} />

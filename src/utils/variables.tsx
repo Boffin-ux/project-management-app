@@ -23,11 +23,16 @@ const API_ENDPOINTS = {
   SIGN_IN: 'auth/signin',
   SIGN_UP: 'auth/signup',
   BOARDS: 'boards',
-  BOARDS_SET: 'boardsSet',
   USER_INFO: 'users/',
   COLUMNS_SET: 'columnsSet',
   BOARD(boardId: string): string {
     return `${this.BOARDS}/${boardId}`;
+  },
+  BOARDS_SET(listBoardIds: string[]): string {
+    return `boardsSet/?ids=${listBoardIds.join(',')}`;
+  },
+  BOARD_SET(userId: string): string {
+    return `boardsSet/${userId}`;
   },
   COLUMNS(boardId: string): string {
     return `${this.BOARDS}/${boardId}/columns`;

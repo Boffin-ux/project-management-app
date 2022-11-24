@@ -63,7 +63,7 @@ export const boardGetAllForUser = createAsyncThunk(
   'boards/getAllForUser',
   async (userId: string, { rejectWithValue }) => {
     try {
-      const response = await axiosPrivate.get(`${API_ENDPOINTS.BOARDS_SET}\${userId}`);
+      const response = await axiosPrivate.get(API_ENDPOINTS.BOARD_SET(userId));
       return response.data;
     } catch (error) {
       const err = error as AxiosError;
@@ -91,9 +91,7 @@ export const boardGetByIds = createAsyncThunk(
   'boards/getByIds',
   async (boardIds: Array<string>, { rejectWithValue }) => {
     try {
-      const response = await axiosPrivate.get(
-        `${API_ENDPOINTS.BOARDS_SET}?ids=${boardIds.join(',')}`
-      );
+      const response = await axiosPrivate.get(API_ENDPOINTS.BOARDS_SET(boardIds));
       return response.data;
     } catch (error) {
       const err = error as AxiosError;

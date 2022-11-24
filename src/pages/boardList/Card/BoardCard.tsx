@@ -13,12 +13,13 @@ import {
   Typography,
 } from '@mui/material';
 import Button from '@mui/material/Button';
-import { useAppDispatch } from 'hooks/redux';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { IBoard } from 'interfaces/boards';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { deleteBoard, updateBoard } from 'store/board/thunks';
+import { getUserById } from 'utils/helpers';
 import { randomString } from 'utils/temputils';
 import styles from './BoardCard.module.scss';
 import { setRandomColor } from './utils';
@@ -26,6 +27,7 @@ import { setRandomColor } from './utils';
 export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const allUsers = useAppSelector((state) => state.users.users);
 
   const removeBoardById = () => {
     dispatch(deleteBoard(_id));
@@ -52,7 +54,7 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
         }
         title={title}
         titleTypographyProps={{ fontWeight: 500 }}
-        subheader={`${t('boards.owner')}: ${owner}`}
+        subheader={`${t('boards.owner')}: ${getUserById(allUsers, owner).name}`}
       />
       <Divider variant="inset" component="p" />
       <CardContent className={styles.content}>
@@ -60,7 +62,7 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
         <List>
           {users.map((user) => (
             <ListItem key={_id + user} className={styles.membersList}>
-              {user}
+              {getUserById(allUsers, user).name}
             </ListItem>
           ))}
         </List>

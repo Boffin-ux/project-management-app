@@ -9,6 +9,7 @@ import {
   getTasks,
   getTasksSet,
   updateColumnsSet,
+  updateTask,
 } from './thunks';
 
 const initialState: IColumnState = {
@@ -121,11 +122,31 @@ export const columnSlice = createSlice({
         state.columns = state.columns.map((column) => {
           return {
             ...column,
-            tasks: [...action.payload.filter((task) => task.columnId === column._id)],
+            tasks: action.payload.filter((task) => task.columnId === column._id),
           };
         });
       })
       .addCase(getTasksSet.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(updateTask.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateTask.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.columns = state.columns.map((column) => {
+          let columnTask = Array.from(column.tasks);
+          if (column._id === action.payload.columnId) {
+            columnTask = columnTask.map((task) =>
+              task._id === action.payload._id ? action.payload : task
+            );
+          }
+          return { ...column, tasks: columnTask };
+        });
+      })
+      .addCase(updateTask.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       })

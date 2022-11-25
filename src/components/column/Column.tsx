@@ -1,7 +1,6 @@
 import { Box, List } from '@mui/material';
 import React, { useState, FC } from 'react';
 import { Draggable, Droppable } from '@hello-pangea/dnd';
-
 import { ColumnHeader } from './Header/ColumnHeader';
 import styles from './Column.module.scss';
 import { IColumn } from 'interfaces/columns';
@@ -26,7 +25,7 @@ export const Column: FC<IColumn> = ({ _id, title, tasks, order, boardId }) => {
       _id: '',
       boardId,
       columnId: _id,
-      description: randomString(35),
+      description: randomString(5) + ' ' + randomString(10),
       order: 0,
       title: randomString(12),
       userId,
@@ -66,7 +65,7 @@ export const Column: FC<IColumn> = ({ _id, title, tasks, order, boardId }) => {
                   <List
                     ref={listProvided.innerRef}
                     {...listProvided.droppableProps}
-                    // className={snapshot.isDraggingOver ? styles.over : styles.drag}
+                    className={snapshot.isDraggingOver ? styles.over : styles.drag}
                   >
                     {tasks.map((task, index) => (
                       <Task key={task._id} task={task} index={index} />

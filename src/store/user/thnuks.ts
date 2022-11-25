@@ -21,9 +21,11 @@ export const signIn = createAsyncThunk(
 
 export const signUp = createAsyncThunk(
   'auth/signUp',
-  async (signUpData: ISingUpData, { rejectWithValue }) => {
+  async (signUpData: ISingUpData, { rejectWithValue, dispatch }) => {
     try {
       const response = await axios.post(API_ENDPOINTS.SIGN_UP, signUpData);
+      const { name, ...signInData } = signUpData;
+      dispatch(signIn(signInData)); // Immediately sign in after successful sign up
       return response.data;
     } catch (error) {
       const err = error as AxiosError;

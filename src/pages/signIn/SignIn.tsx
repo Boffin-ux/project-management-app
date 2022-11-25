@@ -3,33 +3,35 @@ import { Avatar, Box, Button, Container, Link, TextField, Typography } from '@mu
 import Loader from 'components/universal/Loader/Loader';
 import { useFormik } from 'formik';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { useSnackbar } from 'notistack';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { loginValidationSchema } from 'schemas/userSchemas';
 import { signIn } from 'store/user/thnuks';
 import { VIEW_PATH } from 'utils/variables';
-import * as yup from 'yup';
 
 const initialValues = {
   login: '',
   password: '',
 };
 
-const validationSchema = yup.object({
-  login: yup.string().min(3, 'loginValidationMin').required('loginValidationRequired'),
-  password: yup.string().min(8, 'passwordValidationMin').required('passwordValidationRequired'),
-});
-
 function SignIn() {
+  const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { isLoading, error } = useAppSelector((state) => state.user);
 
   const { values, touched, errors, handleSubmit, handleChange, dirty } = useFormik({
     initialValues,
-    validationSchema,
-    onSubmit: (values, { resetForm }) => {
-      dispatch(signIn(values));
-      resetForm();
+    validationSchema: loginValidationSchema,
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        await dispatch(signIn(values)).unwrap();
+        enqueueSnackbar(t('successful.signInMessage'), { variant: 'success' });
+      } catch (error) {
+        resetForm();
+        enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
+      }
     },
   });
 

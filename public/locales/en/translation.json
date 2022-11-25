@@ -1,7 +1,7 @@
 {
   "errors": {
-    "NameValidationMin": "Name should be of minimum 2 characters length",
-    "NameValidationRequired": "Name is required",
+    "nameValidationMin": "Name should be of minimum 2 characters length",
+    "nameValidationRequired": "Name is required",
     "loginValidationMin": "Login should be of minimum 3 characters length",
     "loginValidationRequired": "Login is required",
     "passwordValidationMin": "Password should be of minimum 8 characters length",
@@ -17,6 +17,11 @@
     "errorMaxLengthDesc": "Max length {{DESC_MAX_LENGTH}} letters",
     "errorUserLabel": "Select user",
     "errorTrim": "The field cannot include leading and trailing spaces"
+  },
+  "successful": {
+    "signUpMessage": "Successful registration!",
+    "signInMessage": "Successful sign in!",
+    "userDeleteMessage": "The user account has been successfully deleted!"
   },
   "header": {
     "signIn": "Sign In",

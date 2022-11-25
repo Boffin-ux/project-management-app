@@ -1,3 +1,6 @@
+import { SelectChangeEvent } from '@mui/material';
+import { DefaultTFuncReturn } from 'i18next';
+import { ChangeEventHandler, ReactNode } from 'react';
 import { boardSchema, taskSchema, columnSchema } from 'schemas/boardsSchema';
 
 interface IModalState {
@@ -42,4 +45,31 @@ interface IFormField {
   multiline: boolean;
 }
 
-export { IModalProps, IFormValues, IFormProps, IPropsConfirm, IUserData, IFormField };
+interface ICustomField {
+  helperText: false | DefaultTFuncReturn;
+  error: boolean | undefined;
+}
+
+interface ICustomTextField extends IFormField, ICustomField {
+  handleChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  value: string | IUserData[] | undefined;
+}
+
+interface ICustomSelectField extends ICustomField {
+  labelId: string;
+  users: IUserData[];
+  label: string;
+  value: IUserData[] | undefined;
+  handleChange: (event: SelectChangeEvent<IUserData[]>, child: ReactNode) => void;
+}
+
+export {
+  IModalProps,
+  IFormValues,
+  IFormProps,
+  IPropsConfirm,
+  IUserData,
+  IFormField,
+  ICustomTextField,
+  ICustomSelectField,
+};

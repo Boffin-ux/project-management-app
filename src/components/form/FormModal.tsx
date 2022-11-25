@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Formik } from 'formik';
 import { Box, Button } from '@mui/material';
 import { IFormProps } from 'interfaces/modal';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +9,9 @@ import CustomTextField from './CustomTextField';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { getUsers } from 'store/user/thnuks';
 import ConfirmButtons from './ConfirmButtons';
+import { useFormik } from 'formik';
+import { VALUE_VALID } from 'utils/variables';
+const { MIN_LENGTH, NAME_MAX_LENGTH, DESC_MAX_LENGTH } = VALUE_VALID;
 
 export default function FormModal({
   modalTitle,
@@ -25,40 +27,68 @@ export default function FormModal({
   const { users } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
+  const { values, errors, touched, handleSubmit, handleChange, dirty } = useFormik({
+    initialValues,
+    validationSchema: schema,
+    onSubmit: (values, { resetForm }) => {
+      action(values);
+      resetForm();
+    },
+  });
+
   useEffect(() => {
     if (isUsers) dispatch(getUsers());
   }, []);
+
+  type fieldName = keyof typeof initialValues;
 
   const { t } = useTranslation();
   return (
     <ModalBasic modalTitle={t(modalTitle)} isModalActive={isModalActive} closeModal={closeModal}>
       {fields ? (
-        <Formik
-          initialValues={initialValues}
-          validationSchema={schema}
-          onSubmit={(values) => {
-            action(values);
-          }}
-        >
-          {({ handleSubmit, dirty }) => (
-            <Box component="form" onSubmit={handleSubmit}>
-              {fields.map((field) => (
-                <CustomTextField {...field} key={field.name} />
-              ))}
-              {isUsers && <SelectField users={users} />}
-              <Button
-                type="submit"
-                disabled={!dirty}
-                color="primary"
-                variant="contained"
-                fullWidth
-                sx={{ textTransform: 'none', marginTop: '20px' }}
-              >
-                {btnTitle && t(btnTitle)}
-              </Button>
-            </Box>
+        <Box component="form" onSubmit={handleSubmit}>
+          {fields.map((field) => (
+            <CustomTextField
+              handleChange={handleChange}
+              value={values[field.name as fieldName]}
+              error={touched[field.name as fieldName] && !!errors[field.name as fieldName]}
+              helperText={
+                touched[field.name as fieldName] &&
+                !!errors[field.name as fieldName] &&
+                t(`errors.${errors[field.name as fieldName]}`, {
+                  MIN_LENGTH,
+                  NAME_MAX_LENGTH,
+                  DESC_MAX_LENGTH,
+                })
+              }
+              label={t(field.label)}
+              name={field.name}
+              multiline={field.multiline}
+              key={field.name}
+            />
+          ))}
+          {isUsers && (
+            <SelectField
+              labelId={'users'}
+              handleChange={handleChange}
+              users={users}
+              label={t('selectUser.userLabelForm')}
+              helperText={touched.users && !!errors.users && t(`errors.${errors.users}`)}
+              value={values.users}
+              error={touched.users && !!errors.users}
+            />
           )}
-        </Formik>
+          <Button
+            type="submit"
+            disabled={!dirty}
+            color="primary"
+            variant="contained"
+            fullWidth
+            sx={{ textTransform: 'none', marginTop: '20px' }}
+          >
+            {btnTitle && t(btnTitle)}
+          </Button>
+        </Box>
       ) : (
         <ConfirmButtons action={action} closeModal={closeModal} />
       )}

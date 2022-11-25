@@ -16,8 +16,15 @@ export interface IUser {
   login: string | null;
 }
 
+export interface IUsersData {
+  _id: string;
+  name: string;
+  login: string;
+}
+
 export interface IUsersState extends IUser {
   token: string;
   isLoading: boolean;
   error: string | null;
+  users: Array<IUsersData>;
 }

@@ -1,5 +1,5 @@
-import { Build, Home, Logout } from '@mui/icons-material';
-import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
+import { Build, Home, Logout, ManageAccounts } from '@mui/icons-material';
+import { AppBar, Box, Button, Grid, Toolbar, Typography } from '@mui/material';
 import AuthMenu from 'components/AuthMenu/AuthMenu';
 import SelectionLang from 'components/selectionLang/SelectionLang';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
@@ -30,31 +30,31 @@ export default function Header() {
               </Typography>
             </Button>
           </Typography>
-          <Box sx={navWrapStyle}>
+          <Grid container sx={navWrapStyle}>
             <Box component="nav">
               <AuthMenu />
               {token && (
                 <>
-                  <Button sx={btnStyle} onClick={handleLogout} startIcon={<Logout />}>
-                    <Typography variant="subtitle1" sx={{ display: { xs: 'none', sm: 'flex' } }}>
-                      {t('auth.signOut')}
-                    </Typography>
-                  </Button>
                   <Button
-                    sx={btnStyle}
                     component={Link}
+                    sx={btnStyle}
                     to={VIEW_PATH.PROFILE}
-                    startIcon={<Build />}
+                    startIcon={<ManageAccounts />}
                   >
                     <Typography variant="subtitle1" sx={{ display: { xs: 'none', sm: 'flex' } }}>
                       {t('header.editProfile')}
+                    </Typography>
+                  </Button>
+                  <Button sx={btnStyle} onClick={handleLogout} startIcon={<Logout />}>
+                    <Typography variant="subtitle1" sx={{ display: { xs: 'none', sm: 'flex' } }}>
+                      {t('auth.signOut')}
                     </Typography>
                   </Button>
                 </>
               )}
             </Box>
             <SelectionLang />
-          </Box>
+          </Grid>
         </Toolbar>
       </AppBar>
     </HeaderScroll>

@@ -15,8 +15,18 @@ const initialValues = {
 };
 
 const validationSchema = yup.object({
-  login: yup.string().min(3, 'loginValidationMin').required('loginValidationRequired'),
-  password: yup.string().min(8, 'passwordValidationMin').required('passwordValidationRequired'),
+  login: yup
+    .string()
+    .strict(true)
+    .trim('errorTrim')
+    .min(3, 'loginValidationMin')
+    .required('loginValidationRequired'),
+  password: yup
+    .string()
+    .strict(true)
+    .trim('errorTrim')
+    .min(8, 'passwordValidationMin')
+    .required('passwordValidationRequired'),
 });
 
 function SignIn() {

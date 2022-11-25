@@ -9,9 +9,24 @@ import { deleteUser, updateUserInfo } from 'store/user/thnuks';
 import * as yup from 'yup';
 
 const validationSchema = yup.object({
-  name: yup.string().min(2, 'NameValidationMin').required('NameValidationRequired'),
-  login: yup.string().min(3, 'loginValidationMin').required('loginValidationRequired'),
-  password: yup.string().min(8, 'passwordValidationMin').required('passwordValidationRequired'),
+  name: yup
+    .string()
+    .strict(true)
+    .trim('errorTrim')
+    .min(2, 'NameValidationMin')
+    .required('NameValidationRequired'),
+  login: yup
+    .string()
+    .strict(true)
+    .trim('errorTrim')
+    .min(3, 'loginValidationMin')
+    .required('loginValidationRequired'),
+  password: yup
+    .string()
+    .strict(true)
+    .trim('errorTrim')
+    .min(8, 'passwordValidationMin')
+    .required('passwordValidationRequired'),
 });
 
 function Profile() {

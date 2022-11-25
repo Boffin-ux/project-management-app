@@ -80,12 +80,15 @@
     ]
   },
   "boards": {
+    "boardsList": "Список досок",
     "owner": "Автор",
     "openBoard": "Открыть доску",
     "members": "Участники",
     "search": "Поиск",
     "addBoard": "Добавить доску",
     "onlyMy": "Только мои доски",
+    "addColumn": "Добавить колонку",
+    "addTask": "Добавить задачу",
     "boardModalTitle": "Добавить доску",
     "editModalTitle": "Изменить доску",
     "submitBtnForm": "Создать новую доску",

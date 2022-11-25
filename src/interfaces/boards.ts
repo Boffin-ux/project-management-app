@@ -1,4 +1,4 @@
-import { IUser } from './user';
+import { IUser } from 'interfaces/user';
 
 export interface IBoardState {
   boards: Array<IBoard>;
@@ -21,3 +21,10 @@ export interface BoardCardProps {
 }
 
 export type ResponseBoard = Array<IBoard> | string;
+
+export const INITIAL_IBOARD = {
+  _id: '',
+  owner: '',
+  title: '',
+  users: [],
+};

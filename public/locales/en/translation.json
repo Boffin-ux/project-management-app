@@ -78,12 +78,15 @@
     ]
   },
   "boards": {
+    "boardsList": "Boards List",
     "owner": "Owner",
     "openBoard": "Open Board",
     "members": "Members",
     "search": "Search",
     "addBoard": "Add Board",
     "onlyMy": "Only my boards",
+    "addColumn": "Add Column",
+    "addTask": "Add Task",
     "boardModalTitle": "Add board",
     "editModalTitle": "Edit board",
     "submitBtnForm": "Add new board",

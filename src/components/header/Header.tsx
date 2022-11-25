@@ -1,4 +1,4 @@
-import { Home, Logout } from '@mui/icons-material';
+import { Build, Home, Logout } from '@mui/icons-material';
 import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
 import AuthMenu from 'components/AuthMenu/AuthMenu';
 import SelectionLang from 'components/selectionLang/SelectionLang';
@@ -40,8 +40,15 @@ export default function Header() {
                       {t('auth.signOut')}
                     </Typography>
                   </Button>
-                  <Button component={Link} to={VIEW_PATH.PROFILE} variant="contained">
-                    {t('header.editProfile')}
+                  <Button
+                    sx={btnStyle}
+                    component={Link}
+                    to={VIEW_PATH.PROFILE}
+                    startIcon={<Build />}
+                  >
+                    <Typography variant="subtitle1" sx={{ display: { xs: 'none', sm: 'flex' } }}>
+                      {t('header.editProfile')}
+                    </Typography>
                   </Button>
                 </>
               )}

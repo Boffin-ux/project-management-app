@@ -1,7 +1,7 @@
 {
   "errors": {
-    "NameValidationMin": "Минимальная длина имени 2 символа",
-    "NameValidationRequired": "Имя не введено",
+    "nameValidationMin": "Минимальная длина имени 2 символа",
+    "nameValidationRequired": "Имя не введено",
     "loginValidationMin": "Минимальная длина логина 3 символа",
     "loginValidationRequired": "Логин не введен",
     "passwordValidationMin": "Минимальная длина пароля 8 символов",
@@ -12,6 +12,9 @@
     "authLoginFailed": "Ошибка аутентификации",
     "invalidToken": "Неверный токен авторизации",
     "badRequest": "Некорректный запрос"
+  },
+  "successful": {
+    "userDeleteMessage": "Аккаунт пользователя был успешно удален!"
   },
   "header": {
     "signIn": "Войти",

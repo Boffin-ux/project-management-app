@@ -3,6 +3,7 @@ import { CssBaseline } from '@mui/material';
 import AuthRedirect from 'components/AuthRedirect/AuthRedirect';
 import { Layout } from 'components/layout/Layout';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { SnackbarProvider } from 'notistack';
 import { Board } from 'pages/boardItem/BoardItem';
 import { Boards } from 'pages/boardList/BoardsList';
 import ErrorBoundaryPage from 'pages/errorBoundaryPage/errorBoundaryPage';
@@ -61,9 +62,11 @@ export default function App() {
 
   return (
     <ThemeProvider theme={muiTheme}>
-      <CssBaseline>
-        <RouterProvider router={router} />
-      </CssBaseline>
+      <SnackbarProvider maxSnack={3}>
+        <CssBaseline>
+          <RouterProvider router={router} />
+        </CssBaseline>
+      </SnackbarProvider>
     </ThemeProvider>
   );
 }

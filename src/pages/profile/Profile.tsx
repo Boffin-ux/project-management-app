@@ -3,12 +3,14 @@ import { Avatar, Box, Button, Container, TextField, Typography } from '@mui/mate
 import Loader from 'components/universal/Loader/Loader';
 import { useFormik } from 'formik';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { useSnackbar } from 'notistack';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { userValidationSchema } from 'schemas/userSchemas';
 import { deleteUser, updateUserInfo } from 'store/user/thnuks';
 
 function Profile() {
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { id, name, login, isLoading, error } = useAppSelector((state) => state.user);
@@ -32,8 +34,13 @@ function Profile() {
   const loginError = errors.login;
   const passwordError = errors.password;
 
-  const handleDeleteUser = () => {
-    dispatch(deleteUser(id));
+  const handleDeleteUser = async () => {
+    try {
+      await dispatch(deleteUser(id)).unwrap();
+      enqueueSnackbar(t('successful.userDeleteMessage'), { variant: 'success' });
+    } catch (error) {
+      enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
+    }
   };
 
   return (

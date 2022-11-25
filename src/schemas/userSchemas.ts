@@ -18,8 +18,8 @@ const name = yup
   .string()
   .strict(true)
   .trim('errorTrim')
-  .min(2, 'NameValidationMin')
-  .required('NameValidationRequired');
+  .min(2, 'nameValidationMin')
+  .required('nameValidationRequired');
 
 export const loginValidationSchema = yup.object({
   login,

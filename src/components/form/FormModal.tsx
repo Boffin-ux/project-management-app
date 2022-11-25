@@ -61,9 +61,7 @@ export default function FormModal({
                   DESC_MAX_LENGTH,
                 })
               }
-              label={t(field.label)}
-              name={field.name}
-              multiline={field.multiline}
+              {...field}
               key={field.name}
             />
           ))}

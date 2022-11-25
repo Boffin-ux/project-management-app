@@ -2,6 +2,7 @@ import React from 'react';
 import { TextField } from '@mui/material';
 import { ICustomTextField } from 'interfaces/modal';
 import { FIELD_OPTIONS } from 'utils/variables';
+import { useTranslation } from 'react-i18next';
 const { NAME, INIT_ROWS, MULTI_ROWS } = FIELD_OPTIONS;
 
 export default function CustomTextField({
@@ -13,12 +14,13 @@ export default function CustomTextField({
   helperText,
   error,
 }: ICustomTextField) {
+  const { t } = useTranslation();
   return (
     <TextField
       fullWidth
       id={name}
       autoFocus={name === NAME}
-      label={label}
+      label={t(label)}
       margin="normal"
       value={value}
       onChange={handleChange}

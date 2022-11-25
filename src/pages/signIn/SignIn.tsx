@@ -5,29 +5,14 @@ import { useFormik } from 'formik';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { loginValidationSchema } from 'schemas/userSchemas';
 import { signIn } from 'store/user/thnuks';
 import { VIEW_PATH } from 'utils/variables';
-import * as yup from 'yup';
 
 const initialValues = {
   login: '',
   password: '',
 };
-
-const validationSchema = yup.object({
-  login: yup
-    .string()
-    .strict(true)
-    .trim('errorTrim')
-    .min(3, 'loginValidationMin')
-    .required('loginValidationRequired'),
-  password: yup
-    .string()
-    .strict(true)
-    .trim('errorTrim')
-    .min(8, 'passwordValidationMin')
-    .required('passwordValidationRequired'),
-});
 
 function SignIn() {
   const { t } = useTranslation();
@@ -36,7 +21,7 @@ function SignIn() {
 
   const { values, touched, errors, handleSubmit, handleChange, dirty } = useFormik({
     initialValues,
-    validationSchema,
+    validationSchema: loginValidationSchema,
     onSubmit: (values, { resetForm }) => {
       dispatch(signIn(values));
       resetForm();

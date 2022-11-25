@@ -8,7 +8,13 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { VIEW_PATH } from 'utils/variables';
 import ViewWeekIcon from '@mui/icons-material/ViewWeek';
 import styles from './BoardItem.module.scss';
-import { createColumn, getColumnsByBoardId, updateColumnsSet } from 'store/column/thunks';
+import {
+  createColumn,
+  getColumnsByBoardId,
+  getTasks,
+  getTasksSet,
+  updateColumnsSet,
+} from 'store/column/thunks';
 import { IRequestForCreateColumns } from 'interfaces/columns';
 import { randomString } from 'utils/temputils';
 import Loader from 'components/universal/Loader/Loader';
@@ -26,7 +32,10 @@ export const Board = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getColumnsByBoardId(params.id as string));
+    const boardId = params.id as string;
+    dispatch(getColumnsByBoardId(boardId));
+    columns.forEach((column) => dispatch(getTasks(boardId, column._id)));
+    // dispatch(getTasksSet(boardId));
   }, []);
 
   if (error || !currentBoard) return <Navigate to={VIEW_PATH.ERROR} replace />;

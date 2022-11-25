@@ -5,6 +5,7 @@ import { axiosErrorHandler } from 'utils/helpers';
 import { API_ENDPOINTS } from 'utils/variables';
 import { IColumnSet, IRequestForCreateColumns } from 'interfaces/columns';
 import { ColumnHeaderProps } from 'components/column/Header/ColumnHeader';
+import { ITask, ITaskRequest } from 'interfaces/task';
 
 export const getColumnsByBoardId = createAsyncThunk(
   'columns/byBoardId',
@@ -52,6 +53,46 @@ export const deleteColumn = createAsyncThunk(
     try {
       const { boardId, columnId } = column;
       const response = await axiosPrivate.delete(API_ENDPOINTS.COLUMN(boardId, columnId));
+      return response.data;
+    } catch (error) {
+      const err = error as AxiosError;
+      return rejectWithValue(axiosErrorHandler(err));
+    }
+  }
+);
+
+export const getTasks = createAsyncThunk<ITask[], ITask, { rejectValue: string }>(
+  'columns/getTasks',
+  async ({ boardId, columnId }: ITaskRequest, { rejectWithValue }) => {
+    try {
+      const response = await axiosPrivate.get(API_ENDPOINTS.TASKS(boardId, columnId));
+      return response.data;
+    } catch (error) {
+      const err = error as AxiosError;
+      return rejectWithValue(axiosErrorHandler(err));
+    }
+  }
+);
+
+export const getTasksSet = createAsyncThunk<ITask[], string, { rejectValue: string }>(
+  'columns/getTasksSet',
+  async (boardId: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosPrivate.get(API_ENDPOINTS.TASKS_SET(boardId));
+      return response.data;
+    } catch (error) {
+      const err = error as AxiosError;
+      return rejectWithValue(axiosErrorHandler(err));
+    }
+  }
+);
+
+export const createTask = createAsyncThunk<ITask, ITask, { rejectValue: string }>(
+  'columns/createTask',
+  async (createdTask: ITask, { rejectWithValue }) => {
+    try {
+      const { _id, boardId, columnId, ...task } = createdTask;
+      const response = await axiosPrivate.post(API_ENDPOINTS.TASKS(boardId, columnId), task);
       return response.data;
     } catch (error) {
       const err = error as AxiosError;

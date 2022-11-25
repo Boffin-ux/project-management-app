@@ -36,7 +36,7 @@ export const Task: FC<TaskProps> = ({ task, index }) => {
               {task.description}
             </Typography>
             <Box className={styles.taskSubArea}>
-              <GroupOfAvatar {...task} />
+              {/* <GroupOfAvatar {...task} /> */}
               <ButtonWithIcon
                 clickAction={() => console.log('Delete Task')}
                 icon={<DeleteIcon />}

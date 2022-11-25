@@ -7,10 +7,36 @@ import styles from './Column.module.scss';
 import { IColumn } from 'interfaces/columns';
 import { ButtonAddTask } from './ButtonAddTask/ButtonAddTask';
 import { useTranslation } from 'react-i18next';
+import { ITask } from 'interfaces/task';
+import { randomString } from 'utils/temputils';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { createTask } from 'store/column/thunks';
+import { Task } from 'pages/boardItem/Task/Task';
 
 export const Column: FC<IColumn> = ({ _id, title, tasks, order, boardId }) => {
   const [btnCapture, setBtnCapture] = useState<boolean>(false);
+
+  const userId = useAppSelector((state) => state.user.id);
+  const dispatch = useAppDispatch();
+
   const { t } = useTranslation();
+
+  console.log('->', tasks);
+
+  const addTask = () => {
+    const tempTask: ITask = {
+      _id: '',
+      boardId,
+      columnId: _id,
+      description: randomString(35),
+      order: 0,
+      title: randomString(12),
+      userId,
+      users: [],
+    };
+    dispatch(createTask(tempTask));
+    console.log(tempTask);
+  };
 
   return (
     <Draggable draggableId={_id} index={order}>
@@ -33,7 +59,11 @@ export const Column: FC<IColumn> = ({ _id, title, tasks, order, boardId }) => {
             onMouseOver={() => setBtnCapture(true)}
             onMouseOut={() => setBtnCapture(false)}
           >
-            <ButtonAddTask isCapture={btnCapture} title={t('boards.addTask')} />
+            <ButtonAddTask
+              isCapture={btnCapture}
+              title={t('boards.addTask')}
+              clickAction={addTask}
+            />
             <Box sx={{ mt: 2, flexGrow: 1 }}>
               <Droppable droppableId={_id}>
                 {(listProvided, snapshot) => (
@@ -42,7 +72,7 @@ export const Column: FC<IColumn> = ({ _id, title, tasks, order, boardId }) => {
                     {...listProvided.droppableProps}
                     className={snapshot.isDraggingOver ? styles.over : styles.drag}
                   >
-                    <Box></Box>
+                    {tasks.map((task, index) => task.title)}
                     {listProvided.placeholder}
                   </List>
                 )}
@@ -54,3 +84,5 @@ export const Column: FC<IColumn> = ({ _id, title, tasks, order, boardId }) => {
     </Draggable>
   );
 };
+
+// <Task key={task._id} task={task} index={index} />

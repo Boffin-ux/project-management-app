@@ -1,5 +1,3 @@
-import { IUser } from './user';
-
 export interface ITask {
   _id: string;
   title: string;
@@ -7,6 +5,18 @@ export interface ITask {
   boardId: string;
   columnId: string;
   description: string;
-  userId: number;
-  users: Array<IUser>;
+  userId: string;
+  users: Array<string>;
+}
+
+export interface ITaskState {
+  error: string | null;
+  isLoading: boolean;
+  tasks: ITask[];
+}
+
+export interface ITaskRequest {
+  boardId: string;
+  columnId: string;
+  taskId?: string;
 }

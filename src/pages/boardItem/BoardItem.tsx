@@ -34,8 +34,11 @@ export const Board = () => {
   useEffect(() => {
     const boardId = params.id as string;
     dispatch(getColumnsByBoardId(boardId));
-    columns.forEach((column) => dispatch(getTasks(boardId, column._id)));
-    // dispatch(getTasksSet(boardId));
+    dispatch(getTasksSet(boardId));
+
+    return function updateAll() {
+      console.log('Update all data');
+    };
   }, []);
 
   if (error || !currentBoard) return <Navigate to={VIEW_PATH.ERROR} replace />;
@@ -46,9 +49,10 @@ export const Board = () => {
     if (!source) return;
     if (source.droppableId === 'all-columns') {
       const items = Array.from(columns);
+      console.log(items);
       const [newOrder] = items.splice(source.index, 1);
       items.splice(destination.index, 0, newOrder);
-      dispatch(updateColumnsSet(getNewColumnsSet(items)));
+      // dispatch(updateColumnsSet(getNewColumnsSet(items)));
     }
   };
 

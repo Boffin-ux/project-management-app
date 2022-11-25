@@ -21,8 +21,6 @@ export const Column: FC<IColumn> = ({ _id, title, tasks, order, boardId }) => {
 
   const { t } = useTranslation();
 
-  console.log('->', tasks);
-
   const addTask = () => {
     const tempTask: ITask = {
       _id: '',
@@ -35,7 +33,6 @@ export const Column: FC<IColumn> = ({ _id, title, tasks, order, boardId }) => {
       users: [],
     };
     dispatch(createTask(tempTask));
-    console.log(tempTask);
   };
 
   return (
@@ -54,7 +51,6 @@ export const Column: FC<IColumn> = ({ _id, title, tasks, order, boardId }) => {
             {...columnProvided.dragHandleProps}
           />
           <Box
-            component="div"
             className={styles.columnContent}
             onMouseOver={() => setBtnCapture(true)}
             onMouseOut={() => setBtnCapture(false)}
@@ -70,9 +66,11 @@ export const Column: FC<IColumn> = ({ _id, title, tasks, order, boardId }) => {
                   <List
                     ref={listProvided.innerRef}
                     {...listProvided.droppableProps}
-                    className={snapshot.isDraggingOver ? styles.over : styles.drag}
+                    // className={snapshot.isDraggingOver ? styles.over : styles.drag}
                   >
-                    {tasks.map((task, index) => task.title)}
+                    {tasks.map((task, index) => (
+                      <Task key={task._id} task={task} index={index} />
+                    ))}
                     {listProvided.placeholder}
                   </List>
                 )}

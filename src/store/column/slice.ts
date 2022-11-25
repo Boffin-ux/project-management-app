@@ -4,6 +4,7 @@ import {
   createColumn,
   createTask,
   deleteColumn,
+  deleteTask,
   getColumnsByBoardId,
   getTasks,
   getTasksSet,
@@ -29,6 +30,9 @@ export const columnSlice = createSlice({
       .addCase(getColumnsByBoardId.fulfilled, (state, action) => {
         state.isLoading = false;
         state.columns = action.payload;
+        state.columns = state.columns.map((column) => {
+          return { ...column, tasks: [] };
+        });
       })
       .addCase(getColumnsByBoardId.rejected, (state, action) => {
         state.isLoading = false;
@@ -40,6 +44,7 @@ export const columnSlice = createSlice({
       })
       .addCase(createColumn.fulfilled, (state, action) => {
         state.columns.push(action.payload);
+        state.columns[state.columns.length - 1].tasks = [];
         state.isLoading = false;
       })
       .addCase(createColumn.rejected, (state, action) => {
@@ -86,21 +91,12 @@ export const columnSlice = createSlice({
             state.error = 'Column not found';
           }
         }
-
-        // state.columns = state.columns.map((column) => {
-        //   return { ...column, tasks: [] };
-        // });
-        // state.columns.map();
-
-        //state.columns.find(action.payload)
-        // найти куда вставлять
-        //state.columns tasks = action.payload;
       })
       .addCase(getTasks.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       })
-      .addCase(createTask.pending, (state, action) => {
+      .addCase(createTask.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
@@ -117,16 +113,39 @@ export const columnSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as string;
       })
-      .addCase(getTasksSet.pending, (state, action) => {
+      .addCase(getTasksSet.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(getTasksSet.fulfilled, (state, action) => {
         state.columns = state.columns.map((column) => {
-          return { ...column, tasks: [] };
+          return {
+            ...column,
+            tasks: [...action.payload.filter((task) => task.columnId === column._id)],
+          };
         });
       })
       .addCase(getTasksSet.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(deleteTask.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(deleteTask.fulfilled, (state, action) => {
+        state.isLoading = false;
+        action.payload.columnId;
+        state.columns = state.columns.map((column) => {
+          let editTasks = Array.from(column.tasks);
+          const { columnId, _id } = action.payload;
+          if (column._id === columnId) {
+            editTasks = editTasks.filter((task) => task._id !== _id);
+          }
+          return { ...column, tasks: editTasks };
+        });
+      })
+      .addCase(deleteTask.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       });

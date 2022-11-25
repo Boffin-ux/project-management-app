@@ -100,3 +100,19 @@ export const createTask = createAsyncThunk<ITask, ITask, { rejectValue: string }
     }
   }
 );
+
+export const deleteTask = createAsyncThunk(
+  'columns/daleteTask',
+  async (taskRequest: ITaskRequest, { rejectWithValue }) => {
+    try {
+      const { boardId, columnId, taskId } = taskRequest;
+      const response = await axiosPrivate.delete(
+        API_ENDPOINTS.TASK(boardId, columnId, taskId as string)
+      );
+      return response.data;
+    } catch (error) {
+      const err = error as AxiosError;
+      return rejectWithValue(axiosErrorHandler(err));
+    }
+  }
+);

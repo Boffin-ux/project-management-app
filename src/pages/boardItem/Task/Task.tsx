@@ -7,6 +7,8 @@ import { ITask } from 'interfaces/task';
 import { ButtonWithIcon } from 'components/buttons/ButtonWithIcon/ButtonWithIcon';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { deleteTask } from 'store/column/thunks';
+import { useAppDispatch } from 'hooks/redux';
 
 export interface TaskProps {
   task: ITask;
@@ -14,6 +16,13 @@ export interface TaskProps {
 }
 
 export const Task: FC<TaskProps> = ({ task, index }) => {
+  const dispatch = useAppDispatch();
+
+  const removeTask = () => {
+    const { _id, boardId, columnId } = task;
+    dispatch(deleteTask({ boardId, columnId, taskId: _id }));
+  };
+
   return (
     <Draggable draggableId={task._id} index={index}>
       {(taskProvided, taskSnapshot) => (
@@ -37,10 +46,7 @@ export const Task: FC<TaskProps> = ({ task, index }) => {
             </Typography>
             <Box className={styles.taskSubArea}>
               {/* <GroupOfAvatar {...task} /> */}
-              <ButtonWithIcon
-                clickAction={() => console.log('Delete Task')}
-                icon={<DeleteIcon />}
-              />
+              <ButtonWithIcon clickAction={removeTask} icon={<DeleteIcon />} />
             </Box>
           </Box>
         </ListItem>

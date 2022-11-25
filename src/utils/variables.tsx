@@ -1,3 +1,9 @@
+const initialValues = {
+  title: '',
+  description: '',
+  users: [],
+};
+
 const LOCALES = {
   ENGLISH: 'en',
   RUSSIAN: 'ru',
@@ -24,6 +30,7 @@ const API_ENDPOINTS = {
   SIGN_UP: 'auth/signup',
   BOARDS: 'boards',
   USER_INFO: 'users/',
+  USERS: 'users',
   COLUMNS_SET: 'columnsSet',
   BOARD(boardId: string): string {
     return `${this.BOARDS}/${boardId}`;
@@ -55,4 +62,26 @@ const RESPONSE_CODES = {
   ALREADY_EXIST: 409,
 };
 
-export { LOCALES, VIEW_PATH, PAGES_TITLE, API_ENDPOINTS, RESPONSE_CODES };
+const FIELD_OPTIONS = {
+  DESC: 'description',
+  NAME: 'title',
+  MULTI_ROWS: 3,
+  INIT_ROWS: 1,
+};
+
+const VALUE_VALID = {
+  MIN_LENGTH: 3,
+  NAME_MAX_LENGTH: 30,
+  DESC_MAX_LENGTH: 90,
+};
+
+export {
+  LOCALES,
+  VIEW_PATH,
+  PAGES_TITLE,
+  API_ENDPOINTS,
+  RESPONSE_CODES,
+  FIELD_OPTIONS,
+  VALUE_VALID,
+  initialValues,
+};

@@ -11,19 +11,29 @@
     "authLoginExist": "Такой логин уже существует",
     "authLoginFailed": "Ошибка аутентификации",
     "invalidToken": "Неверный токен авторизации",
-    "badRequest": "Некорректный запрос"
+    "badRequest": "Некорректный запрос",
+    "errorEmptyField": "Поле обязательно для заполнения",
+    "errorMinLengthName": "Минимальная длина {{MIN_LENGTH}} символа",
+    "errorMinLengthDesc": "Минимальная длина {{MIN_LENGTH}} символа",
+    "errorMaxLengthName": "Максимальная длина {{NAME_MAX_LENGTH}} символов",
+    "errorMaxLengthDesc": "Максимальная длина {{DESC_MAX_LENGTH}} символов",
+    "errorUserLabel": "Выберите пользователя",
+    "errorTrim": "Поле не может содержать начальные и конечные пробелы."
   },
   "header": {
     "signIn": "Войти",
     "signUp": "Регистрация",
     "homeLink": "Главная",
     "addBoard": "Добавить доску",
+    "boardPage": "Доски",
     "editProfile": "Редактировать профиль"
   },
   "profile": {
     "profileHeader": "Редактировать профиль",
     "saveButton": "Сохранить",
-    "deleteUserButton": "Удалить пользователя"
+    "deleteUserButton": "Удалить пользователя",
+    "deleteProfile": "Вы хотите удалить профиль?",
+    "editProfile": "Вы хотите изменить данные?"
   },
   "auth": {
     "signIn": "Войти",
@@ -78,6 +88,40 @@
     "addBoard": "Добавить доску",
     "onlyMy": "Только мои доски",
     "addColumn": "Добавить колонку",
-    "addTask": "Добавить задачу"
+    "addTask": "Добавить задачу",
+    "boardModalTitle": "Добавить доску",
+    "editModalTitle": "Изменить доску",
+    "submitBtnForm": "Создать новую доску",
+    "editSubmitBtnForm": "Изменить",
+    "titleLabelForm": "Название доски",
+    "descriptionLabelForm": "Описание доски",
+    "editeBoard": "Редактировать доску",
+    "deleteBoard": "Вы уверены, что хотите удалить эту доску?"
+  },
+    "tasks": {
+    "modalTitle": "Добавить задачу",
+    "editModalTitle": "Изменить задачу",
+    "submitBtnForm": "Добавить новую задачу",
+    "editSubmitBtnForm": "Изменить",
+    "titleLabelForm": "Название задачи",
+    "descLabelForm": "Описание задачи",
+    "deleteTask": "Вы уверены, что хотите удалить эту задачу?"
+  },
+  "columns": {
+    "modalTitle": "Добавить колонку",
+    "submitBtnForm": "Создать новую колонку",
+    "titleLabelForm": "Название колонки",
+    "deleteColumn": "Вы уверены, что хотите удалить эту колонку?"
+  },
+  "confirmBtn": {
+    "agreeBtnForm": "Подтведить",
+    "disagreeBtnForm": "Отказаться"
+  },
+  "selectUser": {
+    "userLabelForm": "Пользователь"
+  },
+  "editForm": {
+    "editModalTitle": "Изменить название",
+    "editSubmitBtnForm": "Изменить"
   }
 }

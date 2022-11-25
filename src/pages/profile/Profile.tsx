@@ -50,6 +50,9 @@ function Profile() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          backgroundColor: '#fff',
+          padding: '20px',
+          borderRadius: '4px',
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -94,7 +97,7 @@ function Profile() {
           {!dirty && error && (
             <Typography sx={{ color: 'red', my: 1 }}>{t(`errors.${error}`)}</Typography>
           )}
-          <Box sx={{ position: 'relative' }}>
+          <Box sx={{ position: 'relative' }} margin={'16px 0 8px'}>
             <Button
               color="primary"
               variant="contained"

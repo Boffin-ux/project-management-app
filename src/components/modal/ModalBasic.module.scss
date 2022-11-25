@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  padding: 30px;
+  margin: auto;
+  width: 90%;
+  max-width: 600px;
+  background-color: #fff;
+  border-radius: 3px;
+
+  button.btnClose {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+
+  .title {
+    text-align: center;
+    font-weight: 500;
+    margin-top: 5px;
+  }
+}

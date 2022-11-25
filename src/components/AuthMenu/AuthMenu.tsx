@@ -1,19 +1,31 @@
 import { AppRegistration, Dashboard, DashboardCustomize, Login } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
+import { addBoardForm } from 'components/form/constants/formOptions';
+import FormModal from 'components/form/FormModal';
 import { btnStyle, subtitleStyle } from 'components/header/headerStyles';
-import { useAppSelector } from 'hooks/redux';
-import React from 'react';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { IRequestForBoard } from 'interfaces/boards';
+import { IFormValues } from 'interfaces/modal';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { createBoard } from 'store/board/thunks';
 import { VIEW_PATH } from 'utils/variables';
 
 function AuthMenu() {
-  const { token } = useAppSelector((state) => state.user);
+  const { token, id } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const [isModalActive, setIsModalActive] = useState(false);
 
   const handleCreateBoard = () => {
-    navigate(VIEW_PATH.BOARDS, { replace: false, state: { showModal: true } });
+    setIsModalActive(true);
+  };
+
+  const addNewBoard = (formData?: IFormValues) => {
+    const newFormData = { ...formData, owner: id } as unknown as IRequestForBoard;
+    setIsModalActive(false);
+    dispatch(createBoard(newFormData));
   };
 
   return (
@@ -50,6 +62,12 @@ function AuthMenu() {
           </Button>
         </>
       )}
+      <FormModal
+        isModalActive={isModalActive}
+        closeModal={() => setIsModalActive(false)}
+        action={addNewBoard}
+        {...addBoardForm}
+      />
     </>
   );
 }

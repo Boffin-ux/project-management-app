@@ -4,7 +4,7 @@ import { ControlUnit } from './controlUnit/ControlUnit';
 import { BoardCard } from './Card/BoardCard';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { createBoard, getAllBoards } from 'store/board/thunks';
-import { useNavigate, useLocation, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import Loader from 'components/universal/Loader/Loader';
 import { VIEW_PATH } from 'utils/variables';
 import styles from './BoardList.module.scss';
@@ -15,8 +15,6 @@ import { IFormValues } from 'interfaces/modal';
 
 export const Boards = () => {
   const dispatch = useAppDispatch();
-  const location = useLocation();
-  const navigate = useNavigate();
   const { boards, error, isLoading } = useAppSelector((state) => state.boards);
   const { id } = useAppSelector((state) => state.user);
   const [isModalActive, setIsModalActive] = useState(false);
@@ -24,13 +22,6 @@ export const Boards = () => {
   useEffect(() => {
     dispatch(getAllBoards());
   }, []);
-
-  useEffect(() => {
-    if (location?.state && location?.state.showModal) {
-      setIsModalActive(true);
-      navigate(location.pathname, { replace: false });
-    }
-  }, [location]);
 
   if (error) return <Navigate to={VIEW_PATH.ERROR} replace />;
 

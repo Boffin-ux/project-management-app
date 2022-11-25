@@ -14,6 +14,8 @@
     "badRequest": "Некорректный запрос"
   },
   "successful": {
+    "signUpMessage": "Аккаунт успешно зарегистрирован!",
+    "signInMessage": "Успешный вход в аккаунт!",
     "userDeleteMessage": "Аккаунт пользователя был успешно удален!"
   },
   "header": {

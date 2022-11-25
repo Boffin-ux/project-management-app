@@ -3,10 +3,11 @@ import { Avatar, Box, Button, Container, Link, TextField, Typography } from '@mu
 import Loader from 'components/universal/Loader/Loader';
 import { useFormik } from 'formik';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { useSnackbar } from 'notistack';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { userValidationSchema } from 'schemas/userSchemas';
-import { signUp } from 'store/user/thnuks';
+import { signIn, signUp } from 'store/user/thnuks';
 import { VIEW_PATH } from 'utils/variables';
 
 const initialValues = {
@@ -16,6 +17,7 @@ const initialValues = {
 };
 
 function SignUp() {
+  const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { isLoading, error } = useAppSelector((state) => state.user);
@@ -24,8 +26,20 @@ function SignUp() {
     initialValues,
     validationSchema: userValidationSchema,
     onSubmit: async (values, { resetForm }) => {
-      await dispatch(signUp(values));
-      resetForm();
+      try {
+        await dispatch(signUp(values)).unwrap();
+        enqueueSnackbar(t('successful.signUpMessage'), { variant: 'success' });
+        const { name, ...signInData } = values;
+        try {
+          await dispatch(signIn(signInData)).unwrap(); // Immediately sign in after successful sign up
+          enqueueSnackbar(t('successful.signInMessage'), { variant: 'success' });
+        } catch (error) {
+          throw error;
+        }
+      } catch (error) {
+        resetForm();
+        enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
+      }
     },
   });
 
@@ -60,6 +74,7 @@ function SignUp() {
             onChange={handleChange}
             error={touched.name && !!nameError}
             helperText={touched.name && !!nameError && t(`errors.${nameError}`)}
+            disabled={isLoading}
           />
           <TextField
             fullWidth
@@ -70,6 +85,7 @@ function SignUp() {
             onChange={handleChange}
             error={touched.login && !!loginError}
             helperText={touched.login && !!loginError && t(`errors.${loginError}`)}
+            disabled={isLoading}
           />
           <TextField
             fullWidth
@@ -81,6 +97,7 @@ function SignUp() {
             onChange={handleChange}
             error={touched.password && !!passwordError}
             helperText={touched.password && !!passwordError && t(`errors.${passwordError}`)}
+            disabled={isLoading}
           />
           {!dirty && error && (
             <Typography sx={{ color: 'red', my: 1 }}>{t(`errors.${error}`)}</Typography>

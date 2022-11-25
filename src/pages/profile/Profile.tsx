@@ -70,6 +70,7 @@ function Profile() {
             onChange={handleChange}
             error={touched.name && !!nameError}
             helperText={touched.name && !!nameError && t(`errors.${nameError}`)}
+            disabled={isLoading}
           />
           <TextField
             fullWidth
@@ -80,6 +81,7 @@ function Profile() {
             onChange={handleChange}
             error={touched.login && !!loginError}
             helperText={touched.login && !!loginError && t(`errors.${loginError}`)}
+            disabled={isLoading}
           />
           <TextField
             fullWidth
@@ -91,6 +93,7 @@ function Profile() {
             onChange={handleChange}
             error={touched.password && !!passwordError}
             helperText={touched.password && !!passwordError && t(`errors.${passwordError}`)}
+            disabled={isLoading}
           />
           {!dirty && error && (
             <Typography sx={{ color: 'red', my: 1 }}>{t(`errors.${error}`)}</Typography>
@@ -119,6 +122,7 @@ function Profile() {
           >
             {t('profile.deleteUserButton')}
           </Button>
+          {isLoading && <Loader />}
         </Box>
       </Box>
     </Container>

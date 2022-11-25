@@ -12,6 +12,8 @@
     "authLoginFailed": "Login Failed"
   },
   "successful": {
+    "signUpMessage": "Successful registration!",
+    "signInMessage": "Successful sign in!",
     "userDeleteMessage": "The user account has been successfully deleted!"
   },
   "header": {

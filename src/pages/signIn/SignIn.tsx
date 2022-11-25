@@ -3,6 +3,7 @@ import { Avatar, Box, Button, Container, Link, TextField, Typography } from '@mu
 import Loader from 'components/universal/Loader/Loader';
 import { useFormik } from 'formik';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { useSnackbar } from 'notistack';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { loginValidationSchema } from 'schemas/userSchemas';
@@ -15,6 +16,7 @@ const initialValues = {
 };
 
 function SignIn() {
+  const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { isLoading, error } = useAppSelector((state) => state.user);
@@ -22,9 +24,14 @@ function SignIn() {
   const { values, touched, errors, handleSubmit, handleChange, dirty } = useFormik({
     initialValues,
     validationSchema: loginValidationSchema,
-    onSubmit: (values, { resetForm }) => {
-      dispatch(signIn(values));
-      resetForm();
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        await dispatch(signIn(values)).unwrap();
+        enqueueSnackbar(t('successful.signInMessage'), { variant: 'success' });
+      } catch (error) {
+        resetForm();
+        enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
+      }
     },
   });
 

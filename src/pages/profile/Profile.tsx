@@ -3,18 +3,14 @@ import { Avatar, Box, Button, Container, TextField, Typography } from '@mui/mate
 import Loader from 'components/universal/Loader/Loader';
 import { useFormik } from 'formik';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { useSnackbar } from 'notistack';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { userValidationSchema } from 'schemas/userSchemas';
 import { deleteUser, updateUserInfo } from 'store/user/thnuks';
-import * as yup from 'yup';
-
-const validationSchema = yup.object({
-  name: yup.string().min(2, 'NameValidationMin').required('NameValidationRequired'),
-  login: yup.string().min(3, 'loginValidationMin').required('loginValidationRequired'),
-  password: yup.string().min(8, 'passwordValidationMin').required('passwordValidationRequired'),
-});
 
 function Profile() {
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { id, name, login, isLoading, error } = useAppSelector((state) => state.user);
@@ -27,7 +23,7 @@ function Profile() {
 
   const { values, touched, errors, handleSubmit, handleChange, dirty } = useFormik({
     initialValues,
-    validationSchema,
+    validationSchema: userValidationSchema,
     onSubmit: (values, { resetForm }) => {
       dispatch(updateUserInfo({ ...values, userId: id }));
       resetForm();
@@ -38,8 +34,13 @@ function Profile() {
   const loginError = errors.login;
   const passwordError = errors.password;
 
-  const handleDeleteUser = () => {
-    dispatch(deleteUser(id));
+  const handleDeleteUser = async () => {
+    try {
+      await dispatch(deleteUser(id)).unwrap();
+      enqueueSnackbar(t('successful.userDeleteMessage'), { variant: 'success' });
+    } catch (error) {
+      enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
+    }
   };
 
   return (
@@ -50,6 +51,9 @@ function Profile() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          backgroundColor: '#fff',
+          padding: '20px',
+          borderRadius: '4px',
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -69,6 +73,7 @@ function Profile() {
             onChange={handleChange}
             error={touched.name && !!nameError}
             helperText={touched.name && !!nameError && t(`errors.${nameError}`)}
+            disabled={isLoading}
           />
           <TextField
             fullWidth
@@ -79,6 +84,7 @@ function Profile() {
             onChange={handleChange}
             error={touched.login && !!loginError}
             helperText={touched.login && !!loginError && t(`errors.${loginError}`)}
+            disabled={isLoading}
           />
           <TextField
             fullWidth
@@ -90,11 +96,12 @@ function Profile() {
             onChange={handleChange}
             error={touched.password && !!passwordError}
             helperText={touched.password && !!passwordError && t(`errors.${passwordError}`)}
+            disabled={isLoading}
           />
           {!dirty && error && (
             <Typography sx={{ color: 'red', my: 1 }}>{t(`errors.${error}`)}</Typography>
           )}
-          <Box sx={{ position: 'relative' }}>
+          <Box sx={{ position: 'relative' }} margin={'16px 0 8px'}>
             <Button
               color="primary"
               variant="contained"
@@ -118,6 +125,7 @@ function Profile() {
           >
             {t('profile.deleteUserButton')}
           </Button>
+          {isLoading && <Loader />}
         </Box>
       </Box>
     </Container>

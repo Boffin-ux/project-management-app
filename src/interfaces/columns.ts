@@ -15,10 +15,12 @@ export interface Icolumns {
   columns: IColumn[];
 }
 
+export type IError = string | null;
+
 export interface IColumnState {
   columns: IColumn[];
   isLoading: boolean;
-  error: string | null;
+  error: IError;
 }
 
 export interface IRequestForCreateColumns {

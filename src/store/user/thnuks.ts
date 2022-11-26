@@ -74,3 +74,13 @@ export const deleteUser = createAsyncThunk(
     }
   }
 );
+
+export const getUsers = createAsyncThunk('users', async (_, { rejectWithValue }) => {
+  try {
+    const response = await axiosPrivate.get(API_ENDPOINTS.USERS);
+    return response.data;
+  } catch (error) {
+    const err = error as AxiosError;
+    return rejectWithValue(axiosErrorHandler(err));
+  }
+});

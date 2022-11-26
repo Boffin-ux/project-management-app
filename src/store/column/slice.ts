@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { IColumnState } from 'interfaces/columns';
+import { createSlice, PayloadAction, PayloadActionCreator } from '@reduxjs/toolkit';
+import { IColumn, IColumnState, IError } from 'interfaces/columns';
 import { createColumn, deleteColumn, getColumnsByBoardId, updateColumnsSet } from './thunks';
 
 const initialState: IColumnState = {
@@ -16,7 +16,7 @@ export const columnSlice = createSlice({
     builder
       .addCase(getColumnsByBoardId.pending, (state) => {
         state.isLoading = true;
-        state.error = null;
+        state.error = '';
       })
       .addCase(getColumnsByBoardId.fulfilled, (state, action) => {
         state.isLoading = false;

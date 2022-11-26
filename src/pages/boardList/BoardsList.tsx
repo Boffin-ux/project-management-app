@@ -33,7 +33,7 @@ export const Boards = () => {
 
   const addNewBoard = (formData?: IFormValues) => {
     const newFormData = { ...formData, owner: id } as unknown as IRequestForBoard;
-    setIsModalActive(false);
+    setIsModalActive(true);
     dispatch(createBoard(newFormData));
   };
 

@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IColumn, IColumnState } from 'interfaces/columns';
+import { IDragDropColumn, IDragDropTask } from 'interfaces/dragdrop';
+import { ITask } from 'interfaces/task';
 import {
   createColumn,
   createTask,
@@ -18,10 +20,52 @@ const initialState: IColumnState = {
   error: null,
 };
 
+const updateOrder = (tasks: ITask[]): ITask[] => {
+  return tasks.map((task, index) => ({ ...task, order: index }));
+};
+
 export const columnSlice = createSlice({
   name: 'columns',
   initialState,
-  reducers: {},
+  reducers: {
+    moveColumns: (state, action: PayloadAction<IDragDropColumn>) => {
+      state.isLoading = true;
+
+      const items = Array.from(state.columns);
+      const [newOrder] = items.splice(action.payload.source, 1);
+      items.splice(action.payload.destination, 0, newOrder);
+      state.columns = items;
+
+      state.isLoading = false;
+    },
+    moveTask: (state, action: PayloadAction<IDragDropTask>) => {
+      state.isLoading = true;
+
+      const { sourceColumnId, destinationColumnId, sourceIndex, destinationIndex } = action.payload;
+      if (destinationColumnId === sourceColumnId) {
+        const currentColumn = state.columns.find((column) => column._id === sourceColumnId);
+        if (currentColumn) {
+          const tasksInColumn = currentColumn.tasks;
+          const [newOrder] = tasksInColumn.splice(sourceIndex, 1);
+          tasksInColumn.splice(destinationIndex, 0, newOrder);
+          currentColumn.tasks = updateOrder(currentColumn.tasks);
+        }
+      } else {
+        const sourceColumn = state.columns.find((column) => column._id === sourceColumnId);
+        const destinationColumn = state.columns.find(
+          (column) => column._id === destinationColumnId
+        );
+        if (sourceColumn && destinationColumn) {
+          const [newOrder] = sourceColumn.tasks.splice(sourceIndex, 1);
+          destinationColumn.tasks.splice(destinationIndex, 0, newOrder);
+          sourceColumn.tasks = updateOrder(sourceColumn.tasks);
+          destinationColumn.tasks = updateOrder(destinationColumn.tasks);
+        }
+      }
+
+      state.isLoading = false;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(getColumnsByBoardId.pending, (state) => {
@@ -173,4 +217,5 @@ export const columnSlice = createSlice({
   },
 });
 
+export const { moveColumns, moveTask } = columnSlice.actions;
 export default columnSlice.reducer;

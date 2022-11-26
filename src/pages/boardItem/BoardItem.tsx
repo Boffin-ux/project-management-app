@@ -20,6 +20,8 @@ import { randomString } from 'utils/temputils';
 import Loader from 'components/universal/Loader/Loader';
 import { getNewColumnsSet } from 'utils/dragdrop';
 import { useTranslation } from 'react-i18next';
+import { moveColumns, moveTask } from 'store/column/slice';
+import { IDragDropColumn, IDragDropTask } from 'interfaces/dragdrop';
 
 export const Board = () => {
   const params = useParams();
@@ -48,11 +50,20 @@ export const Board = () => {
     if (!destination) return;
     if (!source) return;
     if (source.droppableId === 'all-columns') {
-      const items = Array.from(columns);
-      console.log(items);
-      const [newOrder] = items.splice(source.index, 1);
-      items.splice(destination.index, 0, newOrder);
-      // dispatch(updateColumnsSet(getNewColumnsSet(items)));
+      const indexes: IDragDropColumn = {
+        destination: destination.index,
+        source: source.index,
+      };
+      dispatch(moveColumns(indexes));
+    } else {
+      const movedTask: IDragDropTask = {
+        destinationColumnId: destination.droppableId,
+        destinationIndex: destination.index,
+        sourceColumnId: source.droppableId,
+        sourceIndex: source.index,
+      };
+
+      dispatch(moveTask(movedTask));
     }
   };
 

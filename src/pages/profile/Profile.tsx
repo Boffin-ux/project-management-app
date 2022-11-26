@@ -1,10 +1,12 @@
 import { Build } from '@mui/icons-material';
 import { Avatar, Box, Button, Container, TextField, Typography } from '@mui/material';
+import { deleteProfileForm } from 'components/form/constants/formOptions';
+import FormModal from 'components/form/FormModal';
 import Loader from 'components/universal/Loader/Loader';
 import { useFormik } from 'formik';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { useSnackbar } from 'notistack';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { userValidationSchema } from 'schemas/userSchemas';
 import { deleteUser, updateUserInfo } from 'store/user/thnuks';
@@ -14,6 +16,7 @@ function Profile() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { id, name, login, isLoading, error } = useAppSelector((state) => state.user);
+  const [isModalActive, setIsModalActive] = useState(false);
 
   const initialValues = {
     name: name ?? '',
@@ -34,10 +37,15 @@ function Profile() {
   const loginError = errors.login;
   const passwordError = errors.password;
 
+  const onConfirm = () => {
+    setIsModalActive(true);
+  };
+
   const handleDeleteUser = async () => {
     try {
       await dispatch(deleteUser(id)).unwrap();
       enqueueSnackbar(t('successful.userDeleteMessage'), { variant: 'success' });
+      setIsModalActive(false);
     } catch (error) {
       enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
     }
@@ -121,13 +129,19 @@ function Profile() {
             fullWidth
             type="submit"
             disabled={isLoading}
-            onClick={handleDeleteUser}
+            onClick={onConfirm}
           >
             {t('profile.deleteUserButton')}
           </Button>
           {isLoading && <Loader />}
         </Box>
       </Box>
+      <FormModal
+        isModalActive={isModalActive}
+        closeModal={() => setIsModalActive(false)}
+        action={handleDeleteUser}
+        {...deleteProfileForm}
+      />
     </Container>
   );
 }

@@ -46,6 +46,9 @@ function SignIn() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          backgroundColor: '#fff',
+          padding: '20px',
+          borderRadius: '4px',
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>

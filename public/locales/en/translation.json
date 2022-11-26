@@ -10,6 +10,7 @@
     "authWrongPassword": "Wrong Username or Password",
     "authLoginExist": "Login already exist",
     "authLoginFailed": "Login Failed",
+    "invalidToken": "Invalid authorization token",
     "errorEmptyField": "Field is Required",
     "errorMinLengthName": "Min length {{MIN_LENGTH}} letters",
     "errorMinLengthDesc": "Min length {{MIN_LENGTH}} letters",
@@ -21,7 +22,10 @@
   "successful": {
     "signUpMessage": "Successful registration!",
     "signInMessage": "Successful sign in!",
-    "userDeleteMessage": "The user account has been successfully deleted!"
+    "userDeleteMessage": "The user account has been successfully deleted!",
+    "userEditMessage": "The user account has been successfully changed!",
+    "deleteBoardMessage": "The Board was deleted successfully!",
+    "addBoardMessage": "The board was created successfully!"
   },
   "header": {
     "signIn": "Sign In",

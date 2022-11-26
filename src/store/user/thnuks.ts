@@ -33,11 +33,11 @@ export const signUp = createAsyncThunk(
 );
 
 export const getUserInfo = createAsyncThunk(
-  'users/getUsersInfo',
+  'user/getUsersInfo',
   async (token: string, { rejectWithValue, dispatch }) => {
     const { id } = parseJwt(token);
     try {
-      const response = await axiosPrivate.get(API_ENDPOINTS.USER_INFO + id);
+      const response = await axiosPrivate.get(API_ENDPOINTS.USER(id));
       dispatch(setUserId(id));
       return response.data;
     } catch (error) {
@@ -48,11 +48,11 @@ export const getUserInfo = createAsyncThunk(
 );
 
 export const updateUserInfo = createAsyncThunk(
-  'users/updateUsersInfo',
+  'user/updateUsersInfo',
   async (updateUserData: IupdateUserData, { rejectWithValue }) => {
     const { userId, ...otherData } = updateUserData;
     try {
-      const response = await axiosPrivate.put(API_ENDPOINTS.USER_INFO + userId, otherData);
+      const response = await axiosPrivate.put(API_ENDPOINTS.USER(userId), otherData);
       return response.data;
     } catch (error) {
       const err = error as AxiosError;
@@ -62,10 +62,10 @@ export const updateUserInfo = createAsyncThunk(
 );
 
 export const deleteUser = createAsyncThunk(
-  'users/deleteUser',
+  'user/deleteUser',
   async (userId: string, { rejectWithValue, dispatch }) => {
     try {
-      const response = await axiosPrivate.delete(API_ENDPOINTS.USER_INFO + userId);
+      const response = await axiosPrivate.delete(API_ENDPOINTS.USER(userId));
       dispatch(logout());
       return response.data;
     } catch (error) {

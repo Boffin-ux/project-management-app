@@ -13,7 +13,7 @@ const initialState: IUsersState = {
 };
 
 export const usersSlice = createSlice({
-  name: 'users',
+  name: 'user',
   initialState,
   reducers: {
     setUserId: (state, action) => {

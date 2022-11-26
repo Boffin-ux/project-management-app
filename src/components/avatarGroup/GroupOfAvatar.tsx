@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Box, Avatar, AvatarGroup } from '@mui/material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { IUser } from 'interfaces/user';
+import { IUser } from 'interfaces/users';
 
 export interface GroupOfAvatarProps {
   _id: string;

@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { IColumnState } from 'interfaces/columns';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IColumn, IColumnState } from 'interfaces/columns';
 import {
   createColumn,
   createTask,
@@ -26,9 +26,9 @@ export const columnSlice = createSlice({
     builder
       .addCase(getColumnsByBoardId.pending, (state) => {
         state.isLoading = true;
-        state.error = null;
+        state.error = '';
       })
-      .addCase(getColumnsByBoardId.fulfilled, (state, action) => {
+      .addCase(getColumnsByBoardId.fulfilled, (state, action: PayloadAction<IColumn[]>) => {
         state.isLoading = false;
         state.columns = action.payload;
         state.columns = state.columns.map((column) => {
@@ -43,7 +43,7 @@ export const columnSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(createColumn.fulfilled, (state, action) => {
+      .addCase(createColumn.fulfilled, (state, action: PayloadAction<IColumn>) => {
         state.columns.push(action.payload);
         state.columns[state.columns.length - 1].tasks = [];
         state.isLoading = false;
@@ -56,7 +56,7 @@ export const columnSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(updateColumnsSet.fulfilled, (state, action) => {
+      .addCase(updateColumnsSet.fulfilled, (state, action: PayloadAction<IColumn[]>) => {
         state.columns = action.payload;
         state.isLoading = false;
       })
@@ -68,7 +68,7 @@ export const columnSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(deleteColumn.fulfilled, (state, action) => {
+      .addCase(deleteColumn.fulfilled, (state, action: PayloadAction<IColumn>) => {
         state.isLoading = false;
         state.columns = state.columns.filter((column) => column._id !== action.payload._id);
       })

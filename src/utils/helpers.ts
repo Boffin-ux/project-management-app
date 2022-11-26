@@ -1,4 +1,5 @@
 import { AxiosError } from 'axios';
+import { IUsers } from 'interfaces/users';
 import { RESPONSE_CODES } from './variables';
 
 export const axiosErrorHandler = (err: AxiosError) => {
@@ -33,4 +34,13 @@ export const parseJwt = (token: string) => {
       .join('')
   );
   return JSON.parse(jsonPayload);
+};
+
+export const getUserById = (users: IUsers[], userId: string): IUsers => {
+  const tempUser: IUsers = {
+    _id: userId,
+    name: 'noname',
+    login: 'noname',
+  };
+  return users.find((user) => user._id === userId) || tempUser;
 };

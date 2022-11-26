@@ -19,7 +19,7 @@ export const getAllBoards = createAsyncThunk<Array<IBoard>, void, { rejectValue:
   }
 );
 
-export const createBoard = createAsyncThunk(
+export const createBoard = createAsyncThunk<IBoard, IRequestForBoard, { rejectValue: string }>(
   'boards/create',
   async (dataBoardCreator: IRequestForBoard, { rejectWithValue }) => {
     try {
@@ -32,7 +32,7 @@ export const createBoard = createAsyncThunk(
   }
 );
 
-export const deleteBoard = createAsyncThunk(
+export const deleteBoard = createAsyncThunk<IBoard, string, { rejectValue: string }>(
   'boards/delete',
   async (boardId: string, { rejectWithValue }) => {
     try {
@@ -45,7 +45,7 @@ export const deleteBoard = createAsyncThunk(
   }
 );
 
-export const updateBoard = createAsyncThunk(
+export const updateBoard = createAsyncThunk<IBoard, IBoard, { rejectValue: string }>(
   'boards/update',
   async (dataBoardUpdater: IBoard, { rejectWithValue }) => {
     try {
@@ -59,7 +59,7 @@ export const updateBoard = createAsyncThunk(
   }
 );
 
-export const boardGetAllForUser = createAsyncThunk(
+export const boardGetAllForUser = createAsyncThunk<IBoard[], string, { rejectValue: string }>(
   'boards/getAllForUser',
   async (userId: string, { rejectWithValue }) => {
     try {

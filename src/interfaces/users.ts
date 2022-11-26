@@ -28,3 +28,9 @@ export interface IUsersState extends IUser {
   error: string | null;
   users: Array<IUsersData>;
 }
+
+export interface IUsers {
+  _id: string;
+  name: string;
+  login: string;
+}

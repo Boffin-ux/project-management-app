@@ -32,6 +32,9 @@ const API_ENDPOINTS = {
   USER_INFO: 'users/',
   USERS: 'users',
   COLUMNS_SET: 'columnsSet',
+  USER(userId: string): string {
+    return `${this.USERS}/${userId}`;
+  },
   BOARD(boardId: string): string {
     return `${this.BOARDS}/${boardId}`;
   },

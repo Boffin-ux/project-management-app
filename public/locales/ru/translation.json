@@ -23,7 +23,9 @@
   "successful": {
     "signUpMessage": "Аккаунт успешно зарегистрирован!",
     "signInMessage": "Успешный вход в аккаунт!",
-    "userDeleteMessage": "Аккаунт пользователя был успешно удален!"
+    "userDeleteMessage": "Аккаунт пользователя был успешно удален!",
+    "deleteBoardMessage": "Доска успешно удалена!",
+    "addBoardMessage": "Доска успешно создана!"
   },
   "header": {
     "signIn": "Войти",

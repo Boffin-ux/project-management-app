@@ -6,6 +6,7 @@ import { btnStyle, subtitleStyle } from 'components/header/headerStyles';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { IRequestForBoard } from 'interfaces/boards';
 import { IFormValues } from 'interfaces/modal';
+import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -17,15 +18,21 @@ function AuthMenu() {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const [isModalActive, setIsModalActive] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleCreateBoard = () => {
     setIsModalActive(true);
   };
 
-  const addNewBoard = (formData?: IFormValues) => {
+  const addNewBoard = async (formData?: IFormValues) => {
     const newFormData = { ...formData, owner: id } as unknown as IRequestForBoard;
-    setIsModalActive(false);
-    dispatch(createBoard(newFormData));
+    try {
+      await dispatch(createBoard(newFormData)).unwrap();
+      enqueueSnackbar(t('successful.addBoardMessage'), { variant: 'success' });
+      setIsModalActive(false);
+    } catch (error) {
+      enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
+    }
   };
 
   return (

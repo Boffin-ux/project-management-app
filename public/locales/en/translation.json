@@ -22,6 +22,7 @@
     "signUpMessage": "Successful registration!",
     "signInMessage": "Successful sign in!",
     "userDeleteMessage": "The user account has been successfully deleted!",
+    "userEditMessage": "The user account has been successfully changed!",
     "deleteBoardMessage": "The Board was deleted successfully!",
     "addBoardMessage": "The board was created successfully!"
   },

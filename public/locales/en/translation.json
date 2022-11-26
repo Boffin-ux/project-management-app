@@ -10,6 +10,7 @@
     "authWrongPassword": "Wrong Username or Password",
     "authLoginExist": "Login already exist",
     "authLoginFailed": "Login Failed",
+    "invalidToken": "Invalid authorization token",
     "errorEmptyField": "Field is Required",
     "errorMinLengthName": "Min length {{MIN_LENGTH}} letters",
     "errorMinLengthDesc": "Min length {{MIN_LENGTH}} letters",

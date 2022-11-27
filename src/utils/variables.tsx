@@ -56,8 +56,9 @@ const API_ENDPOINTS = {
   TASK(boardId: string, columnId: string, taskId: string) {
     return `${this.TASKS(boardId, columnId)}/${taskId}`;
   },
-  TASKS_SET(boardId: string): string {
-    return `tasksSet/${boardId}`;
+  TASKS_SET: 'tasksSet',
+  TASKS_SET_BY_BOARDID(boardId: string): string {
+    return `${this.TASKS_SET}/${boardId}`;
   },
 };
 

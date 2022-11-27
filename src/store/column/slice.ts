@@ -20,6 +20,10 @@ const initialState: IColumnState = {
   error: null,
 };
 
+const updateColumnOrder = (columns: IColumn[]): IColumn[] => {
+  return columns.map((column, index) => ({ ...column, order: index }));
+};
+
 const updateOrder = (tasks: ITask[]): ITask[] => {
   return tasks.map((task, index) => ({ ...task, order: index }));
 };
@@ -34,7 +38,7 @@ export const columnSlice = createSlice({
       const items = Array.from(state.columns);
       const [newOrder] = items.splice(action.payload.source, 1);
       items.splice(action.payload.destination, 0, newOrder);
-      state.columns = items;
+      state.columns = updateColumnOrder(items);
 
       state.isLoading = false;
     },
@@ -74,7 +78,7 @@ export const columnSlice = createSlice({
       })
       .addCase(getColumnsByBoardId.fulfilled, (state, action: PayloadAction<IColumn[]>) => {
         state.isLoading = false;
-        state.columns = action.payload;
+        state.columns = action.payload.sort((a, b) => a.order - b.order);
         state.columns = state.columns.map((column) => {
           return { ...column, tasks: [] };
         });
@@ -101,7 +105,6 @@ export const columnSlice = createSlice({
         state.error = null;
       })
       .addCase(updateColumnsSet.fulfilled, (state, action: PayloadAction<IColumn[]>) => {
-        state.columns = action.payload;
         state.isLoading = false;
       })
       .addCase(updateColumnsSet.rejected, (state, action) => {
@@ -163,12 +166,12 @@ export const columnSlice = createSlice({
         state.error = null;
       })
       .addCase(getTasksSet.fulfilled, (state, action) => {
-        state.columns = state.columns.map((column) => {
-          return {
-            ...column,
-            tasks: action.payload.filter((task) => task.columnId === column._id),
-          };
-        });
+        state.columns = state.columns.map((column) => ({
+          ...column,
+          tasks: action.payload
+            .filter((task) => task.columnId === column._id)
+            .sort((a, b) => a.order - b.order),
+        }));
       })
       .addCase(getTasksSet.rejected, (state, action) => {
         state.isLoading = false;

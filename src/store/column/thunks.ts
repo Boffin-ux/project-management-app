@@ -5,7 +5,7 @@ import { axiosErrorHandler } from 'utils/helpers';
 import { API_ENDPOINTS } from 'utils/variables';
 import { IColumnSet, IRequestForCreateColumns } from 'interfaces/columns';
 import { ColumnHeaderProps } from 'components/column/Header/ColumnHeader';
-import { ITask, ITaskRequest } from 'interfaces/task';
+import { ITask, ITaskRequest, ITasksSet } from 'interfaces/task';
 
 export const getColumnsByBoardId = createAsyncThunk(
   'columns/byBoardId',
@@ -78,7 +78,7 @@ export const getTasksSet = createAsyncThunk<ITask[], string, { rejectValue: stri
   'columns/getTasksSet',
   async (boardId: string, { rejectWithValue }) => {
     try {
-      const response = await axiosPrivate.get(API_ENDPOINTS.TASKS_SET(boardId));
+      const response = await axiosPrivate.get(API_ENDPOINTS.TASKS_SET_BY_BOARDID(boardId));
       return response.data;
     } catch (error) {
       const err = error as AxiosError;
@@ -126,6 +126,19 @@ export const updateTask = createAsyncThunk(
         ...taskBody,
         columnId,
       });
+      return response.data;
+    } catch (error) {
+      const err = error as AxiosError;
+      return rejectWithValue(axiosErrorHandler(err));
+    }
+  }
+);
+
+export const updateTasksSet = createAsyncThunk(
+  'columns/updateTasksSet',
+  async (dataTasksSet: ITasksSet[], { rejectWithValue }) => {
+    try {
+      const response = await axiosPrivate.patch(API_ENDPOINTS.TASKS_SET, dataTasksSet);
       return response.data;
     } catch (error) {
       const err = error as AxiosError;

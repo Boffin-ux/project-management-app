@@ -12,6 +12,12 @@ export interface ITask extends ITaskBody {
   columnId: string;
 }
 
+export interface ITasksSet {
+  _id: string;
+  columnId: string;
+  order: number;
+}
+
 export interface ITaskState {
   error: string | null;
   isLoading: boolean;

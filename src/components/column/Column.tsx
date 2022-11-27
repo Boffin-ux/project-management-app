@@ -81,5 +81,3 @@ export const Column: FC<IColumn> = ({ _id, title, tasks, order, boardId }) => {
     </Draggable>
   );
 };
-
-// <Task key={task._id} task={task} index={index} />

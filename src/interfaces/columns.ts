@@ -11,7 +11,7 @@ export interface IColumn extends IColumnSet {
   tasks: Array<ITask>;
 }
 
-export interface Icolumns {
+export interface IColumns {
   columns: IColumn[];
 }
 

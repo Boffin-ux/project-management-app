@@ -62,7 +62,6 @@ export const columnSlice = createSlice({
       })
       .addCase(updateColumn.fulfilled, (state, action: PayloadAction<IColumn>) => {
         state.isLoading = false;
-        console.log(action.payload);
         state.columns = state.columns.map((column) =>
           column._id === action.payload._id
             ? { ...column, title: action.payload.title }

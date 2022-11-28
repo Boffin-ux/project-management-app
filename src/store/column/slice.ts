@@ -61,6 +61,7 @@ export const columnSlice = createSlice({
         );
         if (sourceColumn && destinationColumn) {
           const [newOrder] = sourceColumn.tasks.splice(sourceIndex, 1);
+          newOrder.columnId = destinationColumnId;
           destinationColumn.tasks.splice(destinationIndex, 0, newOrder);
           sourceColumn.tasks = updateOrder(sourceColumn.tasks);
           destinationColumn.tasks = updateOrder(destinationColumn.tasks);

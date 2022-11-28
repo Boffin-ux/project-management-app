@@ -8,9 +8,10 @@ import { IColumn } from 'interfaces/columns';
 import { ButtonAddTask } from './ButtonAddTask/ButtonAddTask';
 import { useTranslation } from 'react-i18next';
 
-export const Column: FC<IColumn> = ({ _id, title, tasks, order, boardId }) => {
+export const Column: FC<IColumn> = (column) => {
   const [btnCapture, setBtnCapture] = useState<boolean>(false);
   const { t } = useTranslation();
+  const { _id, title, tasks, order, boardId } = column;
 
   return (
     <Draggable draggableId={_id} index={order}>
@@ -25,6 +26,7 @@ export const Column: FC<IColumn> = ({ _id, title, tasks, order, boardId }) => {
             title={title}
             boardId={boardId}
             columnId={_id}
+            order={order}
             {...columnProvided.dragHandleProps}
           />
           <Box

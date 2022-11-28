@@ -1,6 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IColumn, IColumnState } from 'interfaces/columns';
-import { createColumn, deleteColumn, getColumnsByBoardId, updateColumnsSet } from './thunks';
+import {
+  createColumn,
+  deleteColumn,
+  getColumnsByBoardId,
+  updateColumn,
+  updateColumnsSet,
+} from './thunks';
 
 const initialState: IColumnState = {
   columns: [],
@@ -47,6 +53,23 @@ export const columnSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(updateColumnsSet.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(updateColumn.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateColumn.fulfilled, (state, action: PayloadAction<IColumn>) => {
+        state.isLoading = false;
+        console.log(action.payload);
+        state.columns = state.columns.map((column) =>
+          column._id === action.payload._id
+            ? { ...column, title: action.payload.title }
+            : { ...column }
+        );
+      })
+      .addCase(updateColumn.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       })

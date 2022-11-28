@@ -105,7 +105,7 @@ export const columnSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(updateColumnsSet.fulfilled, (state, action: PayloadAction<IColumn[]>) => {
+      .addCase(updateColumnsSet.fulfilled, (state) => {
         state.isLoading = false;
       })
       .addCase(updateColumnsSet.rejected, (state, action) => {

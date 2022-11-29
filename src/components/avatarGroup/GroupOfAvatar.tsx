@@ -4,11 +4,11 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { IUser } from 'interfaces/users';
 
 export interface GroupOfAvatarProps {
-  userId: number;
-  users: Array<IUser>;
+  _id: string;
+  users: Array<string>;
 }
 
-export const GroupOfAvatar: FC<GroupOfAvatarProps> = ({ userId, users }) => {
+export const GroupOfAvatar: FC<GroupOfAvatarProps> = ({ _id, users }) => {
   return (
     <Box display="flex" alignItems="center" sx={{ justifyContent: 'end', mt: 0.5 }}>
       <Avatar src="/static/images/avatar/1.jpg" />

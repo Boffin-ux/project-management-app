@@ -1,4 +1,4 @@
-import { IUser } from 'interfaces/users';
+import { IDefaultFormProps } from './modal';
 
 export interface IBoardState {
   boards: Array<IBoard>;
@@ -12,8 +12,13 @@ export interface IRequestForBoard {
   users: Array<string>;
 }
 
-export interface IBoard extends IRequestForBoard {
+export interface IBoard extends IRequestForBoard, IOpenModal {
   _id: string;
+}
+
+export interface IOpenModal {
+  closeModal: () => void;
+  openModal: (formOptions?: IDefaultFormProps, action?: () => Promise<void>) => void;
 }
 
 export interface BoardCardProps {

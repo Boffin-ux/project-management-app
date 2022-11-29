@@ -8,41 +8,60 @@ import { Navigate } from 'react-router-dom';
 import Loader from 'components/universal/Loader/Loader';
 import { VIEW_PATH } from 'utils/variables';
 import styles from './BoardList.module.scss';
-<<<<<<< HEAD
 import { getUsers } from 'store/users/thunks';
-=======
 import FormModal from 'components/form/FormModal';
 import { addBoardForm } from 'components/form/constants/formOptions';
 import { IRequestForBoard } from 'interfaces/boards';
-import { IFormValues } from 'interfaces/modal';
->>>>>>> 07f6ecc9daf26048b593c825ebea52da52b6cdde
+import { IDefaultFormProps, IFormValues, ICustomFormProps } from 'interfaces/modal';
+import { useSnackbar } from 'notistack';
+import { useTranslation } from 'react-i18next';
 
 export const Boards = () => {
   const dispatch = useAppDispatch();
   const { boards, error, isLoading } = useAppSelector((state) => state.boards);
   const { id } = useAppSelector((state) => state.user);
   const [isModalActive, setIsModalActive] = useState(false);
+  const [modalProps, setIsModalProps] = useState<ICustomFormProps>({
+    ...addBoardForm,
+    action: addNewBoard,
+  });
+  const { enqueueSnackbar } = useSnackbar();
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(getAllBoards());
     dispatch(getUsers());
   }, []);
 
-  if (error) return <Navigate to={VIEW_PATH.ERROR} replace />;
+  // Временно отключил
+  // if (error) return <Navigate to={VIEW_PATH.ERROR} replace />;
+
+  async function addNewBoard(formData?: IFormValues) {
+    const newFormData = { ...formData, owner: id } as unknown as IRequestForBoard;
+    try {
+      await dispatch(createBoard(newFormData)).unwrap();
+      enqueueSnackbar(t('successful.addBoardMessage'), { variant: 'success' });
+      setIsModalActive(false);
+    } catch (error) {
+      enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
+    }
+  }
+
+  const openModal = (formOptions?: IDefaultFormProps, action?: () => Promise<void>) => {
+    formOptions && action
+      ? setIsModalProps({ ...formOptions, action })
+      : setIsModalProps({ ...addBoardForm, action: addNewBoard });
+
+    setIsModalActive(true);
+  };
 
   const closeModal = () => {
     setIsModalActive(false);
   };
 
-  const addNewBoard = (formData?: IFormValues) => {
-    const newFormData = { ...formData, owner: id } as unknown as IRequestForBoard;
-    setIsModalActive(false);
-    dispatch(createBoard(newFormData));
-  };
-
   return (
     <Box className={styles.boardWrapper}>
-      <ControlUnit />
+      <ControlUnit openModal={openModal} />
       {isLoading && <Loader />}
       {!isLoading && (
         <Grid container spacing={1} justifyContent="center">
@@ -51,12 +70,9 @@ export const Boards = () => {
           ))}
         </Grid>
       )}
-      <FormModal
-        isModalActive={isModalActive}
-        closeModal={closeModal}
-        action={addNewBoard}
-        {...addBoardForm}
-      />
+      {!isLoading && (
+        <FormModal isModalActive={isModalActive} closeModal={closeModal} {...modalProps} />
+      )}
     </Box>
   );
 };

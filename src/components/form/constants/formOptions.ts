@@ -56,11 +56,9 @@ const addBoardForm = {
 };
 
 const editBoardForm = {
-  initialValues: 'getBoardValues',
   fields: newBoardFields,
   modalTitle: 'boards.editModalTitle',
   btnTitle: 'boards.editSubmitBtnForm',
-  action: 'editBoard(formData: IFormValues)',
   schema: boardSchema,
   isUsers: true,
 };
@@ -75,7 +73,6 @@ const addTaskForm = {
 };
 
 const editTaskForm = {
-  initialValues: 'getTaskValues',
   fields: newTaskFields,
   modalTitle: 'tasks.editModalTitle',
   btnTitle: 'tasks.editSubmitBtnForm',
@@ -94,17 +91,14 @@ const addColumnForm = {
 
 const deleteBoardForm = {
   modalTitle: 'boards.deleteBoard',
-  action: 'deleteBoard',
 };
 
 const deleteTaskForm = {
   modalTitle: 'tasks.deleteTask',
-  action: 'deleteTask',
 };
 
 const deleteColumnForm = {
   modalTitle: 'columns.deleteColumn',
-  action: 'deleteColumn',
 };
 
 const deleteProfileForm = {

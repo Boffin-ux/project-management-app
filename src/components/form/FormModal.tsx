@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Box, Button } from '@mui/material';
-import { IFormProps } from 'interfaces/modal';
+import { IFormProps, IUserData } from 'interfaces/modal';
 import { useTranslation } from 'react-i18next';
 import ModalBasic from 'components/modal/ModalBasic';
 import { defaultValues } from './constants/formOptions';
@@ -30,9 +30,10 @@ export default function FormModal({
   const { values, errors, touched, handleSubmit, handleChange, dirty } = useFormik({
     initialValues,
     validationSchema: schema,
+    enableReinitialize: true,
     onSubmit: (values, { resetForm }) => {
       action(values);
-      resetForm();
+      resetForm({ values: initialValues });
     },
   });
 
@@ -65,14 +66,14 @@ export default function FormModal({
               key={field.name}
             />
           ))}
-          {isUsers && (
+          {isUsers && values.users && (
             <SelectField
               labelId={'users'}
               handleChange={handleChange}
               users={users}
               label={t('selectUser.userLabelForm')}
               helperText={touched.users && !!errors.users && t(`errors.${errors.users}`)}
-              value={values.users}
+              value={values.users as unknown as IUserData[]}
               error={touched.users && !!errors.users}
             />
           )}

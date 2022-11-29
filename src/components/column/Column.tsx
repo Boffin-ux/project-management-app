@@ -22,9 +22,11 @@ export const Column: FC<IColumn> = ({ _id, title, tasks, order, boardId }) => {
           {...columnProvided.dragHandleProps}
         >
           <ColumnHeader
+            _id={_id}
             title={title}
+            tasks={tasks}
+            order={order}
             boardId={boardId}
-            columnId={_id}
             {...columnProvided.dragHandleProps}
           />
           <Box

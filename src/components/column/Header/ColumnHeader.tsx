@@ -6,18 +6,19 @@ import { deleteColumn } from 'store/column/thunks';
 import { ButtonWithIcon } from 'components/buttons/ButtonWithIcon/ButtonWithIcon';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { IColumn } from 'interfaces/columns';
 
-export interface ColumnHeaderProps {
-  columnId: string;
-  boardId: string;
-  title: string;
-}
+// export interface ColumnHeaderProps {
+//   column: IColumn;
+// }
 
-export const ColumnHeader: FC<ColumnHeaderProps> = ({ title, boardId, columnId }) => {
+export const ColumnHeader: FC<IColumn> = (column) => {
   const dispatch = useAppDispatch();
+  const { title, tasks } = column;
 
   const removeColumnById = () => {
-    dispatch(deleteColumn({ title, boardId, columnId }));
+    // tasks.forEach((task) => dispatch(deleteTask()));
+    dispatch(deleteColumn(column));
   };
 
   return (

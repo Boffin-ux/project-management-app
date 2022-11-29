@@ -51,8 +51,6 @@ export const BoardCard: FC<BoardCardProps> = ({ board, isLoading }) => {
     dispatch(updateBoard(refreshBoardData));
   };
 
-  console.log(isLoading);
-
   return (
     <Card className={styles.card} sx={{ width: { xs: '100%', sm: '400px' } }}>
       {isLoading ? (

@@ -56,10 +56,10 @@ export const BoardCard: FC<BoardCardProps> = ({ board, isLoading }) => {
   return (
     <Card className={styles.card} sx={{ width: { xs: '100%', sm: '400px' } }}>
       {isLoading ? (
-        <Box sx={{ p: 1, display: 'flex', flexDirection: 'row' }}>
+        <Box sx={{ p: 2, display: 'flex', flexDirection: 'row' }}>
           <Skeleton animation="wave" variant="circular" width={40} height={40} sx={{ p: 2 }} />
-          <Skeleton animation="wave" variant="rectangular" width="60%">
-            <Typography>.</Typography>{' '}
+          <Skeleton animation="wave" variant="rectangular" width="100%">
+            <Typography>.</Typography>
           </Skeleton>
         </Box>
       ) : (

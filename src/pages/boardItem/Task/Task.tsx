@@ -7,6 +7,9 @@ import { ITask } from 'interfaces/task';
 import { ButtonWithIcon } from 'components/buttons/ButtonWithIcon/ButtonWithIcon';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { deleteTask, updateTask } from 'store/column/thunks';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { randomString } from 'utils/temputils';
 
 export interface TaskProps {
   task: ITask;
@@ -14,6 +17,29 @@ export interface TaskProps {
 }
 
 export const Task: FC<TaskProps> = ({ task, index }) => {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
+
+  const { _id, boardId, columnId } = task;
+
+  const removeTask = () => {
+    dispatch(deleteTask({ boardId, columnId, taskId: _id }));
+  };
+
+  const updateTaskData = () => {
+    const tempTask: ITask = {
+      _id,
+      boardId,
+      columnId,
+      description: randomString(5) + ' ' + randomString(10),
+      order: 0,
+      title: randomString(12),
+      userId: user.id,
+      users: [],
+    };
+    dispatch(updateTask(tempTask));
+  };
+
   return (
     <Draggable draggableId={task._id} index={index}>
       {(taskProvided, taskSnapshot) => (
@@ -29,7 +55,7 @@ export const Task: FC<TaskProps> = ({ task, index }) => {
               <Typography component={Box} variant="caption" sx={{ fontWeight: 600 }}>
                 {task.title}
               </Typography>
-              <ButtonWithIcon clickAction={() => {}} icon={<EditIcon />} />
+              <ButtonWithIcon clickAction={updateTaskData} icon={<EditIcon />} />
             </Box>
             <Divider />
             <Typography component={Box} variant="inherit" sx={{ mt: 1 }}>
@@ -37,10 +63,7 @@ export const Task: FC<TaskProps> = ({ task, index }) => {
             </Typography>
             <Box className={styles.taskSubArea}>
               <GroupOfAvatar {...task} />
-              <ButtonWithIcon
-                clickAction={() => console.log('Delete Task')}
-                icon={<DeleteIcon />}
-              />
+              <ButtonWithIcon clickAction={removeTask} icon={<DeleteIcon />} />
             </Box>
           </Box>
         </ListItem>

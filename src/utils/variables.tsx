@@ -50,6 +50,16 @@ const API_ENDPOINTS = {
   COLUMN(boardId: string, columnId: string) {
     return `${this.COLUMNS(boardId)}/${columnId}`;
   },
+  TASKS(boardId: string, columnId: string) {
+    return `${this.COLUMN(boardId, columnId)}/tasks`;
+  },
+  TASK(boardId: string, columnId: string, taskId: string) {
+    return `${this.TASKS(boardId, columnId)}/${taskId}`;
+  },
+  TASKS_SET: 'tasksSet',
+  TASKS_SET_BY_BOARDID(boardId: string): string {
+    return `${this.TASKS_SET}/${boardId}`;
+  },
 };
 
 const RESPONSE_CODES = {

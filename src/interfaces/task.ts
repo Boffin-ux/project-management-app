@@ -1,12 +1,31 @@
-import { IUser } from './users';
-
-export interface ITask {
-  _id: string;
+export interface ITaskBody {
   title: string;
   order: number;
+  description: string;
+  userId: string;
+  users: Array<string>;
+}
+
+export interface ITask extends ITaskBody {
+  _id: string;
   boardId: string;
   columnId: string;
-  description: string;
-  userId: number;
-  users: Array<IUser>;
+}
+
+export interface ITasksSet {
+  _id: string;
+  columnId: string;
+  order: number;
+}
+
+export interface ITaskState {
+  error: string | null;
+  isLoading: boolean;
+  tasks: ITask[];
+}
+
+export interface ITaskRequest {
+  boardId: string;
+  columnId: string;
+  taskId?: string;
 }

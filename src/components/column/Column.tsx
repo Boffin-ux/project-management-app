@@ -8,7 +8,15 @@ import { IColumn } from 'interfaces/columns';
 import { ButtonAddTask } from './ButtonAddTask/ButtonAddTask';
 import { useTranslation } from 'react-i18next';
 
-export const Column: FC<IColumn> = ({ _id, title, tasks, order, boardId }) => {
+export const Column: FC<IColumn> = ({
+  _id,
+  title,
+  tasks,
+  order,
+  boardId,
+  openModal,
+  closeModal,
+}) => {
   const [btnCapture, setBtnCapture] = useState<boolean>(false);
   const { t } = useTranslation();
 
@@ -25,6 +33,8 @@ export const Column: FC<IColumn> = ({ _id, title, tasks, order, boardId }) => {
             title={title}
             boardId={boardId}
             columnId={_id}
+            openModal={openModal}
+            closeModal={closeModal}
             {...columnProvided.dragHandleProps}
           />
           <Box

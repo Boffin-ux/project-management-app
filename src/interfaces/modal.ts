@@ -31,6 +31,11 @@ interface ICustomFormProps extends IDefaultFormProps {
   action: (formData?: IFormValues) => void;
 }
 
+interface IOpenModal {
+  closeModal: () => void;
+  openModal: (formOptions?: IDefaultFormProps, action?: () => Promise<void>) => void;
+}
+
 interface IFormProps extends IModalState, ICustomFormProps {}
 
 interface IUserData {
@@ -79,4 +84,5 @@ export {
   ICustomSelectField,
   IDefaultFormProps,
   ICustomFormProps,
+  IOpenModal,
 };

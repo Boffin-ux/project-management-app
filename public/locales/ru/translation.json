@@ -27,7 +27,12 @@
     "userEditMessage": "Аккаунт пользователя был успешно изменён!",
     "deleteBoardMessage": "Доска успешно удалена!",
     "addBoardMessage": "Доска успешно создана!",
-    "editBoardMessage": "Доска успешно изменена!"
+    "editBoardMessage": "Доска успешно изменена!",
+    "addColumnMessage": "Колонка успешно создана!",
+    "deleteColumnMessage": "Колонка успешно удалена!",
+    "addTaskMessage": "Задача успешно создана!",
+    "editTaskMessage": "Задача успешно изменена!",
+    "deleteTaskMessage": "Задача успешно удалена!"
   },
   "header": {
     "signIn": "Войти",

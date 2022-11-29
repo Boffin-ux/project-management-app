@@ -26,7 +26,12 @@
     "userEditMessage": "The user account has been successfully changed!",
     "deleteBoardMessage": "The Board was deleted successfully!",
     "addBoardMessage": "The board was created successfully!",
-    "editBoardMessage": "The board was changed successfully!"
+    "editBoardMessage": "The board was changed successfully!",
+    "addColumnMessage": "The column was created successfully!",
+    "deleteColumnMessage": "The column was deleted successfully!",
+    "addTaskMessage": "The task was created successfully!",
+    "editTaskMessage": "The task was changed successfully!",
+    "deleteTaskMessage": "The task was deleted successfully!"
   },
   "header": {
     "signIn": "Sign In",

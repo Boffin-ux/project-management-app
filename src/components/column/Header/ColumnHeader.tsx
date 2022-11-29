@@ -6,18 +6,36 @@ import { deleteColumn } from 'store/column/thunks';
 import { ButtonWithIcon } from 'components/buttons/ButtonWithIcon/ButtonWithIcon';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { IOpenModal } from 'interfaces/modal';
+import { useSnackbar } from 'notistack';
+import { deleteColumnForm } from 'components/form/constants/formOptions';
+import { useTranslation } from 'react-i18next';
 
-export interface ColumnHeaderProps {
+export interface ColumnHeaderProps extends IOpenModal {
   columnId: string;
   boardId: string;
   title: string;
 }
 
-export const ColumnHeader: FC<ColumnHeaderProps> = ({ title, boardId, columnId }) => {
+export const ColumnHeader: FC<ColumnHeaderProps> = ({
+  title,
+  boardId,
+  columnId,
+  openModal,
+  closeModal,
+}) => {
   const dispatch = useAppDispatch();
+  const { enqueueSnackbar } = useSnackbar();
+  const { t } = useTranslation();
 
-  const removeColumnById = () => {
-    dispatch(deleteColumn({ title, boardId, columnId }));
+  const removeBoard = async () => {
+    try {
+      await dispatch(deleteColumn({ boardId, columnId })).unwrap();
+      enqueueSnackbar(t('successful.deleteColumnMessage'), { variant: 'success' });
+      closeModal();
+    } catch (error) {
+      enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
+    }
   };
 
   return (
@@ -27,7 +45,10 @@ export const ColumnHeader: FC<ColumnHeaderProps> = ({ title, boardId, columnId }
         <Typography variant="subtitle1" className={styles.caption}>
           {title}
         </Typography>
-        <ButtonWithIcon clickAction={removeColumnById} icon={<DeleteIcon />} />
+        <ButtonWithIcon
+          clickAction={() => openModal(deleteColumnForm, removeBoard)}
+          icon={<DeleteIcon />}
+        />
       </Toolbar>
     </AppBar>
   );

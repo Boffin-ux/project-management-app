@@ -1,3 +1,4 @@
+import { IOpenModal } from './modal';
 import { ITask } from './task';
 
 export interface IColumnSet {
@@ -5,7 +6,7 @@ export interface IColumnSet {
   order: number;
 }
 
-export interface IColumn extends IColumnSet {
+export interface IColumn extends IColumnSet, IOpenModal {
   title: string;
   boardId: string;
   tasks: Array<ITask>;
@@ -13,6 +14,11 @@ export interface IColumn extends IColumnSet {
 
 export interface Icolumns {
   columns: IColumn[];
+}
+
+export interface IDeleteColumn {
+  boardId: string;
+  columnId: string;
 }
 
 export type IError = string | null;

@@ -12,7 +12,7 @@ import { getUsers } from 'store/users/thunks';
 import FormModal from 'components/form/FormModal';
 import { addBoardForm } from 'components/form/constants/formOptions';
 import { IRequestForBoard } from 'interfaces/boards';
-import { IDefaultFormProps, IFormValues, ICustomFormProps } from 'interfaces/modal';
+import { IFormValues, ICustomFormProps, IDefaultFormProps } from 'interfaces/modal';
 import { useSnackbar } from 'notistack';
 import { useTranslation } from 'react-i18next';
 
@@ -66,7 +66,7 @@ export const Boards = () => {
       {!isLoading && (
         <Grid container spacing={1} justifyContent="center">
           {boards.map((board) => (
-            <BoardCard {...board} key={board._id} />
+            <BoardCard {...board} openModal={openModal} closeModal={closeModal} key={board._id} />
           ))}
         </Grid>
       )}

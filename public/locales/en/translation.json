@@ -25,7 +25,8 @@
     "userDeleteMessage": "The user account has been successfully deleted!",
     "userEditMessage": "The user account has been successfully changed!",
     "deleteBoardMessage": "The Board was deleted successfully!",
-    "addBoardMessage": "The board was created successfully!"
+    "addBoardMessage": "The board was created successfully!",
+    "editBoardMessage": "The board was changed successfully!"
   },
   "header": {
     "signIn": "Sign In",

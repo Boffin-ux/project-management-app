@@ -26,7 +26,8 @@
     "userDeleteMessage": "Аккаунт пользователя был успешно удален!",
     "userEditMessage": "Аккаунт пользователя был успешно изменён!",
     "deleteBoardMessage": "Доска успешно удалена!",
-    "addBoardMessage": "Доска успешно создана!"
+    "addBoardMessage": "Доска успешно создана!",
+    "editBoardMessage": "Доска успешно изменена!"
   },
   "header": {
     "signIn": "Войти",

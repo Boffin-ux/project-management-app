@@ -21,13 +21,15 @@ import { Link } from 'react-router-dom';
 import { deleteBoard, updateBoard } from 'store/board/thunks';
 import { getUserById } from 'utils/helpers';
 import { randomString } from 'utils/temputils';
+import { CardDisplayType } from '../controlUnit/mappingSpaces/views';
 import styles from './BoardCard.module.scss';
-import { setRandomColor } from './utils';
+import { actionGrid, actionRow, cardGrid, cardHeadRow, cardRow, setRandomColor } from './utils';
 
 export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const allUsers = useAppSelector((state) => state.users.users);
+  const boardCardView = useAppSelector((state) => state.boards.displayedView);
 
   const removeBoardById = () => {
     dispatch(deleteBoard(_id));
@@ -44,8 +46,9 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
   };
 
   return (
-    <Card className={styles.card} sx={{ width: { xs: '100%', sm: '400px' } }}>
+    <Card className={styles.card} sx={boardCardView === CardDisplayType.grid ? cardGrid : cardRow}>
       <CardHeader
+        sx={boardCardView === CardDisplayType.grid ? actionGrid : cardHeadRow}
         avatar={<Avatar sx={{ bgcolor: setRandomColor() }}>{title[0]}</Avatar>}
         action={
           <IconButton onClick={removeBoardById}>
@@ -56,7 +59,7 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
         titleTypographyProps={{ fontWeight: 500 }}
         subheader={`${t('boards.owner')}: ${getUserById(allUsers, owner).name}`}
       />
-      <Divider variant="inset" component="p" />
+      {boardCardView === CardDisplayType.grid && <Divider variant="inset" component="p" />}
       <CardContent className={styles.content}>
         <Typography variant="caption">{t('boards.members')}:</Typography>
         <List>
@@ -67,7 +70,7 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
           ))}
         </List>
       </CardContent>
-      <CardActions className={styles.action}>
+      <CardActions sx={boardCardView === CardDisplayType.grid ? actionGrid : actionRow}>
         <Button component={Link} to={_id} variant="contained">
           {t('boards.openBoard')}
         </Button>

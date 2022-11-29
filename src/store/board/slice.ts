@@ -1,5 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IBoardState } from 'interfaces/boards';
+import { CardDisplayType } from 'pages/boardList/controlUnit/mappingSpaces/views';
 import {
   getAllBoards,
   createBoard,
@@ -10,6 +11,7 @@ import {
 
 const initialState: IBoardState = {
   boards: [],
+  displayedView: CardDisplayType.grid,
   isLoading: false,
   error: null,
 };
@@ -17,7 +19,13 @@ const initialState: IBoardState = {
 export const boardSlice = createSlice({
   name: 'boards',
   initialState,
-  reducers: {},
+  reducers: {
+    changeView: (state, action: PayloadAction<string>) => {
+      state.isLoading = true;
+      state.displayedView = action.payload;
+      state.isLoading = false;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(getAllBoards.pending, (state) => {
@@ -85,4 +93,5 @@ export const boardSlice = createSlice({
   },
 });
 
+export const { changeView } = boardSlice.actions;
 export default boardSlice.reducer;

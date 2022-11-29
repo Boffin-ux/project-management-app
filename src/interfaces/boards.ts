@@ -1,7 +1,9 @@
 import { IUser } from 'interfaces/users';
+import { CardDisplayType } from 'pages/boardList/controlUnit/mappingSpaces/views';
 
 export interface IBoardState {
   boards: Array<IBoard>;
+  displayedView: string;
   isLoading: boolean;
   error: string | null;
 }

@@ -23,7 +23,8 @@ import { getUserById } from 'utils/helpers';
 import { randomString } from 'utils/temputils';
 import { CardDisplayType } from '../controlUnit/mappingSpaces/views';
 import styles from './BoardCard.module.scss';
-import { actionGrid, actionRow, cardGrid, cardHeadRow, cardRow, setRandomColor } from './utils';
+import { actionGrid, actionRow, cardGrid, cardHeadRow, cardRow } from './BoardCardStyle';
+import { setRandomColor } from './utils';
 
 export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
   const { t } = useTranslation();

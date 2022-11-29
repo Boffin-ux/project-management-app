@@ -8,14 +8,11 @@ import { Navigate } from 'react-router-dom';
 import Loader from 'components/universal/Loader/Loader';
 import { VIEW_PATH } from 'utils/variables';
 import styles from './BoardList.module.scss';
-<<<<<<< HEAD
 import { getUsers } from 'store/users/thunks';
-=======
 import FormModal from 'components/form/FormModal';
 import { addBoardForm } from 'components/form/constants/formOptions';
 import { IRequestForBoard } from 'interfaces/boards';
 import { IFormValues } from 'interfaces/modal';
->>>>>>> 07f6ecc9daf26048b593c825ebea52da52b6cdde
 
 export const Boards = () => {
   const dispatch = useAppDispatch();
@@ -43,14 +40,11 @@ export const Boards = () => {
   return (
     <Box className={styles.boardWrapper}>
       <ControlUnit />
-      {isLoading && <Loader />}
-      {!isLoading && (
-        <Grid container spacing={1} justifyContent="center">
-          {boards.map((board) => (
-            <BoardCard {...board} key={board._id} />
-          ))}
-        </Grid>
-      )}
+      <Grid container spacing={1} justifyContent="center">
+        {boards.map((board) => (
+          <BoardCard board={board} isLoading={isLoading} key={board._id} />
+        ))}
+      </Grid>
       <FormModal
         isModalActive={isModalActive}
         closeModal={closeModal}

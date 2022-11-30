@@ -15,6 +15,8 @@ import { deleteTaskForm, editTaskForm } from 'components/form/constants/formOpti
 import { ICustomFormProps, IFormValues } from 'interfaces/modal';
 import FormModal from 'components/form/FormModal';
 
+const ORDER_NUM = 0;
+
 export const Task: FC<ITaskProps> = ({ task, index }) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -61,7 +63,7 @@ export const Task: FC<ITaskProps> = ({ task, index }) => {
       _id,
       boardId,
       columnId,
-      order: 0,
+      order: ORDER_NUM,
       userId: user.id,
     } as ITask;
     try {

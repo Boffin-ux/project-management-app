@@ -15,6 +15,7 @@ export interface IColumnHeaderProps {
   columnId: string;
   boardId: string;
   title: string;
+  order?: number;
 }
 
 export interface IColumns {

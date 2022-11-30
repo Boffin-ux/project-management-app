@@ -17,13 +17,14 @@ import FormModal from 'components/form/FormModal';
 
 const ORDER_NUM = 0;
 
-export const Column: FC<IColumn> = ({ _id, title, tasks, order, boardId }) => {
+export const Column: FC<IColumn> = (column) => {
   const [btnCapture, setBtnCapture] = useState<boolean>(false);
   const [isModalActive, setIsModalActive] = useState(false);
   const userId = useAppSelector((state) => state.user.id);
   const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
+  const { _id, title, tasks, order, boardId } = column;
 
   const addNewTask = async (formData?: IFormValues) => {
     const newFormData = {

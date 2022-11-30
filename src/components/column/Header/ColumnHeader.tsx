@@ -1,18 +1,16 @@
 import React, { FC, useState } from 'react';
-import { Typography, AppBar, Toolbar } from '@mui/material';
+import { AppBar, Toolbar } from '@mui/material';
 import styles from './ColumnHeader.module.scss';
 import { useAppDispatch } from 'hooks/redux';
-import { deleteColumn } from 'store/column/thunks';
-import { ButtonWithIcon } from 'components/buttons/ButtonWithIcon/ButtonWithIcon';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { deleteColumn, updateColumn } from 'store/column/thunks';
 import { useSnackbar } from 'notistack';
 import { deleteColumnForm } from 'components/form/constants/formOptions';
 import { useTranslation } from 'react-i18next';
 import { IColumnHeaderProps } from 'interfaces/columns';
 import FormModal from 'components/form/FormModal';
+import { EditableTitle } from './EditableTitle/EditableTitle';
 
-export const ColumnHeader: FC<IColumnHeaderProps> = ({ title, boardId, columnId }) => {
+export const ColumnHeader: FC<IColumnHeaderProps> = ({ title, boardId, columnId, order }) => {
   const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
@@ -28,15 +26,19 @@ export const ColumnHeader: FC<IColumnHeaderProps> = ({ title, boardId, columnId 
     }
   };
 
+  const setNewTitle = (newTitle: string) => {
+    dispatch(updateColumn({ title: newTitle, boardId, columnId, order }));
+  };
+
   return (
     <>
       <AppBar position="static" className={styles.bar}>
         <Toolbar variant="dense" className={styles.align}>
-          <ButtonWithIcon clickAction={() => {}} icon={<EditIcon />} />
-          <Typography variant="subtitle1" className={styles.caption}>
-            {title}
-          </Typography>
-          <ButtonWithIcon clickAction={() => setIsModalActive(true)} icon={<DeleteIcon />} />
+          <EditableTitle
+            title={title}
+            onOkEditTitle={setNewTitle}
+            onDeleteColumn={() => setIsModalActive(true)}
+          />
         </Toolbar>
       </AppBar>
       <FormModal

@@ -12,6 +12,12 @@ export interface IColumn extends IColumnSet, IOpenModal {
   tasks: Array<ITask>;
 }
 
+export interface IColumnHeaderProps extends IOpenModal {
+  columnId: string;
+  boardId: string;
+  title: string;
+}
+
 export interface IColumns {
   columns: IColumn[];
 }

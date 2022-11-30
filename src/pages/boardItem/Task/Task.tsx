@@ -3,41 +3,63 @@ import { ListItem, Box, Divider, Typography } from '@mui/material';
 import { GroupOfAvatar } from 'components/avatarGroup/GroupOfAvatar';
 import { Draggable } from '@hello-pangea/dnd';
 import styles from './Task.module.scss';
-import { ITask } from 'interfaces/task';
+import { ITask, ITaskProps } from 'interfaces/task';
 import { ButtonWithIcon } from 'components/buttons/ButtonWithIcon/ButtonWithIcon';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { deleteTask, updateTask } from 'store/column/thunks';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { randomString } from 'utils/temputils';
+import { useSnackbar } from 'notistack';
+import { useTranslation } from 'react-i18next';
+import { deleteTaskForm, editTaskForm } from 'components/form/constants/formOptions';
+import { IFormValues } from 'interfaces/modal';
 
-export interface TaskProps {
-  task: ITask;
-  index: number;
-}
-
-export const Task: FC<TaskProps> = ({ task, index }) => {
+export const Task: FC<ITaskProps> = ({ task, index, openModal, closeModal }) => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
   const user = useAppSelector((state) => state.user);
+  const { enqueueSnackbar } = useSnackbar();
+  const { _id, boardId, columnId, title, description, users } = task;
 
-  const { _id, boardId, columnId } = task;
-
-  const removeTask = () => {
-    dispatch(deleteTask({ boardId, columnId, taskId: _id }));
+  const removeTask = async () => {
+    try {
+      await dispatch(deleteTask({ boardId, columnId, taskId: _id })).unwrap();
+      enqueueSnackbar(t('successful.deleteTaskMessage'), { variant: 'success' });
+      closeModal();
+    } catch (error) {
+      enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
+    }
   };
 
-  const updateTaskData = () => {
-    const tempTask: ITask = {
+  const editBoard = () => {
+    const currentData = {
+      initialValues: {
+        title,
+        description,
+        users,
+      },
+      ...editTaskForm,
+    };
+    openModal(currentData, updateTaskData);
+  };
+
+  const updateTaskData = async (formData?: IFormValues) => {
+    const newFormData = {
+      ...formData,
       _id,
       boardId,
       columnId,
-      description: randomString(5) + ' ' + randomString(10),
       order: 0,
-      title: randomString(12),
       userId: user.id,
-      users: [],
-    };
-    dispatch(updateTask(tempTask));
+    } as unknown as ITask;
+    try {
+      await dispatch(updateTask(newFormData)).unwrap();
+      enqueueSnackbar(t('successful.editTaskMessage'), { variant: 'success' });
+      closeModal();
+    } catch (error) {
+      enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
+    }
   };
 
   return (
@@ -55,7 +77,7 @@ export const Task: FC<TaskProps> = ({ task, index }) => {
               <Typography component={Box} variant="caption" sx={{ fontWeight: 600 }}>
                 {task.title}
               </Typography>
-              <ButtonWithIcon clickAction={updateTaskData} icon={<EditIcon />} />
+              <ButtonWithIcon clickAction={editBoard} icon={<EditIcon />} />
             </Box>
             <Divider />
             <Typography component={Box} variant="inherit" sx={{ mt: 1 }}>
@@ -63,7 +85,10 @@ export const Task: FC<TaskProps> = ({ task, index }) => {
             </Typography>
             <Box className={styles.taskSubArea}>
               <GroupOfAvatar {...task} />
-              <ButtonWithIcon clickAction={removeTask} icon={<DeleteIcon />} />
+              <ButtonWithIcon
+                clickAction={() => openModal(deleteTaskForm, removeTask)}
+                icon={<DeleteIcon />}
+              />
             </Box>
           </Box>
         </ListItem>

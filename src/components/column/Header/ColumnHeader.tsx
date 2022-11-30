@@ -6,18 +6,12 @@ import { deleteColumn } from 'store/column/thunks';
 import { ButtonWithIcon } from 'components/buttons/ButtonWithIcon/ButtonWithIcon';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { IOpenModal } from 'interfaces/modal';
 import { useSnackbar } from 'notistack';
 import { deleteColumnForm } from 'components/form/constants/formOptions';
 import { useTranslation } from 'react-i18next';
+import { IColumnHeaderProps } from 'interfaces/columns';
 
-export interface ColumnHeaderProps extends IOpenModal {
-  columnId: string;
-  boardId: string;
-  title: string;
-}
-
-export const ColumnHeader: FC<ColumnHeaderProps> = ({
+export const ColumnHeader: FC<IColumnHeaderProps> = ({
   title,
   boardId,
   columnId,

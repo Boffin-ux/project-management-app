@@ -7,10 +7,12 @@ import { IColumn } from 'interfaces/columns';
 import { ButtonAddTask } from './ButtonAddTask/ButtonAddTask';
 import { useTranslation } from 'react-i18next';
 import { ITask } from 'interfaces/task';
-import { randomString } from 'utils/temputils';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { createTask } from 'store/column/thunks';
 import { Task } from 'pages/boardItem/Task/Task';
+import { IFormValues } from 'interfaces/modal';
+import { useSnackbar } from 'notistack';
+import { addTaskForm } from 'components/form/constants/formOptions';
 
 export const Column: FC<IColumn> = ({
   _id,
@@ -25,21 +27,25 @@ export const Column: FC<IColumn> = ({
 
   const userId = useAppSelector((state) => state.user.id);
   const dispatch = useAppDispatch();
-
+  const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
 
-  const addTask = () => {
-    const tempTask: ITask = {
+  const addNewTask = async (formData?: IFormValues) => {
+    const newFormData = {
+      ...formData,
       _id: '',
-      boardId,
-      columnId: _id,
-      description: randomString(5) + ' ' + randomString(10),
       order: 0,
-      title: randomString(12),
+      columnId: _id,
+      boardId,
       userId,
-      users: [],
-    };
-    dispatch(createTask(tempTask));
+    } as unknown as ITask;
+    try {
+      await dispatch(createTask(newFormData)).unwrap();
+      enqueueSnackbar(t('successful.addTaskMessage'), { variant: 'success' });
+      closeModal();
+    } catch (error) {
+      enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
+    }
   };
 
   return (
@@ -67,7 +73,7 @@ export const Column: FC<IColumn> = ({
             <ButtonAddTask
               isCapture={btnCapture}
               title={t('boards.addTask')}
-              clickAction={addTask}
+              clickAction={() => openModal(addTaskForm, addNewTask)}
             />
             <Box sx={{ mt: 2, flexGrow: 1 }}>
               <Droppable droppableId={_id}>
@@ -78,7 +84,13 @@ export const Column: FC<IColumn> = ({
                     className={snapshot.isDraggingOver ? styles.over : styles.drag}
                   >
                     {tasks.map((task, index) => (
-                      <Task key={task._id} task={task} index={index} />
+                      <Task
+                        key={task._id}
+                        task={task}
+                        index={index}
+                        openModal={openModal}
+                        closeModal={closeModal}
+                      />
                     ))}
                     {listProvided.placeholder}
                   </List>

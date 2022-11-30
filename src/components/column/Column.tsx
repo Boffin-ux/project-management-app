@@ -12,13 +12,14 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { createTask } from 'store/column/thunks';
 import { Task } from 'pages/boardItem/Task/Task';
 
-export const Column: FC<IColumn> = ({ _id, title, tasks, order, boardId }) => {
+export const Column: FC<IColumn> = (column) => {
   const [btnCapture, setBtnCapture] = useState<boolean>(false);
 
   const userId = useAppSelector((state) => state.user.id);
   const dispatch = useAppDispatch();
 
   const { t } = useTranslation();
+  const { _id, title, tasks, order, boardId } = column;
 
   const addTask = () => {
     const tempTask: ITask = {

@@ -10,6 +10,7 @@ import {
   getColumnsByBoardId,
   getTasks,
   getTasksSet,
+  updateColumn,
   updateColumnsSet,
   updateTask,
 } from './thunks';
@@ -113,6 +114,22 @@ export const columnSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(updateColumnsSet.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(updateColumn.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateColumn.fulfilled, (state, action: PayloadAction<IColumn>) => {
+        state.isLoading = false;
+        state.columns = state.columns.map((column) =>
+          column._id === action.payload._id
+            ? { ...column, title: action.payload.title }
+            : { ...column }
+        );
+      })
+      .addCase(updateColumn.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       })

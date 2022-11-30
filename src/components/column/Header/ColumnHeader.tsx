@@ -1,17 +1,14 @@
 import React, { FC } from 'react';
-import { Typography, AppBar, Toolbar } from '@mui/material';
+import { AppBar, Toolbar } from '@mui/material';
 import styles from './ColumnHeader.module.scss';
 import { useAppDispatch } from 'hooks/redux';
-import { deleteColumn, deleteTask } from 'store/column/thunks';
-import { ButtonWithIcon } from 'components/buttons/ButtonWithIcon/ButtonWithIcon';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { IColumn } from 'interfaces/columns';
+import { deleteColumn, deleteTask, updateColumn } from 'store/column/thunks';
+import { EditableTitle } from './EditableTitle/EditableTitle';
 import { toggleBanOnUpdate } from 'store/column/slice';
+import { IColumn } from 'interfaces/columns';
 
 export const ColumnHeader: FC<IColumn> = (column) => {
   const dispatch = useAppDispatch();
-
   const { title } = column;
 
   const removeColumnById = () => {
@@ -21,14 +18,18 @@ export const ColumnHeader: FC<IColumn> = (column) => {
     dispatch(deleteColumn(column));
   };
 
+  const setNewTitle = (newTitle: string) => {
+    dispatch(updateColumn({ ...column, title: newTitle }));
+  };
+
   return (
     <AppBar position="static" className={styles.bar}>
       <Toolbar variant="dense" className={styles.align}>
-        <ButtonWithIcon clickAction={() => {}} icon={<EditIcon />} />
-        <Typography variant="subtitle1" className={styles.caption}>
-          {title}
-        </Typography>
-        <ButtonWithIcon clickAction={removeColumnById} icon={<DeleteIcon />} />
+        <EditableTitle
+          title={title}
+          onOkEditTitle={setNewTitle}
+          onDeleteColumn={removeColumnById}
+        />
       </Toolbar>
     </AppBar>
   );

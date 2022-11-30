@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { ListItem, Box, Divider, Typography } from '@mui/material';
 import { GroupOfAvatar } from 'components/avatarGroup/GroupOfAvatar';
 import { Draggable } from '@hello-pangea/dnd';
@@ -9,30 +9,35 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { deleteTask, updateTask } from 'store/column/thunks';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { randomString } from 'utils/temputils';
 import { useSnackbar } from 'notistack';
 import { useTranslation } from 'react-i18next';
 import { deleteTaskForm, editTaskForm } from 'components/form/constants/formOptions';
-import { IFormValues } from 'interfaces/modal';
+import { ICustomFormProps, IFormValues } from 'interfaces/modal';
+import FormModal from 'components/form/FormModal';
 
-export const Task: FC<ITaskProps> = ({ task, index, openModal, closeModal }) => {
+export const Task: FC<ITaskProps> = ({ task, index }) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const user = useAppSelector((state) => state.user);
   const { enqueueSnackbar } = useSnackbar();
   const { _id, boardId, columnId, title, description, users } = task;
+  const [isModalActive, setIsModalActive] = useState(false);
+  const [modalProps, setIsModalProps] = useState<ICustomFormProps>({
+    ...deleteTaskForm,
+    action: removeTask,
+  });
 
-  const removeTask = async () => {
+  async function removeTask() {
     try {
       await dispatch(deleteTask({ boardId, columnId, taskId: _id })).unwrap();
       enqueueSnackbar(t('successful.deleteTaskMessage'), { variant: 'success' });
-      closeModal();
+      setIsModalActive(false);
     } catch (error) {
       enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
     }
-  };
+  }
 
-  const editBoard = () => {
+  const editTask = () => {
     const currentData = {
       initialValues: {
         title,
@@ -41,7 +46,13 @@ export const Task: FC<ITaskProps> = ({ task, index, openModal, closeModal }) => 
       },
       ...editTaskForm,
     };
-    openModal(currentData, updateTaskData);
+    setIsModalProps({ ...currentData, action: updateTaskData });
+    setIsModalActive(true);
+  };
+
+  const deleteCurrentTask = () => {
+    setIsModalProps({ ...deleteTaskForm, action: removeTask });
+    setIsModalActive(true);
   };
 
   const updateTaskData = async (formData?: IFormValues) => {
@@ -52,47 +63,51 @@ export const Task: FC<ITaskProps> = ({ task, index, openModal, closeModal }) => 
       columnId,
       order: 0,
       userId: user.id,
-    } as unknown as ITask;
+    } as ITask;
     try {
       await dispatch(updateTask(newFormData)).unwrap();
       enqueueSnackbar(t('successful.editTaskMessage'), { variant: 'success' });
-      closeModal();
+      setIsModalActive(false);
     } catch (error) {
       enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
     }
   };
 
   return (
-    <Draggable draggableId={task._id} index={index}>
-      {(taskProvided, taskSnapshot) => (
-        <ListItem
-          {...taskProvided.draggableProps}
-          {...taskProvided.dragHandleProps}
-          ref={taskProvided.innerRef}
-          sx={{ flexGrow: 0 }}
-          className={taskSnapshot.isDragging ? styles.drag : styles.rest}
-        >
-          <Box className={styles.fullWidth}>
-            <Box className={styles.taskSubArea}>
-              <Typography component={Box} variant="caption" sx={{ fontWeight: 600 }}>
-                {task.title}
+    <>
+      <Draggable draggableId={task._id} index={index}>
+        {(taskProvided, taskSnapshot) => (
+          <ListItem
+            {...taskProvided.draggableProps}
+            {...taskProvided.dragHandleProps}
+            ref={taskProvided.innerRef}
+            sx={{ flexGrow: 0 }}
+            className={taskSnapshot.isDragging ? styles.drag : styles.rest}
+          >
+            <Box className={styles.fullWidth}>
+              <Box className={styles.taskSubArea}>
+                <Typography component={Box} variant="caption" sx={{ fontWeight: 600 }}>
+                  {task.title}
+                </Typography>
+                <ButtonWithIcon clickAction={editTask} icon={<EditIcon />} />
+              </Box>
+              <Divider />
+              <Typography component={Box} variant="inherit" sx={{ mt: 1 }}>
+                {task.description}
               </Typography>
-              <ButtonWithIcon clickAction={editBoard} icon={<EditIcon />} />
+              <Box className={styles.taskSubArea}>
+                <GroupOfAvatar {...task} />
+                <ButtonWithIcon clickAction={deleteCurrentTask} icon={<DeleteIcon />} />
+              </Box>
             </Box>
-            <Divider />
-            <Typography component={Box} variant="inherit" sx={{ mt: 1 }}>
-              {task.description}
-            </Typography>
-            <Box className={styles.taskSubArea}>
-              <GroupOfAvatar {...task} />
-              <ButtonWithIcon
-                clickAction={() => openModal(deleteTaskForm, removeTask)}
-                icon={<DeleteIcon />}
-              />
-            </Box>
-          </Box>
-        </ListItem>
-      )}
-    </Draggable>
+          </ListItem>
+        )}
+      </Draggable>
+      <FormModal
+        isModalActive={isModalActive}
+        closeModal={() => setIsModalActive(false)}
+        {...modalProps}
+      />
+    </>
   );
 };

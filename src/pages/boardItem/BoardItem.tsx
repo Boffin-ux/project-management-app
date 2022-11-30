@@ -1,11 +1,10 @@
 import { Box, Button } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd';
 import { BreadCrumbs } from './Breadcrumbs/Breadcrumbs';
 import { Column } from 'components/column/Column';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { VIEW_PATH } from 'utils/variables';
 import ViewWeekIcon from '@mui/icons-material/ViewWeek';
 import styles from './BoardItem.module.scss';
 import {
@@ -16,11 +15,10 @@ import {
   updateTasksSet,
 } from 'store/column/thunks';
 import { IRequestForCreateColumns } from 'interfaces/columns';
-import { randomString } from 'utils/temputils';
 import Loader from 'components/universal/Loader/Loader';
 import { useTranslation } from 'react-i18next';
 import FormModal from 'components/form/FormModal';
-import { ICustomFormProps, IDefaultFormProps, IFormValues } from 'interfaces/modal';
+import { IFormValues } from 'interfaces/modal';
 import { useSnackbar } from 'notistack';
 import { addColumnForm } from 'components/form/constants/formOptions';
 import { moveColumns, moveTask } from 'store/column/slice';
@@ -31,10 +29,6 @@ export const Board = () => {
   const params = useParams();
   const { t } = useTranslation();
   const [isModalActive, setIsModalActive] = useState(false);
-  const [modalProps, setIsModalProps] = useState<ICustomFormProps>({
-    ...addColumnForm,
-    action: addNewColumn,
-  });
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useAppDispatch();
 
@@ -55,9 +49,6 @@ export const Board = () => {
     if (orderingSet.columns.length > 0) dispatch(updateColumnsSet(orderingSet.columns));
     if (orderingSet.tasks.length > 0) dispatch(updateTasksSet(orderingSet.tasks));
   }, [columns, dispatch]);
-
-  // Временно отключил
-  // if (error || !currentBoard) return <Navigate to={VIEW_PATH.ERROR} replace />;
 
   const onDragEndColumn = (result: DropResult) => {
     const { source, destination } = result;
@@ -87,7 +78,7 @@ export const Board = () => {
       ...formData,
       boardId: currentBoard?._id,
       order: columns.length,
-    } as unknown as IRequestForCreateColumns;
+    } as IRequestForCreateColumns;
     try {
       await dispatch(createColumn(newFormData)).unwrap();
       enqueueSnackbar(t('successful.addColumnMessage'), { variant: 'success' });
@@ -97,23 +88,15 @@ export const Board = () => {
     }
   }
 
-  const closeModal = () => {
-    setIsModalActive(false);
-  };
-
-  const openModal = (formOptions?: IDefaultFormProps, action?: () => Promise<void>) => {
-    formOptions && action
-      ? setIsModalProps({ ...formOptions, action })
-      : setIsModalProps({ ...addColumnForm, action: addNewColumn });
-
-    setIsModalActive(true);
-  };
-
   return (
     <Box className={styles.wrapper}>
       <Box className={styles.controlPanel}>
         {currentBoard && <BreadCrumbs title={currentBoard.title} />}
-        <Button startIcon={<ViewWeekIcon />} variant="contained" onClick={() => openModal()}>
+        <Button
+          startIcon={<ViewWeekIcon />}
+          variant="contained"
+          onClick={() => setIsModalActive(true)}
+        >
           {t('boards.addColumn')}
         </Button>
       </Box>
@@ -130,12 +113,7 @@ export const Board = () => {
                   className={columnSnapshot.isDraggingOver ? styles.drag : styles.over}
                 >
                   {columns.map((column) => (
-                    <Column
-                      key={column._id}
-                      {...column}
-                      openModal={openModal}
-                      closeModal={closeModal}
-                    />
+                    <Column key={column._id} {...column} />
                   ))}
                   {columnsProvided.placeholder}
                 </Box>
@@ -145,7 +123,11 @@ export const Board = () => {
           {isLoading && <Loader />}
         </Box>
       </Box>
-      <FormModal isModalActive={isModalActive} closeModal={closeModal} {...modalProps} />
+      <FormModal
+        isModalActive={isModalActive}
+        closeModal={() => setIsModalActive(false)}
+        {...{ ...addColumnForm, action: addNewColumn }}
+      />
     </Box>
   );
 };

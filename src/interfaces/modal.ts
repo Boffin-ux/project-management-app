@@ -69,8 +69,8 @@ interface ICustomSelectField extends ICustomField {
   labelId: string;
   users: IUserData[];
   label: string;
-  value: IUserData[] | undefined;
-  handleChange: (event: SelectChangeEvent<IUserData[]>, child: ReactNode) => void;
+  value: string[];
+  handleChange: (event: SelectChangeEvent<string[]>, child: ReactNode) => void;
 }
 
 export {

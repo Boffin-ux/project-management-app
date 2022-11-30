@@ -1,5 +1,3 @@
-import { IOpenModal } from './modal';
-
 export interface ITaskBody {
   title: string;
   order: number;
@@ -20,7 +18,7 @@ export interface ITasksSet {
   order: number;
 }
 
-export interface ITaskProps extends IOpenModal {
+export interface ITaskProps {
   task: ITask;
   index: number;
 }

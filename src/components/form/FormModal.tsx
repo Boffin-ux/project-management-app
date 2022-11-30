@@ -73,7 +73,7 @@ export default function FormModal({
               users={users}
               label={t('selectUser.userLabelForm')}
               helperText={touched.users && !!errors.users && t(`errors.${errors.users}`)}
-              value={values.users as unknown as IUserData[]}
+              value={values.users}
               error={touched.users && !!errors.users}
             />
           )}

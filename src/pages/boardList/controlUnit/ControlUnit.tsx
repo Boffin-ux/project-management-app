@@ -5,11 +5,7 @@ import { MappingSpaces } from './mappingSpaces/MappingSpaces';
 import { PersonalizeView } from './personalizeView/PersonalizeView';
 import { AddBoardButton } from './addBoardButton/AddBoardButton';
 
-interface ICreateBoard {
-  openModal: () => void;
-}
-
-export const ControlUnit = ({ openModal }: ICreateBoard) => {
+export const ControlUnit = () => {
   return (
     <Grid
       container
@@ -26,7 +22,7 @@ export const ControlUnit = ({ openModal }: ICreateBoard) => {
         width="100%"
         sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
       >
-        <AddBoardButton openModal={openModal} />
+        <AddBoardButton />
         <Search />
       </Grid>
       <Box display="flex" justifyContent="end" alignItems="center" gap={1}>

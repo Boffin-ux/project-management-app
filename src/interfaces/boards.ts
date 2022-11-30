@@ -1,5 +1,3 @@
-import { IOpenModal } from './modal';
-
 export interface IBoardState {
   boards: Array<IBoard>;
   isLoading: boolean;
@@ -12,7 +10,7 @@ export interface IRequestForBoard {
   users: Array<string>;
 }
 
-export interface IBoard extends IRequestForBoard, IOpenModal {
+export interface IBoard extends IRequestForBoard {
   _id: string;
 }
 

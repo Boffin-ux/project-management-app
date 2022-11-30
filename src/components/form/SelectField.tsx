@@ -25,7 +25,7 @@ export default function SelectField({
   useEffect(() => {
     if (value) {
       const getLogin = users.reduce((acc: string[], user) => {
-        if (value.includes(user._id as unknown as typeof user)) {
+        if (value.includes(user._id)) {
           acc = [...acc, user.login];
         }
         return acc;
@@ -51,7 +51,7 @@ export default function SelectField({
       >
         {users.map((user) => (
           <MenuItem key={user._id} value={user._id}>
-            <Checkbox checked={value && value.indexOf(user._id as unknown as typeof user) > -1} />
+            <Checkbox checked={value && value.indexOf(user._id) > -1} />
             <ListItemText primary={user.login} />
           </MenuItem>
         ))}

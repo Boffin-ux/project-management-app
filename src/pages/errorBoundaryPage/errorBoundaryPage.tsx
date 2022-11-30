@@ -12,10 +12,10 @@ function ErrorBoundaryPage() {
   return (
     <Container sx={{ p: 5 }}>
       <Box className={styles.boundaryWrap}>
-        <Typography component="h2" variant="h3">
+        <Typography component="h2" variant="h3" textAlign={'center'}>
           {t('errorBoundary.title')}
         </Typography>
-        <Typography variant="h4">
+        <Typography variant="h4" textAlign={'center'}>
           {t('errorBoundary.subTitle')}: <i>{error.statusText || error.message}</i>
         </Typography>
       </Box>

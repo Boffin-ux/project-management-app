@@ -6,9 +6,10 @@ import React, { FC } from 'react';
 export interface CaptureButtonProp {
   title: string;
   isCapture: boolean;
+  clickAction: () => void;
 }
 
-export const ButtonAddTask: FC<CaptureButtonProp> = ({ title, isCapture }) => {
+export const ButtonAddTask: FC<CaptureButtonProp> = ({ title, isCapture, clickAction }) => {
   return (
     <Box className={styles.wrapper}>
       <Button
@@ -16,6 +17,7 @@ export const ButtonAddTask: FC<CaptureButtonProp> = ({ title, isCapture }) => {
         sx={{ fontSize: '13', height: 25 }}
         fullWidth
         startIcon={<AddTaskIcon />}
+        onClick={clickAction}
       >
         {isCapture && `${title}`}
       </Button>

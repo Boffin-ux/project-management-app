@@ -12,7 +12,7 @@ export interface IColumn extends IColumnSet, IOpenModal {
   tasks: Array<ITask>;
 }
 
-export interface Icolumns {
+export interface IColumns {
   columns: IColumn[];
 }
 

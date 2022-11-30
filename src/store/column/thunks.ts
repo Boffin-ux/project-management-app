@@ -61,6 +61,20 @@ export const deleteColumn = createAsyncThunk(
   }
 );
 
+export const updateColumn = createAsyncThunk(
+  'columns/update',
+  async (column: ColumnHeaderProps, { rejectWithValue }) => {
+    try {
+      const { boardId, columnId, ...requestBody } = column;
+      const response = await axiosPrivate.put(API_ENDPOINTS.COLUMN(boardId, columnId), requestBody);
+      return response.data;
+    } catch (error) {
+      const err = error as AxiosError;
+      return rejectWithValue(axiosErrorHandler(err));
+    }
+  }
+);
+
 export const getTasks = createAsyncThunk<ITask[], ITask, { rejectValue: string }>(
   'columns/getTasks',
   async ({ boardId, columnId }: ITaskRequest, { rejectWithValue }) => {

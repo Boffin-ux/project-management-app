@@ -18,15 +18,25 @@ interface IPropsConfirm {
   closeModal: () => void;
 }
 
-interface IFormProps extends IModalState {
+interface IDefaultFormProps {
   modalTitle: string;
-  action: (formData?: IFormValues) => void;
   initialValues?: IFormValues;
   btnTitle?: string;
   fields?: IFormField[];
   isUsers?: boolean;
   schema?: typeof boardSchema | typeof columnSchema | typeof taskSchema;
 }
+
+interface ICustomFormProps extends IDefaultFormProps {
+  action: (formData?: IFormValues) => void;
+}
+
+interface IOpenModal {
+  closeModal: () => void;
+  openModal: (formOptions?: IDefaultFormProps, action?: () => Promise<void>) => void;
+}
+
+interface IFormProps extends IModalState, ICustomFormProps {}
 
 interface IUserData {
   _id: string;
@@ -36,7 +46,7 @@ interface IUserData {
 interface IFormValues {
   title: string;
   description?: string;
-  users?: IUserData[];
+  users?: Array<string>;
 }
 
 interface IFormField {
@@ -52,15 +62,15 @@ interface ICustomField {
 
 interface ICustomTextField extends IFormField, ICustomField {
   handleChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
-  value: string | IUserData[] | undefined;
+  value: string | IUserData[] | Array<string> | undefined;
 }
 
 interface ICustomSelectField extends ICustomField {
   labelId: string;
   users: IUserData[];
   label: string;
-  value: IUserData[] | undefined;
-  handleChange: (event: SelectChangeEvent<IUserData[]>, child: ReactNode) => void;
+  value: string[];
+  handleChange: (event: SelectChangeEvent<string[]>, child: ReactNode) => void;
 }
 
 export {
@@ -72,4 +82,7 @@ export {
   IFormField,
   ICustomTextField,
   ICustomSelectField,
+  IDefaultFormProps,
+  ICustomFormProps,
+  IOpenModal,
 };

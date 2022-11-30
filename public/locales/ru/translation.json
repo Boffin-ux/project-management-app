@@ -134,8 +134,8 @@
   "selectUser": {
     "userLabelForm": "Пользователь"
   },
-  "editForm": {
-    "editModalTitle": "Изменить название",
-    "editSubmitBtnForm": "Изменить"
+  "errorBoundary": {
+    "title": "Произошла неожиданная ошибка!",
+    "subTitle": "Подробности"
   }
 }

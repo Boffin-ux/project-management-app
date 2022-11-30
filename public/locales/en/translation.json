@@ -132,5 +132,9 @@
   },
   "selectUser": {
     "userLabelForm": "User"
+  },
+  "errorBoundary": {
+    "title": "An unexpected error has occurred!",
+    "subTitle": "Details"
   }
 }

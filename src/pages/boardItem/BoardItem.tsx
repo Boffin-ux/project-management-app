@@ -1,45 +1,77 @@
 import { Box, Button } from '@mui/material';
 import React, { useEffect } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd';
 import { BreadCrumbs } from './Breadcrumbs/Breadcrumbs';
 import { Column } from 'components/column/Column';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { VIEW_PATH } from 'utils/variables';
+import { useSnackbar } from 'notistack';
 import ViewWeekIcon from '@mui/icons-material/ViewWeek';
 import styles from './BoardItem.module.scss';
-import { createColumn, getColumnsByBoardId, updateColumnsSet } from 'store/column/thunks';
+import {
+  createColumn,
+  getColumnsByBoardId,
+  getTasksSet,
+  updateColumnsSet,
+  updateTasksSet,
+} from 'store/column/thunks';
 import { IRequestForCreateColumns } from 'interfaces/columns';
 import { randomString } from 'utils/temputils';
 import Loader from 'components/universal/Loader/Loader';
-import { getNewColumnsSet } from 'utils/dragdrop';
 import { useTranslation } from 'react-i18next';
+import { moveColumns, moveTask } from 'store/column/slice';
+import { IDragDropColumn, IDragDropTask } from 'interfaces/dragdrop';
+import { setOrderingSets } from 'utils/dragdrop';
+import { IBoard } from 'interfaces/boards';
 
 export const Board = () => {
   const params = useParams();
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const { enqueueSnackbar } = useSnackbar();
 
   const currentBoard = useAppSelector((state) =>
     state.boards.boards.find((board) => board._id === params.id)
-  );
-  const { columns, error, isLoading } = useAppSelector((state) => state.columns);
-  const dispatch = useAppDispatch();
+  ) as IBoard;
+  const { columns, error, isLoading, banOnUpdate } = useAppSelector((state) => state.columns);
 
   useEffect(() => {
-    dispatch(getColumnsByBoardId(params.id as string));
-  }, []);
+    if (!banOnUpdate) {
+      const boardId = params.id as string;
+      dispatch(getColumnsByBoardId(boardId));
+      dispatch(getTasksSet(boardId));
+    }
+  }, [params.id]);
 
-  if (error || !currentBoard) return <Navigate to={VIEW_PATH.ERROR} replace />;
+  useEffect(() => {
+    const orderingSet = setOrderingSets(columns);
+
+    if (orderingSet.columns.length > 0) dispatch(updateColumnsSet(orderingSet.columns));
+    if (orderingSet.tasks.length > 0) dispatch(updateTasksSet(orderingSet.tasks));
+  }, [columns, dispatch]);
+
+  if (error || !currentBoard) enqueueSnackbar(t(`errors.authNoResponse`), { variant: 'error' });
 
   const onDragEndColumn = (result: DropResult) => {
     const { source, destination } = result;
+
     if (!destination) return;
     if (!source) return;
+
     if (source.droppableId === 'all-columns') {
-      const items = Array.from(columns);
-      const [newOrder] = items.splice(source.index, 1);
-      items.splice(destination.index, 0, newOrder);
-      dispatch(updateColumnsSet(getNewColumnsSet(items)));
+      const indexes: IDragDropColumn = {
+        destination: destination.index,
+        source: source.index,
+      };
+      dispatch(moveColumns(indexes));
+    } else {
+      const movedTask: IDragDropTask = {
+        destinationColumnId: destination.droppableId,
+        destinationIndex: destination.index,
+        sourceColumnId: source.droppableId,
+        sourceIndex: source.index,
+      };
+      dispatch(moveTask(movedTask));
     }
   };
 
@@ -62,7 +94,6 @@ export const Board = () => {
       </Box>
       <Box className={styles.centering}>
         <Box className={styles.columns}>
-          {isLoading && <Loader />}
           <DragDropContext onDragEnd={onDragEndColumn}>
             <Droppable droppableId="all-columns" direction="horizontal" type="column">
               {(columnsProvided, columnSnapshot) => (
@@ -80,6 +111,7 @@ export const Board = () => {
               )}
             </Droppable>
           </DragDropContext>
+          {isLoading && <Loader />}
         </Box>
       </Box>
     </Box>

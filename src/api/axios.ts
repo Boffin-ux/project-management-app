@@ -2,6 +2,7 @@ import axios from 'axios';
 import { store } from 'index';
 import { logout } from 'store/user/slice';
 import { RESPONSE_CODES } from 'utils/variables';
+
 const BASE_URL = 'https://final-task.cyclic.app/';
 
 export default axios.create({

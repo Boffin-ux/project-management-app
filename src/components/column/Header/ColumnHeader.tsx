@@ -2,22 +2,22 @@ import React, { FC } from 'react';
 import { Typography, AppBar, Toolbar } from '@mui/material';
 import styles from './ColumnHeader.module.scss';
 import { useAppDispatch } from 'hooks/redux';
-import { deleteColumn } from 'store/column/thunks';
+import { deleteColumn, deleteTask } from 'store/column/thunks';
 import { ButtonWithIcon } from 'components/buttons/ButtonWithIcon/ButtonWithIcon';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IColumn } from 'interfaces/columns';
-
-// export interface ColumnHeaderProps {
-//   column: IColumn;
-// }
+import { toggleBanOnUpdate } from 'store/column/slice';
 
 export const ColumnHeader: FC<IColumn> = (column) => {
   const dispatch = useAppDispatch();
-  const { title, tasks } = column;
+
+  const { title } = column;
 
   const removeColumnById = () => {
-    // tasks.forEach((task) => dispatch(deleteTask()));
+    dispatch(toggleBanOnUpdate());
+    column.tasks.forEach((task) => dispatch(deleteTask(task)));
+    dispatch(toggleBanOnUpdate());
     dispatch(deleteColumn(column));
   };
 

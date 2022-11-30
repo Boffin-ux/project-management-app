@@ -11,7 +11,7 @@ export interface IColumn extends IColumnSet {
   tasks: Array<ITask>;
 }
 
-export interface Icolumns {
+export interface IColumns {
   columns: IColumn[];
 }
 
@@ -21,6 +21,7 @@ export interface IColumnState {
   columns: IColumn[];
   isLoading: boolean;
   error: IError;
+  banOnUpdate: boolean;
 }
 
 export interface IRequestForCreateColumns {

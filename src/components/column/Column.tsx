@@ -72,7 +72,7 @@ export const Column: FC<IColumn> = (column) => {
                 title={t('boards.addTask')}
                 clickAction={() => setIsModalActive(true)}
               />
-              <Box sx={{ mt: 2, flexGrow: 1 }}>
+              <Box sx={{ mt: 2, flexGrow: 1, height: '60vh', overflowY: 'auto' }}>
                 <Droppable droppableId={_id}>
                   {(listProvided, snapshot) => (
                     <List

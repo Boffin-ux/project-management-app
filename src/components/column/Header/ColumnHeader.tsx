@@ -6,7 +6,6 @@ import { deleteColumn, deleteTask, updateColumn } from 'store/column/thunks';
 import { useSnackbar } from 'notistack';
 import { deleteColumnForm } from 'components/form/constants/formOptions';
 import { useTranslation } from 'react-i18next';
-import { IColumnHeaderProps } from 'interfaces/columns';
 import FormModal from 'components/form/FormModal';
 import { EditableTitle } from './EditableTitle/EditableTitle';
 import { toggleBanOnUpdate } from 'store/column/slice';
@@ -29,7 +28,6 @@ export const ColumnHeader: FC<IColumn> = (column) => {
 
     try {
       await removeColumnById();
-      // await dispatch(deleteColumn({ ...column })).unwrap();
       enqueueSnackbar(t('successful.deleteColumnMessage'), { variant: 'success' });
       setIsModalActive(false);
     } catch (error) {

@@ -1,0 +1,13 @@
+.boundaryWrap {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 15px;
+
+  i {
+    color: #ff5722;
+  }
+}

@@ -18,6 +18,11 @@ export interface ITasksSet {
   order: number;
 }
 
+export interface ITaskProps {
+  task: ITask;
+  index: number;
+}
+
 export interface ITaskState {
   error: string | null;
   isLoading: boolean;

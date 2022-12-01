@@ -11,8 +11,20 @@ export interface IColumn extends IColumnSet {
   tasks: Array<ITask>;
 }
 
+export interface IColumnHeaderProps {
+  columnId: string;
+  boardId: string;
+  title: string;
+  order?: number;
+}
+
 export interface IColumns {
   columns: IColumn[];
+}
+
+export interface IDeleteColumn {
+  boardId: string;
+  columnId: string;
 }
 
 export type IError = string | null;

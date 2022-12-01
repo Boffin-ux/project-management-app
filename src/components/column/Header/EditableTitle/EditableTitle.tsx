@@ -58,7 +58,7 @@ export const EditableTitle: FC<EditableTitleProps> = (column) => {
       )}
       {!isEdit && (
         <>
-          <ButtonWithIcon clickAction={() => {}} icon={<EditIcon />} />
+          <ButtonWithIcon clickAction={() => setIsEdit(true)} icon={<EditIcon />} />
           <Typography
             variant="subtitle1"
             className={styles.caption}

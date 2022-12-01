@@ -4,6 +4,7 @@ import { AxiosError } from 'axios';
 import { axiosErrorHandler } from 'utils/helpers';
 import { API_ENDPOINTS } from 'utils/variables';
 import { IColumn, IColumnSet, IRequestForCreateColumns } from 'interfaces/columns';
+import { IColumnHeaderProps, IDeleteColumn } from 'interfaces/columns';
 import { ITask, ITaskRequest, ITasksSet } from 'interfaces/task';
 
 export const getColumnsByBoardId = createAsyncThunk(

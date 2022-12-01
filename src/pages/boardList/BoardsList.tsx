@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Box } from '@mui/material';
+import { Grid, Box, Skeleton } from '@mui/material';
 import { ControlUnit } from './controlUnit/ControlUnit';
 import { BoardCard } from './Card/BoardCard';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
@@ -13,6 +13,8 @@ import { addBoardForm } from 'components/form/constants/formOptions';
 import { IRequestForBoard } from 'interfaces/boards';
 import { IFormValues } from 'interfaces/modal';
 import Loader from 'components/universal/Loader/Loader';
+import { randomString } from 'utils/temputils';
+import { SkeletonCard } from './Card/SkeletonCard';
 
 export const Boards = () => {
   const dispatch = useAppDispatch();
@@ -41,10 +43,11 @@ export const Boards = () => {
     <Box className={styles.boardWrapper}>
       <ControlUnit />
       <Grid container spacing={1} justifyContent="center">
-        {isLoading && <Loader />}
-        {boards.map((board) => (
-          <BoardCard board={board} isLoading={isLoading} key={board._id} />
-        ))}
+        {isLoading &&
+          randomString(Math.round(5 + Math.random() * 5))
+            .split('')
+            .map((card, index) => <SkeletonCard key={index + card} />)}
+        {!isLoading && boards.map((board) => <BoardCard {...board} key={board._id} />)}
       </Grid>
       <FormModal
         isModalActive={isModalActive}

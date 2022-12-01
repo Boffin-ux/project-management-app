@@ -83,6 +83,22 @@ const VALUE_VALID = {
   DESC_MAX_LENGTH: 90,
 };
 
+const TITLES = {
+  '/': 'HOME',
+  '/boards': 'Входящие - СЭД',
+  '/outbox': 'Исходящие - СЭД',
+  '/appeals': 'Обращения граждан - СЭД',
+  '/ord': 'ОРД - СЭД',
+  '/documents-list': 'Перечень поручений - СЭД',
+  '/events': 'Мероприятия - СЭД',
+  '/notifications': 'Уведомления - СЭД',
+  '/calendar': 'Календарь задач - СЭД',
+  '/management': 'Управление СЭД',
+  '/users': 'Пользователи - СЭД',
+  '/settings': 'Настройки - СЭД',
+  '/login': 'Добро пожаловать в СЭД!',
+};
+
 export {
   LOCALES,
   VIEW_PATH,
@@ -91,5 +107,6 @@ export {
   RESPONSE_CODES,
   FIELD_OPTIONS,
   VALUE_VALID,
+  TITLES,
   initialValues,
 };

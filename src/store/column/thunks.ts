@@ -3,8 +3,12 @@ import { axiosPrivate } from 'api/axios';
 import { AxiosError } from 'axios';
 import { axiosErrorHandler } from 'utils/helpers';
 import { API_ENDPOINTS } from 'utils/variables';
-import { IColumnSet, IRequestForCreateColumns } from 'interfaces/columns';
-import { ColumnHeaderProps } from 'components/column/Header/ColumnHeader';
+import {
+  IColumnHeaderProps,
+  IColumnSet,
+  IDeleteColumn,
+  IRequestForCreateColumns,
+} from 'interfaces/columns';
 import { ITask, ITaskRequest, ITasksSet } from 'interfaces/task';
 
 export const getColumnsByBoardId = createAsyncThunk(
@@ -49,7 +53,7 @@ export const updateColumnsSet = createAsyncThunk(
 
 export const deleteColumn = createAsyncThunk(
   'columns/delete',
-  async (column: ColumnHeaderProps, { rejectWithValue }) => {
+  async (column: IDeleteColumn, { rejectWithValue }) => {
     try {
       const { boardId, columnId } = column;
       const response = await axiosPrivate.delete(API_ENDPOINTS.COLUMN(boardId, columnId));
@@ -63,7 +67,7 @@ export const deleteColumn = createAsyncThunk(
 
 export const updateColumn = createAsyncThunk(
   'columns/update',
-  async (column: ColumnHeaderProps, { rejectWithValue }) => {
+  async (column: IColumnHeaderProps, { rejectWithValue }) => {
     try {
       const { boardId, columnId, ...requestBody } = column;
       const response = await axiosPrivate.put(API_ENDPOINTS.COLUMN(boardId, columnId), requestBody);

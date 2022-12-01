@@ -1,5 +1,3 @@
-import { IUser } from 'interfaces/users';
-
 export interface IBoardState {
   boards: Array<IBoard>;
   isLoading: boolean;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Checkbox,
   FormControl,
@@ -20,13 +20,19 @@ export default function SelectField({
   label,
   labelId,
 }: ICustomSelectField) {
-  const [userLogin, setUserLogin] = useState([] as Array<string>);
+  const [userLogin, setUserLogin] = useState<string[]>([]);
 
-  const selectedLogin = (login: string) => {
-    userLogin.includes(login)
-      ? setUserLogin(userLogin.filter((item) => item !== login))
-      : setUserLogin([...userLogin, login]);
-  };
+  useEffect(() => {
+    if (value) {
+      const getLogin = users.reduce((acc: string[], user) => {
+        if (value.includes(user._id)) {
+          acc = [...acc, user.login];
+        }
+        return acc;
+      }, []);
+      setUserLogin([...getLogin]);
+    }
+  }, [value]);
 
   return (
     <FormControl margin="normal" fullWidth>
@@ -44,8 +50,8 @@ export default function SelectField({
         error={error}
       >
         {users.map((user) => (
-          <MenuItem key={user._id} value={user._id} onClick={() => selectedLogin(user.login)}>
-            <Checkbox checked={value && value.indexOf(user._id as unknown as typeof user) > -1} />
+          <MenuItem key={user._id} value={user._id}>
+            <Checkbox checked={value && value.indexOf(user._id) > -1} />
             <ListItemText primary={user.login} />
           </MenuItem>
         ))}

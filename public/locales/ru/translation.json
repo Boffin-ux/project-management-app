@@ -26,7 +26,13 @@
     "userDeleteMessage": "Аккаунт пользователя был успешно удален!",
     "userEditMessage": "Аккаунт пользователя был успешно изменён!",
     "deleteBoardMessage": "Доска успешно удалена!",
-    "addBoardMessage": "Доска успешно создана!"
+    "addBoardMessage": "Доска успешно создана!",
+    "editBoardMessage": "Доска успешно изменена!",
+    "addColumnMessage": "Колонка успешно создана!",
+    "deleteColumnMessage": "Колонка успешно удалена!",
+    "addTaskMessage": "Задача успешно создана!",
+    "editTaskMessage": "Задача успешно изменена!",
+    "deleteTaskMessage": "Задача успешно удалена!"
   },
   "header": {
     "signIn": "Войти",
@@ -128,8 +134,8 @@
   "selectUser": {
     "userLabelForm": "Пользователь"
   },
-  "editForm": {
-    "editModalTitle": "Изменить название",
-    "editSubmitBtnForm": "Изменить"
+  "errorBoundary": {
+    "title": "Произошла неожиданная ошибка!",
+    "subTitle": "Подробности"
   }
 }

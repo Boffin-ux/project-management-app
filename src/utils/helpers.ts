@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios';
 import { IUsers } from 'interfaces/users';
+import { randomString } from './temputils';
 import { RESPONSE_CODES } from './variables';
 
 export const axiosErrorHandler = (err: AxiosError) => {
@@ -43,4 +44,8 @@ export const getUserById = (users: IUsers[], userId: string): IUsers => {
     login: 'noname',
   };
   return users.find((user) => user._id === userId) || tempUser;
+};
+
+export const generateRandomArray = (minLength: number, maxLength: number): Array<string> => {
+  return randomString(Math.round(minLength + Math.random() * maxLength)).split('');
 };

@@ -6,9 +6,8 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { getAllBoards } from 'store/board/thunks';
 import styles from './BoardList.module.scss';
 import { getUsers } from 'store/users/thunks';
-
-import { randomString } from 'utils/temputils';
 import { SkeletonCard } from './Card/SkeletonCard';
+import { generateRandomArray } from 'utils/helpers';
 
 export const Boards = () => {
   const dispatch = useAppDispatch();
@@ -23,10 +22,7 @@ export const Boards = () => {
     <Box className={styles.boardWrapper}>
       <ControlUnit />
       <Grid container spacing={1} justifyContent="center">
-        {isLoading &&
-          randomString(Math.round(5 + Math.random() * 5))
-            .split('')
-            .map((card, index) => <SkeletonCard key={index + card} />)}
+        {isLoading && generateRandomArray(5, 10).map((_, index) => <SkeletonCard key={index} />)}
         {!isLoading && boards.map((board) => <BoardCard {...board} key={board._id} />)}
       </Grid>
     </Box>

@@ -46,7 +46,7 @@ export const Column: FC<IColumn> = (column) => {
 
   return (
     <>
-      <Draggable draggableId={_id} index={order}>
+      <Draggable key={_id} draggableId={_id} index={order}>
         {(columnProvided) => (
           <Box
             className={styles.column}
@@ -70,10 +70,11 @@ export const Column: FC<IColumn> = (column) => {
                 title={t('boards.addTask')}
                 clickAction={() => setIsModalActive(true)}
               />
-              <Box sx={{ mt: 2, flexGrow: 1 }}>
+              <Box sx={{ mt: 2, flexGrow: 1, overflowY: 'auto' }}>
                 <Droppable droppableId={_id}>
                   {(listProvided, snapshot) => (
                     <List
+                      sx={{ mt: 2, padding: '10px' }}
                       ref={listProvided.innerRef}
                       {...listProvided.droppableProps}
                       className={snapshot.isDraggingOver ? styles.over : styles.drag}

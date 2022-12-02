@@ -18,16 +18,16 @@ export const BreadCrumbs = (boardName: BreadCrumbsProps) => {
   const { t } = useTranslation();
 
   return (
-    <Breadcrumbs sx={{ m: 1 }}>
+    <Breadcrumbs sx={{ m: 0.5 }} className={styles.nav}>
       <Button className={styles.link} component={Link} to={VIEW_PATH.HOME}>
-        <HomeIcon sx={{ mr: 0.5 }} fontSize="large" />
+        <HomeIcon sx={{ mr: 0.5 }} fontSize="small" />
         {t('header.homeLink')}
       </Button>
       <Button className={styles.link} component={Link} to={'../' + VIEW_PATH.BOARDS}>
-        <DashboardIcon sx={{ mr: 0.5 }} fontSize="large" />
+        <DashboardIcon sx={{ mr: 0.5 }} fontSize="small" />
         {t('boards.boardsList')}
       </Button>
-      <Typography className={styles.link} variant="h5">
+      <Typography className={styles.link} variant="h6">
         <PlaylistAddCheckIcon sx={{ mr: 0.5 }} fontSize="large" />
         {boardName.title}
       </Typography>

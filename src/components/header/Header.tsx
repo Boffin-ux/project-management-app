@@ -1,4 +1,4 @@
-import { Build, Home, Logout, ManageAccounts } from '@mui/icons-material';
+import { Home, Logout, ManageAccounts } from '@mui/icons-material';
 import { AppBar, Box, Button, Grid, Toolbar, Typography } from '@mui/material';
 import AuthMenu from 'components/AuthMenu/AuthMenu';
 import SelectionLang from 'components/selectionLang/SelectionLang';

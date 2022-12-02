@@ -77,7 +77,7 @@ export const Task: FC<ITaskProps> = ({ task, index }) => {
 
   return (
     <>
-      <Draggable draggableId={task._id} index={index}>
+      <Draggable key={_id} draggableId={task._id} index={index}>
         {(taskProvided, taskSnapshot) => (
           <ListItem
             {...taskProvided.draggableProps}

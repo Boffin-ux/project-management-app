@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd';
@@ -90,7 +90,7 @@ export const Board = () => {
 
   return (
     <Box className={styles.wrapper}>
-      <Box className={styles.controlPanel}>
+      <Grid className={styles.controlPanel} sx={{ flexDirection: { xs: 'column', sm: 'row' } }}>
         {currentBoard && <BreadCrumbs title={currentBoard.title} />}
         <Button
           startIcon={<ViewWeekIcon />}
@@ -99,7 +99,7 @@ export const Board = () => {
         >
           {t('boards.addColumn')}
         </Button>
-      </Box>
+      </Grid>
       <Box className={styles.centering}>
         <Box className={styles.columns}>
           {isLoading && <Loader />}
@@ -107,7 +107,7 @@ export const Board = () => {
             <Droppable droppableId="all-columns" direction="horizontal" type="column">
               {(columnsProvided, columnSnapshot) => (
                 <Box
-                  sx={{ display: 'flex', justifyContent: 'center' }}
+                  sx={{ display: 'flex', justifyContent: 'flex-start' }}
                   ref={columnsProvided.innerRef}
                   {...columnsProvided.droppableProps}
                   className={columnSnapshot.isDraggingOver ? styles.drag : styles.over}

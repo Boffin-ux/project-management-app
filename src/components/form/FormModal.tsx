@@ -38,8 +38,10 @@ export default function FormModal({
   });
 
   useEffect(() => {
-    if (isUsers) dispatch(getUsers());
-  }, []);
+    if (isUsers && isModalActive) {
+      dispatch(getUsers());
+    }
+  }, [isModalActive]);
 
   type fieldName = keyof typeof initialValues;
 

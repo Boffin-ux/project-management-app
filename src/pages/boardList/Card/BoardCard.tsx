@@ -32,7 +32,7 @@ import { setRandomColor } from './utils';
 export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const allUsers = useAppSelector((state) => state.users.users);
+  const allUsers = useAppSelector((state) => state.user.users);
   const { enqueueSnackbar } = useSnackbar();
   const [isModalActive, setIsModalActive] = useState(false);
   const [modalProps, setIsModalProps] = useState<ICustomFormProps>({

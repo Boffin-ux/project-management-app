@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 import { AppBar, Toolbar } from '@mui/material';
 import styles from './ColumnHeader.module.scss';
 import { useAppDispatch } from 'hooks/redux';
-import { deleteColumn, deleteTask, updateColumn } from 'store/column/thunks';
+import { deleteColumn, updateColumn } from 'store/column/thunks';
 import { useSnackbar } from 'notistack';
 import { deleteColumnForm } from 'components/form/constants/formOptions';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +10,7 @@ import FormModal from 'components/form/FormModal';
 import { EditableTitle } from './EditableTitle/EditableTitle';
 import { toggleBanOnUpdate } from 'store/column/slice';
 import { IColumn } from 'interfaces/columns';
+import { deleteTask } from 'store/tasks/thunks';
 
 export const ColumnHeader: FC<IColumn> = (column) => {
   const dispatch = useAppDispatch();

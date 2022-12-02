@@ -7,13 +7,13 @@ import { ITask, ITaskProps } from 'interfaces/task';
 import { ButtonWithIcon } from 'components/buttons/ButtonWithIcon/ButtonWithIcon';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { deleteTask, updateTask } from 'store/column/thunks';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { useSnackbar } from 'notistack';
 import { useTranslation } from 'react-i18next';
 import { deleteTaskForm, editTaskForm } from 'components/form/constants/formOptions';
 import { ICustomFormProps, IFormValues } from 'interfaces/modal';
 import FormModal from 'components/form/FormModal';
+import { deleteTask, updateTask } from 'store/tasks/thunks';
 
 const ORDER_NUM = 0;
 

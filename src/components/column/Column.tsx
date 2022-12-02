@@ -8,12 +8,12 @@ import { ButtonAddTask } from './ButtonAddTask/ButtonAddTask';
 import { useTranslation } from 'react-i18next';
 import { ITask } from 'interfaces/task';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { createTask } from 'store/column/thunks';
 import { Task } from 'pages/boardItem/Task/Task';
 import { IFormValues } from 'interfaces/modal';
 import { useSnackbar } from 'notistack';
 import { addTaskForm } from 'components/form/constants/formOptions';
 import FormModal from 'components/form/FormModal';
+import { createTask } from 'store/tasks/thunks';
 
 const ORDER_NUM = 0;
 
@@ -72,21 +72,23 @@ export const Column: FC<IColumn> = (column) => {
                 title={t('boards.addTask')}
                 clickAction={() => setIsModalActive(true)}
               />
-              <Box sx={{ mt: 2, flexGrow: 1, height: '60vh', overflowY: 'auto' }}>
-                <Droppable droppableId={_id}>
-                  {(listProvided, snapshot) => (
-                    <List
-                      ref={listProvided.innerRef}
-                      {...listProvided.droppableProps}
-                      className={snapshot.isDraggingOver ? styles.over : styles.drag}
-                    >
-                      {tasks.map((task, index) => (
-                        <Task key={task._id} task={task} index={index} />
-                      ))}
-                      {listProvided.placeholder}
-                    </List>
-                  )}
-                </Droppable>
+              <Box sx={{ overflow: 'scroll' }}>
+                <Box sx={{ mt: 2, flexGrow: 1, height: '60vh' }}>
+                  <Droppable droppableId={_id}>
+                    {(listProvided, snapshot) => (
+                      <List
+                        ref={listProvided.innerRef}
+                        {...listProvided.droppableProps}
+                        className={snapshot.isDraggingOver ? styles.over : styles.drag}
+                      >
+                        {tasks.map((task, index) => (
+                          <Task key={task._id} task={task} index={index} />
+                        ))}
+                        {listProvided.placeholder}
+                      </List>
+                    )}
+                  </Droppable>
+                </Box>
               </Box>
             </Box>
           </Box>

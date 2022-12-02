@@ -7,26 +7,23 @@ import { Column } from 'components/column/Column';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import ViewWeekIcon from '@mui/icons-material/ViewWeek';
 import styles from './BoardItem.module.scss';
-import {
-  createColumn,
-  getColumnsByBoardId,
-  getTasksSet,
-  updateColumnsSet,
-  updateTasksSet,
-} from 'store/column/thunks';
-import { IRequestForCreateColumns } from 'interfaces/columns';
+import { createColumn, getColumnsByBoardId, updateColumnsSet } from 'store/column/thunks';
+import { IColumn, IRequestForCreateColumns } from 'interfaces/columns';
 import Loader from 'components/universal/Loader/Loader';
 import { useTranslation } from 'react-i18next';
 import FormModal from 'components/form/FormModal';
 import { IFormValues } from 'interfaces/modal';
 import { useSnackbar } from 'notistack';
 import { addColumnForm } from 'components/form/constants/formOptions';
-import { moveColumns, moveTask } from 'store/column/slice';
+import { moveColumns } from 'store/column/slice';
 import { IDragDropColumn, IDragDropTask } from 'interfaces/dragdrop';
 import { setOrderingSets } from 'utils/dragdrop';
 import { IBoard } from 'interfaces/boards';
+import { getTasksSet, updateTasksSet } from 'store/tasks/thunks';
+import { moveTask } from 'store/tasks/slice';
 
 export const Board = () => {
+  const [viewCol, setViewCol] = useState<IColumn[]>([]);
   const params = useParams();
   const { t } = useTranslation();
   const [isModalActive, setIsModalActive] = useState(false);
@@ -37,6 +34,19 @@ export const Board = () => {
     state.boards.boards.find((board) => board._id === params.id)
   ) as IBoard;
   const { columns, error, isLoading, banOnUpdate } = useAppSelector((state) => state.columns);
+  const { tasks } = useAppSelector((state) => state.alltasks);
+
+  useEffect(() => {
+    const newCol = columns.map((column) => ({
+      ...column,
+      tasks: tasks.filter((task) => task.columnId === column._id).sort((a, b) => a.order - b.order),
+    }));
+    setViewCol(newCol);
+
+    const orderingSet = setOrderingSets(newCol);
+    if (orderingSet.columns.length > 0) dispatch(updateColumnsSet(orderingSet.columns));
+    if (orderingSet.tasks.length > 0) dispatch(updateTasksSet(orderingSet.tasks));
+  }, [columns, tasks]);
 
   useEffect(() => {
     if (!banOnUpdate) {
@@ -44,14 +54,7 @@ export const Board = () => {
       dispatch(getColumnsByBoardId(boardId));
       dispatch(getTasksSet(boardId));
     }
-  }, [params.id]);
-
-  useEffect(() => {
-    const orderingSet = setOrderingSets(columns);
-
-    if (orderingSet.columns.length > 0) dispatch(updateColumnsSet(orderingSet.columns));
-    if (orderingSet.tasks.length > 0) dispatch(updateTasksSet(orderingSet.tasks));
-  }, [columns, dispatch]);
+  }, []);
 
   if (error || !currentBoard) enqueueSnackbar(t(`errors.authNoResponse`), { variant: 'error' });
 
@@ -117,8 +120,8 @@ export const Board = () => {
                   {...columnsProvided.droppableProps}
                   className={columnSnapshot.isDraggingOver ? styles.drag : styles.over}
                 >
-                  {columns.map((column) => (
-                    <Column key={column._id} {...column} />
+                  {viewCol.map((c) => (
+                    <Column key={c._id} {...c} />
                   ))}
                   {columnsProvided.placeholder}
                 </Box>

@@ -32,7 +32,7 @@ export default function SelectField({
       }, []);
       setUserLogin([...getLogin]);
     }
-  }, [value]);
+  }, [value, users]);
 
   return (
     <FormControl margin="normal" fullWidth>

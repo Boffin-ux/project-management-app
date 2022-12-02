@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
   boards: boardsReducer,
   user: usersReducer,
   columns: columnReducer,
-  alltasks: tasksReducer,
+  tasks: tasksReducer,
   users: allUsersSlice,
 });
 

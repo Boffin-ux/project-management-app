@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IColumn, IColumnState } from 'interfaces/columns';
-import { IDragDropColumn, IDragDropTask } from 'interfaces/dragdrop';
+import { IDragDropTask } from 'interfaces/dragdrop';
 import { ITask } from 'interfaces/task';
 import { createTask, deleteTask, getTasks, getTasksSet, updateTask } from './thunks';
 
@@ -20,24 +19,11 @@ const updateOrder = (tasks: ITask[]): ITask[] => {
   return tasks.map((task, index) => ({ ...task, order: index }));
 };
 
-const groupArray = (arr: ITask[]) => {
-  const res = new Map<string, ITask[]>();
-  arr.forEach((task) => {
-    if (res.has(task.columnId)) {
-      res.set(task.columnId, [...(res.get(task.columnId) as ITask[]), task]);
-    } else {
-      res.set(task.columnId, [task]);
-    }
-  });
-  return res;
-};
-
 export const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
     moveTask: (state, action: PayloadAction<IDragDropTask>) => {
-      state.isLoading = true;
       const { sourceColumnId, destinationColumnId, sourceIndex, destinationIndex } = action.payload;
       if (destinationColumnId === sourceColumnId) {
         const columnTasks: ITask[] = [];
@@ -71,7 +57,6 @@ export const tasksSlice = createSlice({
         updateOrder(sourceTasks);
         state.tasks = [...otherTasks, ...updateOrder(sourceTasks), ...updateOrder(destTasks)];
       }
-      state.isLoading = false;
     },
   },
   extraReducers(builder) {
@@ -104,7 +89,7 @@ export const tasksSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(getTasksSet.fulfilled, (state, action) => {
+      .addCase(getTasksSet.fulfilled, (state, action: PayloadAction<ITask[]>) => {
         state.tasks = action.payload;
       })
       .addCase(getTasksSet.rejected, (state, action) => {
@@ -115,7 +100,7 @@ export const tasksSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(updateTask.fulfilled, (state, action) => {
+      .addCase(updateTask.fulfilled, (state, action: PayloadAction<ITask>) => {
         state.isLoading = false;
         state.tasks = state.tasks.map((task) =>
           task._id === action.payload._id ? action.payload : task
@@ -129,7 +114,7 @@ export const tasksSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(deleteTask.fulfilled, (state, action) => {
+      .addCase(deleteTask.fulfilled, (state, action: PayloadAction<ITask>) => {
         state.isLoading = false;
         state.tasks = state.tasks.filter((task) => task._id != action.payload._id);
       })

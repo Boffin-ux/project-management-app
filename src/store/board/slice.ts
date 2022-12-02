@@ -21,9 +21,7 @@ export const boardSlice = createSlice({
   initialState,
   reducers: {
     changeView: (state, action: PayloadAction<string>) => {
-      state.isLoading = true;
       state.displayedView = action.payload;
-      state.isLoading = false;
     },
   },
   extraReducers(builder) {

@@ -10,7 +10,7 @@ import { getUsers } from 'store/users/thunks';
 
 export const Boards = () => {
   const dispatch = useAppDispatch();
-  const { boards, error, isLoading } = useAppSelector((state) => state.boards);
+  const { boards, isLoading } = useAppSelector((state) => state.boards);
 
   useEffect(() => {
     dispatch(getAllBoards());

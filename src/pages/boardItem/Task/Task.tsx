@@ -22,7 +22,7 @@ export const Task: FC<ITaskProps> = ({ task, index }) => {
   const { t } = useTranslation();
   const user = useAppSelector((state) => state.user);
   const { enqueueSnackbar } = useSnackbar();
-  const { _id, boardId, columnId, title, description, users } = task;
+  const { _id, boardId, columnId, title, description, order, users } = task;
   const [isModalActive, setIsModalActive] = useState(false);
   const [modalProps, setIsModalProps] = useState<ICustomFormProps>({
     ...deleteTaskForm,
@@ -63,7 +63,7 @@ export const Task: FC<ITaskProps> = ({ task, index }) => {
       _id,
       boardId,
       columnId,
-      order: ORDER_NUM,
+      order,
       userId: user.id,
     } as ITask;
     try {

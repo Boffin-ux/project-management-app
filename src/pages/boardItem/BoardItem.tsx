@@ -23,7 +23,7 @@ import { getTasksSet, updateTasksSet } from 'store/tasks/thunks';
 import { moveTask } from 'store/tasks/slice';
 
 export const Board = () => {
-  const [viewCol, setViewCol] = useState<IColumn[]>([]);
+  const [viewedColumns, setViewedColumns] = useState<IColumn[]>([]); //для объединения двух state
   const params = useParams();
   const { t } = useTranslation();
   const [isModalActive, setIsModalActive] = useState(false);
@@ -34,14 +34,14 @@ export const Board = () => {
     state.boards.boards.find((board) => board._id === params.id)
   ) as IBoard;
   const { columns, error, isLoading, banOnUpdate } = useAppSelector((state) => state.columns);
-  const { tasks } = useAppSelector((state) => state.alltasks);
+  const { tasks } = useAppSelector((state) => state.tasks);
 
   useEffect(() => {
     const newCol = columns.map((column) => ({
       ...column,
       tasks: tasks.filter((task) => task.columnId === column._id).sort((a, b) => a.order - b.order),
     }));
-    setViewCol(newCol);
+    setViewedColumns(newCol);
 
     const orderingSet = setOrderingSets(newCol);
     if (orderingSet.columns.length > 0) dispatch(updateColumnsSet(orderingSet.columns));
@@ -120,7 +120,7 @@ export const Board = () => {
                   {...columnsProvided.droppableProps}
                   className={columnSnapshot.isDraggingOver ? styles.drag : styles.over}
                 >
-                  {viewCol.map((c) => (
+                  {viewedColumns.map((c) => (
                     <Column key={c._id} {...c} />
                   ))}
                   {columnsProvided.placeholder}

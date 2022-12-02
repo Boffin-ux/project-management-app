@@ -28,10 +28,9 @@ function Profile() {
   const { values, touched, errors, handleSubmit, handleChange } = useFormik({
     initialValues,
     validationSchema: userValidationSchema,
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: () => {
       setIsEditProfile(true);
       setIsModalActive(true);
-      resetForm();
     },
   });
 

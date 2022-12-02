@@ -1,7 +1,7 @@
 const selectStyle = {
   fontSize: '.9rem',
   transition: 'all .4s',
-  width: { sx: '45px', sm: '60px' },
+  width: { xs: '45px', sm: '60px' },
   '&.Mui-selected': {
     backgroundColor: 'rgba(63, 191, 195, 0.8)',
     color: 'inherit',

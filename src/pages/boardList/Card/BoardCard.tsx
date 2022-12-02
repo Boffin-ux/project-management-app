@@ -2,6 +2,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {
   Avatar,
+  Box,
   Card,
   CardActions,
   CardContent,
@@ -88,18 +89,20 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
           }
           title={title}
           titleTypographyProps={{ fontWeight: 500 }}
-          subheader={`${t('boards.owner')}: ${getUserById(allUsers, owner).name}`}
+          subheader={`${t('boards.owner')}: ${getUserById(allUsers, owner).login}`}
         />
         <Divider variant="inset" component="p" />
         <CardContent className={styles.content}>
-          <Typography variant="caption">{t('boards.members')}:</Typography>
-          <List>
-            {users.map((user) => (
-              <ListItem key={_id + user} className={styles.membersList}>
-                {getUserById(allUsers, user).name}
-              </ListItem>
-            ))}
-          </List>
+          <Typography variant="subtitle2">{t('boards.members')}:</Typography>
+          <Box className={styles.wrapList}>
+            <List className={styles.membersList}>
+              {users.map((user) => (
+                <ListItem key={_id + user} className={styles.memberItem}>
+                  {getUserById(allUsers, user).login}
+                </ListItem>
+              ))}
+            </List>
+          </Box>
         </CardContent>
         <CardActions className={styles.action}>
           <Button component={Link} to={_id} variant="contained">

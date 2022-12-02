@@ -18,17 +18,27 @@ export const BreadCrumbs = (boardName: BreadCrumbsProps) => {
   const { t } = useTranslation();
 
   return (
-    <Breadcrumbs sx={{ m: 0.5 }} className={styles.nav}>
-      <Button className={styles.link} component={Link} to={VIEW_PATH.HOME}>
-        <HomeIcon sx={{ mr: 0.5 }} fontSize="small" />
+    <Breadcrumbs sx={{ m: 0.3 }} className={styles.nav}>
+      <Button
+        className={styles.link}
+        component={Link}
+        to={VIEW_PATH.HOME}
+        sx={{ fontSize: { xs: '.6rem', sm: '.875rem' } }}
+      >
+        <HomeIcon sx={{ mr: 0.3 }} fontSize="small" />
         {t('header.homeLink')}
       </Button>
-      <Button className={styles.link} component={Link} to={'../' + VIEW_PATH.BOARDS}>
-        <DashboardIcon sx={{ mr: 0.5 }} fontSize="small" />
+      <Button
+        className={styles.link}
+        component={Link}
+        to={'../' + VIEW_PATH.BOARDS}
+        sx={{ fontSize: { xs: '.6rem', sm: '.875rem' } }}
+      >
+        <DashboardIcon sx={{ mr: 0.3 }} fontSize="small" />
         {t('boards.boardsList')}
       </Button>
-      <Typography className={styles.link} variant="h6">
-        <PlaylistAddCheckIcon sx={{ mr: 0.5 }} fontSize="large" />
+      <Typography className={styles.link} sx={{ fontSize: { xs: '.80rem', sm: '1.25rem' } }}>
+        <PlaylistAddCheckIcon sx={{ mr: 0.3, fontSize: { xs: '1.5rem', sm: '2rem' } }} />
         {boardName.title}
       </Typography>
     </Breadcrumbs>

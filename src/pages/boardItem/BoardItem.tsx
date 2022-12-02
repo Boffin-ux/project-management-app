@@ -35,7 +35,7 @@ export const Board = () => {
   const currentBoard = useAppSelector((state) =>
     state.boards.boards.find((board) => board._id === params.id)
   );
-  const { columns, error, isLoading } = useAppSelector((state) => state.columns);
+  const { columns, isLoading } = useAppSelector((state) => state.columns);
 
   useEffect(() => {
     const boardId = params.id as string;
@@ -90,7 +90,13 @@ export const Board = () => {
 
   return (
     <Box className={styles.wrapper}>
-      <Grid className={styles.controlPanel} sx={{ flexDirection: { xs: 'column', sm: 'row' } }}>
+      <Grid
+        className={styles.controlPanel}
+        sx={{
+          flexDirection: { xs: 'column', sm: 'row' },
+          margin: { xs: '1.2rem 0', sm: '1.2rem' },
+        }}
+      >
         {currentBoard && <BreadCrumbs title={currentBoard.title} />}
         <Button
           startIcon={<ViewWeekIcon />}

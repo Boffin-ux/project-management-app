@@ -73,7 +73,7 @@ export const Board = () => {
     }
   };
 
-  async function addNewColumn(formData?: IFormValues) {
+  const addNewColumn = async (formData?: IFormValues) => {
     const newFormData = {
       ...formData,
       boardId: currentBoard?._id,
@@ -86,7 +86,7 @@ export const Board = () => {
     } catch (error) {
       enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
     }
-  }
+  };
 
   return (
     <Box className={styles.wrapper}>
@@ -126,7 +126,8 @@ export const Board = () => {
       <FormModal
         isModalActive={isModalActive}
         closeModal={() => setIsModalActive(false)}
-        {...{ ...addColumnForm, action: addNewColumn }}
+        action={addNewColumn}
+        {...addColumnForm}
       />
     </Box>
   );

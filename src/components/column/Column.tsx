@@ -93,7 +93,8 @@ export const Column: FC<IColumn> = (column) => {
       <FormModal
         isModalActive={isModalActive}
         closeModal={() => setIsModalActive(false)}
-        {...{ ...addTaskForm, action: addNewTask }}
+        action={addNewTask}
+        {...addTaskForm}
       />
     </>
   );

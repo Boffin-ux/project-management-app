@@ -10,9 +10,10 @@ import {
   Select,
 } from '@mui/material';
 import { ICustomSelectField } from 'interfaces/modal';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { getUsers } from 'store/user/thnuks';
 
 export default function SelectField({
-  users,
   value,
   handleChange,
   helperText,
@@ -20,10 +21,16 @@ export default function SelectField({
   label,
   labelId,
 }: ICustomSelectField) {
+  const { users } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
   const [userLogin, setUserLogin] = useState<string[]>([]);
 
   useEffect(() => {
-    if (value) {
+    dispatch(getUsers());
+  }, []);
+
+  useEffect(() => {
+    if (users) {
       const getLogin = users.reduce((acc: string[], user) => {
         if (value.includes(user._id)) {
           acc = [...acc, user.login];
@@ -32,7 +39,7 @@ export default function SelectField({
       }, []);
       setUserLogin([...getLogin]);
     }
-  }, [value, users]);
+  }, [users]);
 
   return (
     <FormControl margin="normal" fullWidth>

@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Box, Button } from '@mui/material';
-import { IFormProps, IUserData } from 'interfaces/modal';
+import { IFormProps } from 'interfaces/modal';
 import { useTranslation } from 'react-i18next';
 import ModalBasic from 'components/modal/ModalBasic';
 import { defaultValues } from './constants/formOptions';
 import SelectField from './SelectField';
 import CustomTextField from './CustomTextField';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { getUsers } from 'store/user/thnuks';
 import ConfirmButtons from './ConfirmButtons';
 import { useFormik } from 'formik';
 import { VALUE_VALID } from 'utils/variables';
@@ -24,9 +22,6 @@ export default function FormModal({
   isModalActive,
   closeModal,
 }: IFormProps) {
-  const { users } = useAppSelector((state) => state.user);
-  const dispatch = useAppDispatch();
-
   const { values, errors, touched, handleSubmit, handleChange, dirty } = useFormik({
     initialValues,
     validationSchema: schema,
@@ -36,12 +31,6 @@ export default function FormModal({
       resetForm({ values: initialValues });
     },
   });
-
-  useEffect(() => {
-    if (isUsers && isModalActive) {
-      dispatch(getUsers());
-    }
-  }, [isModalActive]);
 
   type fieldName = keyof typeof initialValues;
 
@@ -72,7 +61,6 @@ export default function FormModal({
             <SelectField
               labelId={'users'}
               handleChange={handleChange}
-              users={users}
               label={t('selectUser.userLabelForm')}
               helperText={touched.users && !!errors.users && t(`errors.${errors.users}`)}
               value={values.users}

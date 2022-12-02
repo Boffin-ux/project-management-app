@@ -61,12 +61,8 @@ export default function App() {
   );
 
   return (
-    <ThemeProvider theme={muiTheme}>
-      <SnackbarProvider maxSnack={3}>
-        <CssBaseline>
-          <RouterProvider router={router} />
-        </CssBaseline>
-      </SnackbarProvider>
-    </ThemeProvider>
+    <SnackbarProvider maxSnack={3}>
+      <RouterProvider router={router} />
+    </SnackbarProvider>
   );
 }

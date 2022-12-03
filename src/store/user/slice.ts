@@ -77,7 +77,7 @@ export const usersSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(deleteUser.fulfilled, (state, action) => {
+      .addCase(deleteUser.fulfilled, (state) => {
         state.isLoading = false;
       })
       .addCase(deleteUser.rejected, (state, action) => {

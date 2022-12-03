@@ -1,5 +1,3 @@
-import { ThemeProvider } from '@emotion/react';
-import { CssBaseline } from '@mui/material';
 import AuthRedirect from 'components/AuthRedirect/AuthRedirect';
 import { Layout } from 'components/layout/Layout';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
@@ -21,7 +19,6 @@ import {
 } from 'react-router-dom';
 import { logout } from 'store/user/slice';
 import { getUserInfo } from 'store/user/thnuks';
-import { muiTheme } from 'utils/muiTheme';
 import { VIEW_PATH } from 'utils/variables';
 import '../../i18n/i18next';
 import './app.scss';

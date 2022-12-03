@@ -27,7 +27,9 @@ export default function SelectField({
   const { t } = useTranslation();
 
   useEffect(() => {
-    dispatch(getUsers());
+    if (!users.length) {
+      dispatch(getUsers());
+    }
   }, []);
 
   const usersLogin = useMemo(() => {
@@ -37,7 +39,7 @@ export default function SelectField({
       }
       return acc;
     }, []);
-  }, [users]);
+  }, [users, value]);
 
   if (isLoading) {
     return <Loader size={48} />;

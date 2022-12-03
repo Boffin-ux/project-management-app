@@ -66,13 +66,12 @@ export default function SelectField({
         renderValue={() => usersLogin.join(', ')}
         error={error}
       >
-        {!isLoading &&
-          users.map((user) => (
-            <MenuItem key={user._id} value={user._id}>
-              <Checkbox checked={value && value.indexOf(user._id) > -1} />
-              <ListItemText primary={user.login} />
-            </MenuItem>
-          ))}
+        {users.map((user) => (
+          <MenuItem key={user._id} value={user._id}>
+            <Checkbox checked={value && value.indexOf(user._id) > -1} />
+            <ListItemText primary={user.login} />
+          </MenuItem>
+        ))}
       </Select>
       <FormHelperText error>{helperText}</FormHelperText>
     </FormControl>

@@ -108,7 +108,7 @@ export const Board = () => {
       </Grid>
       <Box className={styles.centering}>
         <Box className={styles.columns}>
-          {isLoading && <Loader />}
+          {isLoading && <Loader size={110} />}
           <DragDropContext onDragEnd={onDragEndColumn}>
             <Droppable droppableId="all-columns" direction="horizontal" type="column">
               {(columnsProvided, columnSnapshot) => (
@@ -126,7 +126,6 @@ export const Board = () => {
               )}
             </Droppable>
           </DragDropContext>
-          {isLoading && <Loader />}
         </Box>
       </Box>
       <FormModal

@@ -51,11 +51,6 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
   }
   const boardCardView = useAppSelector((state) => state.boards.displayedView);
 
-  const deleteCurrentBoard = () => {
-    setIsModalProps({ ...deleteBoardForm, action: removeBoard });
-    setIsModalActive(true);
-  };
-
   const editBoard = () => {
     const currentData = {
       initialValues: {

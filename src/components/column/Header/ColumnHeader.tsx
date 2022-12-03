@@ -17,7 +17,7 @@ export const ColumnHeader: FC<IColumn> = (column) => {
   const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
   const [isModalActive, setIsModalActive] = useState(false);
-  const { title, boardId, _id } = column;
+  const { title } = column;
 
   const removeBoard = async () => {
     const removeColumnById = async () => {

@@ -15,8 +15,6 @@ import { ICustomFormProps, IFormValues } from 'interfaces/modal';
 import FormModal from 'components/form/FormModal';
 import { deleteTask, updateTask } from 'store/tasks/thunks';
 
-const ORDER_NUM = 0;
-
 export const Task: FC<ITaskProps> = ({ task, index }) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();

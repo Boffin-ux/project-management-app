@@ -1,7 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IDragDropTask } from 'interfaces/dragdrop';
 import { ITask } from 'interfaces/task';
-import { createTask, deleteTask, getTasks, getTasksSet, updateTask } from './thunks';
+import { setOrderTasks } from 'utils/dragdrop';
+import {
+  createTask,
+  deleteTask,
+  getTasks,
+  getTasksSet,
+  updateTask,
+  updateTasksSet,
+} from './thunks';
 
 export interface ITaskState {
   tasks: ITask[];
@@ -54,7 +62,6 @@ export const tasksSlice = createSlice({
         const [newOrder] = sourceTasks.splice(sourceIndex, 1);
         newOrder.columnId = destinationColumnId;
         destTasks.splice(destinationIndex, 0, newOrder);
-        updateOrder(sourceTasks);
         state.tasks = [...otherTasks, ...updateOrder(sourceTasks), ...updateOrder(destTasks)];
       }
     },

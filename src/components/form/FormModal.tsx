@@ -59,9 +59,7 @@ export default function FormModal({
           ))}
           {isUsers && values.users && (
             <SelectField
-              labelId={'users'}
               handleChange={handleChange}
-              label={t('selectUser.userLabelForm')}
               helperText={touched.users && !!errors.users && t(`errors.${errors.users}`)}
               value={values.users}
               error={touched.users && !!errors.users}

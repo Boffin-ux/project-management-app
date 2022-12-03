@@ -1,3 +1,4 @@
+import './styles/style.scss';
 import { ThemeProvider } from '@emotion/react';
 import { CssBaseline } from '@mui/material';
 import App from 'components/app/App';
@@ -6,7 +7,6 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { setupStore } from 'store/store';
 import { muiTheme } from 'utils/muiTheme';
-import './styles/style.scss';
 
 export const store = setupStore();
 

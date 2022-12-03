@@ -1,10 +1,14 @@
 import { CircularProgress } from '@mui/material';
 import React from 'react';
 
-function Loader() {
+interface ISize {
+  size?: number;
+}
+
+function Loader({ size }: ISize) {
   return (
     <CircularProgress
-      size={24}
+      size={size || 24}
       sx={{
         position: 'absolute',
         top: '50%',

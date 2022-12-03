@@ -9,6 +9,8 @@ import styles from './Layout.module.scss';
 const Layout = () => {
   const { isLoading } = useAppSelector((state) => state.user);
 
+  // if (isLoading) return <Loader />;
+
   return (
     <>
       <Header />

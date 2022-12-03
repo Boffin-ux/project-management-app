@@ -11,7 +11,7 @@ import { generateRandomArray } from 'utils/helpers';
 
 export const Boards = () => {
   const dispatch = useAppDispatch();
-  const { boards, isLoading } = useAppSelector((state) => state.boards);
+  const { boards, error, isLoading } = useAppSelector((state) => state.boards);
 
   useEffect(() => {
     dispatch(getAllBoards());

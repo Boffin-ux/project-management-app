@@ -24,15 +24,13 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { deleteBoard, updateBoard } from 'store/board/thunks';
 import { getUserById } from 'utils/helpers';
-import { CardDisplayType } from '../controlUnit/mappingSpaces/views';
 import styles from './BoardCard.module.scss';
-import { actionGrid, actionRow, cardGrid, cardHeadRow, cardRow } from './BoardCardStyle';
 import { setRandomColor } from './utils';
 
 export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const allUsers = useAppSelector((state) => state.user.users);
+  const allUsers = useAppSelector((state) => state.users.users);
   const { enqueueSnackbar } = useSnackbar();
   const [isModalActive, setIsModalActive] = useState(false);
   const [modalProps, setIsModalProps] = useState<ICustomFormProps>({
@@ -49,7 +47,11 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
       enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
     }
   }
-  const boardCardView = useAppSelector((state) => state.boards.displayedView);
+
+  const deleteCurrentBoard = () => {
+    setIsModalProps({ ...deleteBoardForm, action: removeBoard });
+    setIsModalActive(true);
+  };
 
   const editBoard = () => {
     const currentData = {
@@ -76,15 +78,11 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
 
   return (
     <>
-      <Card
-        className={styles.card}
-        sx={boardCardView === CardDisplayType.grid ? cardGrid : cardRow}
-      >
+      <Card className={styles.card} sx={{ width: { xs: '100%', sm: '400px' } }}>
         <CardHeader
-          sx={boardCardView === CardDisplayType.grid ? actionGrid : cardHeadRow}
           avatar={<Avatar sx={{ bgcolor: setRandomColor() }}>{title[0]}</Avatar>}
           action={
-            <IconButton onClick={removeBoard}>
+            <IconButton onClick={deleteCurrentBoard}>
               <DeleteIcon color="error" className={styles.iconButton} />
             </IconButton>
           }
@@ -92,7 +90,7 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
           titleTypographyProps={{ fontWeight: 500 }}
           subheader={`${t('boards.owner')}: ${getUserById(allUsers, owner).name}`}
         />
-        {boardCardView === CardDisplayType.grid && <Divider variant="inset" component="p" />}
+        <Divider variant="inset" component="p" />
         <CardContent className={styles.content}>
           <Typography variant="caption">{t('boards.members')}:</Typography>
           <List>
@@ -103,7 +101,7 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
             ))}
           </List>
         </CardContent>
-        <CardActions sx={boardCardView === CardDisplayType.grid ? actionGrid : actionRow}>
+        <CardActions className={styles.action}>
           <Button component={Link} to={_id} variant="contained">
             {t('boards.openBoard')}
           </Button>

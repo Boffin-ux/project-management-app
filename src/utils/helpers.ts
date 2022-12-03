@@ -3,7 +3,7 @@ import { IBoard } from 'interfaces/boards';
 import { IColumn } from 'interfaces/columns';
 import { ITask } from 'interfaces/task';
 import { IUsers } from 'interfaces/users';
-import { array } from 'yup';
+import { randomString } from './temputils';
 import { RESPONSE_CODES } from './variables';
 
 export const axiosErrorHandler = (err: AxiosError) => {
@@ -58,4 +58,8 @@ export const putTasksInColumns = (columns: IColumn[], tasks: ITask[]): IColumn[]
 
 export const findBoardById = (boards: IBoard[], id: string): IBoard => {
   return boards.find((board) => board._id === id) as IBoard;
+};
+
+export const generateRandomArray = (minLength: number, maxLength: number): Array<string> => {
+  return randomString(Math.round(minLength + Math.random() * maxLength)).split('');
 };

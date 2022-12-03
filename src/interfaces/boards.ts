@@ -1,5 +1,6 @@
 export interface IBoardState {
   boards: Array<IBoard>;
+  displayedView: string;
   isLoading: boolean;
   error: string | null;
 }

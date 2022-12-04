@@ -137,5 +137,12 @@
   "errorBoundary": {
     "title": "An unexpected error has occurred!",
     "subTitle": "Details"
+  },
+  "titles": {
+    "boards": "Boards",
+    "profile": "Edit profile",
+    "signin": "Sign in",
+    "signup": "Sign up",
+    "404": "Page not found"
   }
 }

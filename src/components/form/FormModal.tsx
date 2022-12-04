@@ -3,12 +3,12 @@ import { Box, Button } from '@mui/material';
 import { IFormProps } from 'interfaces/modal';
 import { useTranslation } from 'react-i18next';
 import ModalBasic from 'components/modal/ModalBasic';
-import { defaultValues } from './constants/formOptions';
-import SelectField from './SelectField';
-import CustomTextField from './CustomTextField';
-import ConfirmButtons from './ConfirmButtons';
 import { useFormik } from 'formik';
 import { VALUE_VALID } from 'utils/variables';
+import ConfirmButtons from './ConfirmButtons';
+import { defaultValues } from './constants/formOptions';
+import CustomTextField from './CustomTextField';
+import SelectField from './SelectField';
 const { MIN_LENGTH, NAME_MAX_LENGTH, DESC_MAX_LENGTH } = VALUE_VALID;
 
 export default function FormModal({
@@ -31,10 +31,9 @@ export default function FormModal({
       resetForm({ values: initialValues });
     },
   });
-
+  const { t } = useTranslation();
   type fieldName = keyof typeof initialValues;
 
-  const { t } = useTranslation();
   return (
     <ModalBasic modalTitle={t(modalTitle)} isModalActive={isModalActive} closeModal={closeModal}>
       {fields ? (

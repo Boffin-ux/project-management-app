@@ -8,8 +8,9 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
 import { userValidationSchema } from 'schemas/userSchemas';
-import { deleteUser, updateUserInfo } from 'store/user/thnuks';
+import { deleteUser, updateUserInfo } from 'store/user/thunks';
 
 function Profile() {
   const { enqueueSnackbar } = useSnackbar();
@@ -18,6 +19,7 @@ function Profile() {
   const { id, name, login, isLoading } = useAppSelector((state) => state.user);
   const [isModalActive, setIsModalActive] = useState(false);
   const [isEditProfile, setIsEditProfile] = useState(false);
+  const navigate = useNavigate();
 
   const initialValues = {
     name: name ?? '',
@@ -25,8 +27,9 @@ function Profile() {
     password: '',
   };
 
-  const { values, touched, errors, handleSubmit, handleChange } = useFormik({
+  const { values, touched, errors, handleSubmit, handleChange, resetForm } = useFormik({
     initialValues,
+    enableReinitialize: true,
     validationSchema: userValidationSchema,
     onSubmit: () => {
       setIsEditProfile(true);
@@ -59,8 +62,10 @@ function Profile() {
       enqueueSnackbar(t('successful.userEditMessage'), { variant: 'success' });
       setIsEditProfile(false);
       setIsModalActive(false);
+      // navigate('/' + VIEW_PATH.BOARDS);
     } catch (error) {
       enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
+      resetForm();
     }
   };
 

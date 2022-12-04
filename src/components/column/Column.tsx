@@ -8,12 +8,12 @@ import { ButtonAddTask } from './ButtonAddTask/ButtonAddTask';
 import { useTranslation } from 'react-i18next';
 import { ITask } from 'interfaces/task';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { createTask } from 'store/column/thunks';
 import { Task } from 'pages/boardItem/Task/Task';
 import { IFormValues } from 'interfaces/modal';
 import { useSnackbar } from 'notistack';
 import { addTaskForm } from 'components/form/constants/formOptions';
 import FormModal from 'components/form/FormModal';
+import { createTask } from 'store/tasks/thunks';
 
 const ORDER_NUM = 0;
 
@@ -57,7 +57,9 @@ export const Column: FC<IColumn> = (column) => {
             <ColumnHeader
               title={title}
               boardId={boardId}
-              columnId={_id}
+              _id={_id}
+              order={order}
+              tasks={tasks}
               {...columnProvided.dragHandleProps}
             />
             <Box

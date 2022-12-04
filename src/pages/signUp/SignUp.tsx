@@ -7,7 +7,7 @@ import { useSnackbar } from 'notistack';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { userValidationSchema } from 'schemas/userSchemas';
-import { signIn, signUp } from 'store/user/thnuks';
+import { signIn, signUp } from 'store/user/thunks';
 import { VIEW_PATH } from 'utils/variables';
 
 const initialValues = {

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IUsersState } from 'interfaces/users';
-import { deleteUser, getUserInfo, signIn, signUp, updateUserInfo } from './thnuks';
+import { deleteUser, getUserInfo, signIn, signUp, updateUserInfo } from './thunks';
 
 const initialState: IUsersState = {
   token: localStorage.getItem('pmAppToken') ?? '',
@@ -41,7 +41,7 @@ export const usersSlice = createSlice({
       })
       .addCase(signUp.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.token = action.payload.token; // ???
+        state.token = action.payload.token;
       })
       .addCase(signUp.rejected, (state, action) => {
         state.isLoading = false;

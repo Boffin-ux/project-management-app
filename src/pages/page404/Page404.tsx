@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { PAGES_TITLE, VIEW_PATH } from 'utils/variables';
 import { useTranslation } from 'react-i18next';
@@ -15,10 +15,6 @@ import {
 
 export default function PageNotFound() {
   const { t } = useTranslation();
-
-  useEffect(() => {
-    document.title = PAGES_TITLE.NOT_FOUND;
-  }, []);
 
   return (
     <Container sx={{ display: 'flex', padding: '32px 14px', fontSize: '1.2rem' }}>

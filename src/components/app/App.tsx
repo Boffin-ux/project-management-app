@@ -18,7 +18,7 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import { logout } from 'store/user/slice';
-import { getUserInfo } from 'store/user/thnuks';
+import { getUserInfo } from 'store/user/thunks';
 import { VIEW_PATH } from 'utils/variables';
 import '../../i18n/i18next';
 import './app.scss';

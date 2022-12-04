@@ -1,4 +1,7 @@
 import { AxiosError } from 'axios';
+import { IBoard } from 'interfaces/boards';
+import { IColumn } from 'interfaces/columns';
+import { ITask } from 'interfaces/task';
 import { IUsers } from 'interfaces/users';
 import { randomString } from './temputils';
 import { RESPONSE_CODES } from './variables';
@@ -44,6 +47,17 @@ export const getUserById = (users: IUsers[], userId: string): IUsers => {
     login: 'noname',
   };
   return users.find((user) => user._id === userId) || tempUser;
+};
+
+export const putTasksInColumns = (columns: IColumn[], tasks: ITask[]): IColumn[] => {
+  return columns.map((column) => ({
+    ...column,
+    tasks: tasks.filter((task) => task.columnId === column._id).sort((a, b) => a.order - b.order),
+  }));
+};
+
+export const findBoardById = (boards: IBoard[], id: string): IBoard => {
+  return boards.find((board) => board._id === id) as IBoard;
 };
 
 export const generateRandomArray = (minLength: number, maxLength: number): Array<string> => {

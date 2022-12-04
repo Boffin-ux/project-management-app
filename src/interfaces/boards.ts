@@ -27,3 +27,8 @@ export const INITIAL_IBOARD = {
   title: '',
   users: [],
 };
+
+export interface ISearch {
+  onSearch: (searchQuery: string) => void;
+  value: string;
+}

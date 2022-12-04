@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
 import { Box, Grid } from '@mui/material';
-import { Search } from './search/Search';
-import { MappingSpaces } from './mappingSpaces/MappingSpaces';
-import { PersonalizeView } from './personalizeView/PersonalizeView';
-import { AddBoardButton } from './addBoardButton/AddBoardButton';
 import { addBoardForm } from 'components/form/constants/formOptions';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { useSnackbar } from 'notistack';
-import { IRequestForBoard } from 'interfaces/boards';
 import FormModal from 'components/form/FormModal';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { IRequestForBoard, ISearch } from 'interfaces/boards';
+import { IFormValues } from 'interfaces/modal';
+import { useSnackbar } from 'notistack';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { createBoard } from 'store/board/thunks';
-import { IFormValues } from 'interfaces/modal';
+import { AddBoardButton } from './addBoardButton/AddBoardButton';
+import { MappingSpaces } from './mappingSpaces/MappingSpaces';
+import { PersonalizeView } from './personalizeView/PersonalizeView';
+import { Search } from './search/Search';
 
-export const ControlUnit = () => {
+export const ControlUnit = (props: ISearch) => {
   const dispatch = useAppDispatch();
   const { id } = useAppSelector((state) => state.user);
   const { enqueueSnackbar } = useSnackbar();
@@ -51,7 +51,7 @@ export const ControlUnit = () => {
           sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
         >
           <AddBoardButton onAddBoard={() => setIsModalActive(true)} />
-          <Search />
+          <Search {...props} />
         </Grid>
         <Box display="flex" justifyContent="end" alignItems="center" gap={1}>
           <PersonalizeView />

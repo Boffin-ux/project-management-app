@@ -8,7 +8,6 @@ import styles from './Layout.module.scss';
 
 const Layout = () => {
   useDocumentTitle();
-  const { isLoading } = useAppSelector((state) => state.user);
 
   return (
     <>

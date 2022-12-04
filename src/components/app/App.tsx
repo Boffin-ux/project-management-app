@@ -34,7 +34,6 @@ export default function App() {
     if (token) {
       dispatch(getUserInfo(token));
     } else {
-      console.log('t:', token);
       dispatch(logout());
     }
   }, [dispatch, token]);

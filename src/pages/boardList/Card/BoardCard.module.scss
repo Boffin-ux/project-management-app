@@ -1,6 +1,4 @@
 .card {
-  min-height: 200px;
-  margin: 30px;
 
   &:hover {
     transform: translateY(-3px);
@@ -12,6 +10,7 @@
   }
 
   .action {
+    padding: 15px;
     font-size: 15px;
     justify-content: space-between;
   }
@@ -24,3 +23,4 @@
     font-size: 15px;
   }
 }
+

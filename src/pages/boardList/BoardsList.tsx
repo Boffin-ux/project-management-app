@@ -4,13 +4,14 @@ import { ControlUnit } from './controlUnit/ControlUnit';
 import { BoardCard } from './Card/BoardCard';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { getAllBoards } from 'store/board/thunks';
-import Loader from 'components/universal/Loader/Loader';
 import styles from './BoardList.module.scss';
 import { getUsers } from 'store/users/thunks';
+import { SkeletonCard } from './Card/SkeletonCard';
+import { generateRandomArray } from 'utils/helpers';
 
 export const Boards = () => {
   const dispatch = useAppDispatch();
-  const { boards, error, isLoading } = useAppSelector((state) => state.boards);
+  const { boards, isLoading } = useAppSelector((state) => state.boards);
 
   useEffect(() => {
     dispatch(getAllBoards());
@@ -20,14 +21,10 @@ export const Boards = () => {
   return (
     <Box className={styles.boardWrapper}>
       <ControlUnit />
-      {isLoading && <Loader />}
-      {!isLoading && (
-        <Grid container spacing={1} justifyContent="center">
-          {boards.map((board) => (
-            <BoardCard {...board} key={board._id} />
-          ))}
-        </Grid>
-      )}
+      <Grid container spacing={1} justifyContent="center">
+        {isLoading && generateRandomArray(5, 10).map((_, index) => <SkeletonCard key={index} />)}
+        {!isLoading && boards.map((board) => <BoardCard {...board} key={board._id} />)}
+      </Grid>
     </Box>
   );
 };

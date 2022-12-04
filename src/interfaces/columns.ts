@@ -33,6 +33,7 @@ export interface IColumnState {
   columns: IColumn[];
   isLoading: boolean;
   error: IError;
+  banOnUpdate: boolean;
 }
 
 export interface IRequestForCreateColumns {

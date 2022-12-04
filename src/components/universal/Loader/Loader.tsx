@@ -1,16 +1,24 @@
 import { CircularProgress } from '@mui/material';
 import React from 'react';
 
-function Loader() {
+const DEFAULT_SIZE = 24;
+
+interface ISize {
+  size?: number;
+}
+
+function Loader({ size }: ISize) {
+  const indent = size ? size / 2 : DEFAULT_SIZE / 2;
+
   return (
     <CircularProgress
-      size={24}
+      size={size || DEFAULT_SIZE}
       sx={{
         position: 'absolute',
-        top: '50%',
+        top: `calc(50% - ${indent}px)`,
         left: '50%',
         marginTop: '-12px',
-        marginLeft: '-12px',
+        marginLeft: `-${indent}px`,
       }}
     />
   );

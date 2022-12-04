@@ -66,9 +66,6 @@ interface ICustomTextField extends IFormField, ICustomField {
 }
 
 interface ICustomSelectField extends ICustomField {
-  labelId: string;
-  users: IUserData[];
-  label: string;
   value: string[];
   handleChange: (event: SelectChangeEvent<string[]>, child: ReactNode) => void;
 }

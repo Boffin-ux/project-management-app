@@ -11,6 +11,7 @@
     "authLoginExist": "Login already exist",
     "authLoginFailed": "Login Failed",
     "invalidToken": "Invalid authorization token",
+    "badRequest": "Bad request",
     "errorEmptyField": "Field is Required",
     "errorMinLengthName": "Min length {{MIN_LENGTH}} letters",
     "errorMinLengthDesc": "Min length {{MIN_LENGTH}} letters",
@@ -141,6 +142,7 @@
     "boards": "Boards",
     "profile": "Edit profile",
     "signin": "Sign in",
-    "signup": "Sign up"
+    "signup": "Sign up",
+    "404": "Page not found"
   }
 }

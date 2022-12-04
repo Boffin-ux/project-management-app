@@ -1,9 +1,9 @@
+import imgLogo from '../../../assets/img/PM-APP.svg';
 import { Box, Grid, Button, Typography } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { PAGES_TITLE, VIEW_PATH } from 'utils/variables';
-import imgLogo from '../../../assets/img/PM-APP.svg';
 import { btnStyle, infoStyle, infoWrapStyle, titleStyle } from './projectStyles';
 
 export default function Project() {
@@ -22,8 +22,8 @@ export default function Project() {
           {t('project.link')}
         </Button>
       </Grid>
-      <Grid item xs={0} md={6} sx={{ display: { xs: 'none', md: 'flex' } }}>
-        <Box component="img" width="100%" src={imgLogo}></Box>
+      <Grid item xs={0} md={6} sx={{ display: { xs: 'none', md: 'flex' } }} minHeight="330px">
+        <Box component="img" width="100%" src={imgLogo} />
       </Grid>
     </Grid>
   );

@@ -54,7 +54,8 @@ export const ColumnHeader: FC<IColumn> = (column) => {
       <FormModal
         isModalActive={isModalActive}
         closeModal={() => setIsModalActive(false)}
-        {...{ ...deleteColumnForm, action: removeBoard }}
+        action={removeBoard}
+        {...deleteColumnForm}
       />
     </>
   );

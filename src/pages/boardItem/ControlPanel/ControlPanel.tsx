@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import React, { useState } from 'react';
 import { BreadCrumbs } from '../Breadcrumbs/Breadcrumbs';
@@ -32,6 +32,7 @@ export const ControlPanel = () => {
       boardId: currentBoard?._id,
       order: columns.length,
     } as IRequestForCreateColumns;
+
     try {
       await dispatch(createColumn(newFormData)).unwrap();
       enqueueSnackbar(t('successful.addColumnMessage'), { variant: 'success' });
@@ -43,7 +44,13 @@ export const ControlPanel = () => {
 
   return (
     <>
-      <Box className={styles.controlPanel}>
+      <Grid
+        className={styles.controlPanel}
+        sx={{
+          flexDirection: { xs: 'column', sm: 'row' },
+          margin: { xs: '1.2rem 0', sm: '1.2rem' },
+        }}
+      >
         {currentBoard && <BreadCrumbs title={currentBoard.title} />}
         <Button
           startIcon={<ViewWeekIcon />}
@@ -52,7 +59,7 @@ export const ControlPanel = () => {
         >
           {t('boards.addColumn')}
         </Button>
-      </Box>
+      </Grid>
       <FormModal
         isModalActive={isModalActive}
         closeModal={() => setIsModalActive(false)}

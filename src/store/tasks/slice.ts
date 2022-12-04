@@ -1,15 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IDragDropTask } from 'interfaces/dragdrop';
 import { ITask } from 'interfaces/task';
-import { setOrderTasks } from 'utils/dragdrop';
-import {
-  createTask,
-  deleteTask,
-  getTasks,
-  getTasksSet,
-  updateTask,
-  updateTasksSet,
-} from './thunks';
+import { createTask, deleteTask, getTasks, getTasksSet, updateTask } from './thunks';
 
 export interface ITaskState {
   tasks: ITask[];
@@ -23,47 +14,12 @@ const initialState: ITaskState = {
   error: null,
 };
 
-const updateOrder = (tasks: ITask[]): ITask[] => {
-  return tasks.map((task, index) => ({ ...task, order: index }));
-};
-
 export const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
-    moveTask: (state, action: PayloadAction<IDragDropTask>) => {
-      const { sourceColumnId, destinationColumnId, sourceIndex, destinationIndex } = action.payload;
-      if (destinationColumnId === sourceColumnId) {
-        const columnTasks: ITask[] = [];
-        const otherTasks: ITask[] = [];
-        state.tasks.forEach((task) => {
-          if (task.columnId === sourceColumnId) {
-            columnTasks.push(task);
-          } else {
-            otherTasks.push(task);
-          }
-        });
-        const [newOrder] = columnTasks.splice(sourceIndex, 1);
-        columnTasks.splice(destinationIndex, 0, newOrder);
-        state.tasks = [...otherTasks, ...updateOrder(columnTasks)];
-      } else {
-        const sourceTasks: ITask[] = [];
-        const destTasks: ITask[] = [];
-        const otherTasks: ITask[] = [];
-        state.tasks.forEach((task) => {
-          if (task.columnId === sourceColumnId) {
-            sourceTasks.push(task);
-          } else if (task.columnId === destinationColumnId) {
-            destTasks.push(task);
-          } else {
-            otherTasks.push(task);
-          }
-        });
-        const [newOrder] = sourceTasks.splice(sourceIndex, 1);
-        newOrder.columnId = destinationColumnId;
-        destTasks.splice(destinationIndex, 0, newOrder);
-        state.tasks = [...otherTasks, ...updateOrder(sourceTasks), ...updateOrder(destTasks)];
-      }
+    moveTask: (state, action: PayloadAction<ITask[]>) => {
+      state.tasks = action.payload;
     },
   },
   extraReducers(builder) {

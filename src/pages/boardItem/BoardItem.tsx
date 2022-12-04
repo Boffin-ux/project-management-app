@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { useSnackbar } from 'notistack';
 import { moveColumns } from 'store/column/slice';
 import { IDragDropColumn, IDragDropTask } from 'interfaces/dragdrop';
-import { setOrderColumns, setOrderingSets, setOrderTasks } from 'utils/dragdrop';
+import { movingColumn, movingTask, setOrderColumns, setOrderTasks } from 'utils/dragdrop';
 import { getTasksSet, updateTasksSet } from 'store/tasks/thunks';
 import { moveTask } from 'store/tasks/slice';
 import ControlPanel from './ControlPanel/ControlPanel';
@@ -19,7 +19,7 @@ import DroppableArea from './DroppableArea/DroppableArea';
 import { putTasksInColumns } from 'utils/helpers';
 
 export const Board = () => {
-  const [viewedColumns, setViewedColumns] = useState<IColumn[]>([]); //для объединения двух state
+  const [viewedColumns, setViewedColumns] = useState<IColumn[]>([]);
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useAppDispatch();
@@ -31,11 +31,6 @@ export const Board = () => {
   useEffect(() => {
     const newCol = putTasksInColumns(columns, tasks);
     setViewedColumns(newCol);
-
-    const orderingColumns = setOrderColumns(columns);
-    const orderingTasks = setOrderTasks(tasks);
-    dispatch(updateColumnsSet(orderingColumns));
-    dispatch(updateTasksSet(orderingTasks));
   }, [columns, tasks]);
 
   useEffect(() => {
@@ -48,6 +43,7 @@ export const Board = () => {
 
   const onDragEndColumn = (result: DropResult) => {
     const { source, destination } = result;
+    let newCol: IColumn[] = [];
 
     if (!destination) return;
     if (!source) return;
@@ -57,7 +53,11 @@ export const Board = () => {
         destination: destination.index,
         source: source.index,
       };
-      dispatch(moveColumns(indexes));
+      const newColumns = movingColumn(columns, indexes);
+      const orderingColumns = setOrderColumns(newColumns);
+      dispatch(updateColumnsSet(orderingColumns));
+      dispatch(moveColumns(newColumns));
+      newCol = putTasksInColumns(newColumns, tasks);
     } else {
       const movedTask: IDragDropTask = {
         destinationColumnId: destination.droppableId,
@@ -65,8 +65,13 @@ export const Board = () => {
         sourceColumnId: source.droppableId,
         sourceIndex: source.index,
       };
-      dispatch(moveTask(movedTask));
+      const newTasks = movingTask(tasks, movedTask);
+      const orderingTasks = setOrderTasks(newTasks);
+      dispatch(updateTasksSet(orderingTasks));
+      dispatch(moveTask(newTasks));
+      newCol = putTasksInColumns(columns, newTasks);
     }
+    setViewedColumns(newCol);
   };
 
   return (

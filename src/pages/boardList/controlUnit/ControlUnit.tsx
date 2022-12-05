@@ -54,7 +54,7 @@ export const ControlUnit = (props: ISearch) => {
           <Search {...props} />
         </Grid>
         <Box display="flex" justifyContent="end" alignItems="center" gap={1}>
-          <PersonalizeView />
+          <PersonalizeView searchQuery={props.searchQuery} />
           <MappingSpaces />
         </Box>
       </Grid>

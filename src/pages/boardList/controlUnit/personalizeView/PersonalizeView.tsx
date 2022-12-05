@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { boardGetAllForUser, getAllBoards } from 'store/board/thunks';
 
-export const PersonalizeView = () => {
+export const PersonalizeView = ({ searchQuery }: { searchQuery: string }) => {
   const { t } = useTranslation();
   const [viewOnlyMyBoard, setViewOnlyMyBoard] = useState<boolean>(false);
   const { id } = useAppSelector((state) => state.user);

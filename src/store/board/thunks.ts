@@ -1,10 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosPrivate } from 'api/axios';
 import { AxiosError } from 'axios';
-import { IBoard } from 'interfaces/boards';
+import { IBoard, IRequestForBoard } from 'interfaces/boards';
 import { axiosErrorHandler } from 'utils/helpers';
 import { API_ENDPOINTS } from 'utils/variables';
-import { IRequestForBoard } from 'interfaces/boards';
 
 export const getAllBoards = createAsyncThunk<Array<IBoard>, void, { rejectValue: string }>(
   'boards/all',

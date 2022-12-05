@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosPrivate } from 'api/axios';
 import { AxiosError } from 'axios';
+import { ITask, ITaskRequest, ITasksSet } from 'interfaces/task';
 import { axiosErrorHandler } from 'utils/helpers';
 import { API_ENDPOINTS } from 'utils/variables';
-import { ITask, ITaskRequest, ITasksSet } from 'interfaces/task';
 
 export const getTasks = createAsyncThunk<ITask[], ITask, { rejectValue: string }>(
   'tasks/getTasks',
@@ -83,6 +83,19 @@ export const updateTasksSet = createAsyncThunk(
   async (dataTasksSet: ITasksSet[], { rejectWithValue }) => {
     try {
       const response = await axiosPrivate.patch(API_ENDPOINTS.TASKS_SET, dataTasksSet);
+      return response.data;
+    } catch (error) {
+      const err = error as AxiosError;
+      return rejectWithValue(axiosErrorHandler(err));
+    }
+  }
+);
+
+export const getTasksBySearch = createAsyncThunk(
+  'tasksSetBySearch',
+  async (searchQuery: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosPrivate.get(API_ENDPOINTS.TASKS_SET_SEARCH(searchQuery));
       return response.data;
     } catch (error) {
       const err = error as AxiosError;

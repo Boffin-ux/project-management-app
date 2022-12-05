@@ -30,5 +30,5 @@ export const INITIAL_IBOARD = {
 
 export interface ISearch {
   onSearch: (searchQuery: string) => void;
-  value: string;
+  searchQuery: string;
 }

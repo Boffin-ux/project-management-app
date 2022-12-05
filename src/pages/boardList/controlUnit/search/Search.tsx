@@ -5,7 +5,7 @@ import React, { FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './Search.module.scss';
 
-export const Search = ({ onSearch, value }: ISearch) => {
+export const Search = ({ onSearch, searchQuery }: ISearch) => {
   const { t } = useTranslation();
 
   const handleSubmit = (e: FormEvent) => {
@@ -26,7 +26,7 @@ export const Search = ({ onSearch, value }: ISearch) => {
       <InputBase
         className={styles.input}
         placeholder={`${t('boards.search')} ...`}
-        defaultValue={value}
+        defaultValue={searchQuery}
         name="search"
       />
       <Divider className={styles.divider} orientation="vertical" />

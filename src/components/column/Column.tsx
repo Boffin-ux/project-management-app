@@ -14,6 +14,7 @@ import { useSnackbar } from 'notistack';
 import { addTaskForm } from 'components/form/constants/formOptions';
 import FormModal from 'components/form/FormModal';
 import { createTask } from 'store/tasks/thunks';
+import Loader from 'components/universal/Loader/Loader';
 
 const ORDER_NUM = 0;
 
@@ -21,11 +22,11 @@ export const Column: FC<IColumn> = (column) => {
   const [btnCapture, setBtnCapture] = useState<boolean>(false);
   const [isModalActive, setIsModalActive] = useState(false);
   const userId = useAppSelector((state) => state.user.id);
+  const { isLoading } = useAppSelector((state) => state.tasks);
   const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
   const { _id, title, tasks, order, boardId } = column;
-
   const addNewTask = async (formData?: IFormValues) => {
     const newFormData = {
       ...formData,
@@ -46,59 +47,64 @@ export const Column: FC<IColumn> = (column) => {
 
   return (
     <>
-      <Draggable key={_id} draggableId={_id} index={order}>
-        {(columnProvided) => (
-          <Box
-            className={styles.column}
-            ref={columnProvided.innerRef}
-            {...columnProvided.draggableProps}
-            {...columnProvided.dragHandleProps}
-          >
-            <ColumnHeader
-              title={title}
-              boardId={boardId}
-              _id={_id}
-              order={order}
-              tasks={tasks}
-              {...columnProvided.dragHandleProps}
-            />
-            <Box
-              className={styles.columnContent}
-              onMouseOver={() => setBtnCapture(true)}
-              onMouseOut={() => setBtnCapture(false)}
-            >
-              <ButtonAddTask
-                isCapture={btnCapture}
-                title={t('boards.addTask')}
-                clickAction={() => setIsModalActive(true)}
-              />
-              <Box sx={{ mt: 2, flexGrow: 1, overflowY: 'auto' }}>
-                <Droppable droppableId={_id}>
-                  {(listProvided, snapshot) => (
-                    <List
-                      sx={{ mt: 2, padding: '10px' }}
-                      ref={listProvided.innerRef}
-                      {...listProvided.droppableProps}
-                      className={snapshot.isDraggingOver ? styles.over : styles.drag}
-                    >
-                      {tasks.map((task, index) => (
-                        <Task key={task._id} task={task} index={index} />
-                      ))}
-                      {listProvided.placeholder}
-                    </List>
-                  )}
-                </Droppable>
+      {isLoading && <Loader size={110} />}
+      {!isLoading && (
+        <>
+          <Draggable key={_id} draggableId={_id} index={order}>
+            {(columnProvided) => (
+              <Box
+                className={styles.column}
+                ref={columnProvided.innerRef}
+                {...columnProvided.draggableProps}
+                {...columnProvided.dragHandleProps}
+              >
+                <ColumnHeader
+                  title={title}
+                  boardId={boardId}
+                  _id={_id}
+                  order={order}
+                  tasks={tasks}
+                  {...columnProvided.dragHandleProps}
+                />
+                <Box
+                  className={styles.columnContent}
+                  onMouseOver={() => setBtnCapture(true)}
+                  onMouseOut={() => setBtnCapture(false)}
+                >
+                  <ButtonAddTask
+                    isCapture={btnCapture}
+                    title={t('boards.addTask')}
+                    clickAction={() => setIsModalActive(true)}
+                  />
+                  <Box sx={{ mt: 2, flexGrow: 1, overflowY: 'auto' }}>
+                    <Droppable droppableId={_id}>
+                      {(listProvided, snapshot) => (
+                        <List
+                          sx={{ mt: 2, padding: '10px' }}
+                          ref={listProvided.innerRef}
+                          {...listProvided.droppableProps}
+                          className={snapshot.isDraggingOver ? styles.over : styles.drag}
+                        >
+                          {tasks.map((task, index) => (
+                            <Task key={task._id} task={task} index={index} />
+                          ))}
+                          {listProvided.placeholder}
+                        </List>
+                      )}
+                    </Droppable>
+                  </Box>
+                </Box>
               </Box>
-            </Box>
-          </Box>
-        )}
-      </Draggable>
-      <FormModal
-        isModalActive={isModalActive}
-        closeModal={() => setIsModalActive(false)}
-        action={addNewTask}
-        {...addTaskForm}
-      />
+            )}
+          </Draggable>
+          <FormModal
+            isModalActive={isModalActive}
+            closeModal={() => setIsModalActive(false)}
+            action={addNewTask}
+            {...addTaskForm}
+          />
+        </>
+      )}
     </>
   );
 };

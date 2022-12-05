@@ -53,6 +53,7 @@ export const tasksSlice = createSlice({
         state.error = null;
       })
       .addCase(getTasksSet.fulfilled, (state, action: PayloadAction<ITask[]>) => {
+        state.isLoading = false;
         state.tasks = action.payload;
       })
       .addCase(getTasksSet.rejected, (state, action) => {

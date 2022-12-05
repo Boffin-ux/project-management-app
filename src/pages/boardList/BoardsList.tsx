@@ -25,10 +25,6 @@ export const Boards = () => {
   const filteredBoards = boards.filter(
     (b) => b.title.trim().toLowerCase().includes(searchQuery) || boardsIdsBySearch.includes(b._id)
   );
-  // console.log('boards', boards);
-  // console.log('filteredBoards', filteredBoards);
-  // console.log('boardsIdsBySearch', boardsIdsBySearch);
-  // console.log('searchTasks', searchTasks);
   const isLoading = isLoadingBoards || isLoadingTasks;
 
   useEffect(() => {

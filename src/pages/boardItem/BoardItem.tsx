@@ -5,7 +5,6 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import styles from './BoardItem.module.scss';
 import { getColumnsByBoardId, updateColumnsSet } from 'store/column/thunks';
 import { IColumn } from 'interfaces/columns';
-import Loader from 'components/universal/Loader/Loader';
 import { useTranslation } from 'react-i18next';
 import { useSnackbar } from 'notistack';
 import { moveColumns } from 'store/column/slice';
@@ -25,7 +24,7 @@ export const Board = () => {
   const dispatch = useAppDispatch();
   const params = useParams();
 
-  const { columns, error, isLoading } = useAppSelector((state) => state.columns);
+  const { columns, error } = useAppSelector((state) => state.columns);
   const { tasks } = useAppSelector((state) => state.tasks);
 
   useEffect(() => {
@@ -76,27 +75,24 @@ export const Board = () => {
 
   return (
     <Box className={styles.wrapper}>
-      {isLoading && <Loader size={110} />}
-      {!isLoading && (
-        <>
-          <ControlPanel />
-          <Box className={styles.centering}>
-            <Box className={styles.columns}>
-              <DragDropContext onDragEnd={onDragEndColumn}>
-                <Droppable droppableId="all-columns" direction="horizontal" type="column">
-                  {(columnsProvided, columnSnapshot) => (
-                    <DroppableArea
-                      columns={viewedColumns}
-                      provider={columnsProvided}
-                      snapshot={columnSnapshot}
-                    />
-                  )}
-                </Droppable>
-              </DragDropContext>
-            </Box>
+      <>
+        <ControlPanel />
+        <Box className={styles.centering}>
+          <Box className={styles.columns}>
+            <DragDropContext onDragEnd={onDragEndColumn}>
+              <Droppable droppableId="all-columns" direction="horizontal" type="column">
+                {(columnsProvided, columnSnapshot) => (
+                  <DroppableArea
+                    columns={viewedColumns}
+                    provider={columnsProvided}
+                    snapshot={columnSnapshot}
+                  />
+                )}
+              </Droppable>
+            </DragDropContext>
           </Box>
-        </>
-      )}
+        </Box>
+      </>
     </Box>
   );
 };

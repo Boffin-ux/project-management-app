@@ -11,18 +11,34 @@ export const MappingSpaces = () => {
   const currentView = useAppSelector((state) => state.boards.displayedView);
   const dispatch = useDispatch();
 
-  const toggleView = () => {
-    const newView =
-      currentView === CardDisplayType.grid ? CardDisplayType.rows : CardDisplayType.grid;
-    dispatch(changeView(newView));
+  const toggleView = (newValue: string | null) => {
+    if (newValue !== null) {
+      const newView =
+        currentView === CardDisplayType.grid ? CardDisplayType.rows : CardDisplayType.grid;
+      dispatch(changeView(newView));
+    }
   };
 
   return (
-    <ToggleButtonGroup value={currentView} onChange={toggleView}>
-      <ToggleButton value={CardDisplayType.grid} key={CardDisplayType.grid}>
+    <ToggleButtonGroup
+      sx={{ display: { xs: 'none', sm: 'flex' } }}
+      value={currentView}
+      exclusive
+      onChange={(_, newValue) => toggleView(newValue)}
+      color={'primary'}
+    >
+      <ToggleButton
+        value={CardDisplayType.grid}
+        key={CardDisplayType.grid}
+        sx={{ color: 'inherit' }}
+      >
         <GridViewIcon />
       </ToggleButton>
-      <ToggleButton value={CardDisplayType.rows} key={CardDisplayType.rows}>
+      <ToggleButton
+        value={CardDisplayType.rows}
+        key={CardDisplayType.rows}
+        sx={{ color: 'inherit' }}
+      >
         <SplitscreenIcon />
       </ToggleButton>
     </ToggleButtonGroup>

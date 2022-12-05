@@ -3,7 +3,9 @@ import { store } from 'index';
 import { logout } from 'store/user/slice';
 import { RESPONSE_CODES } from 'utils/variables';
 
-const BASE_URL = 'https://final-task.cyclic.app/';
+//резерв
+//const BASE_URL = 'https://final-task.cyclic.app/';
+const BASE_URL = 'https://final-task-backend-production-4e60.up.railway.app/';
 
 export default axios.create({
   baseURL: BASE_URL,

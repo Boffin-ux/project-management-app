@@ -18,11 +18,24 @@ export const MappingSpaces = () => {
   };
 
   return (
-    <ToggleButtonGroup value={currentView} onChange={toggleView}>
-      <ToggleButton value={CardDisplayType.grid} key={CardDisplayType.grid}>
+    <ToggleButtonGroup
+      sx={{ display: { xs: 'none', sm: 'flex' } }}
+      value={currentView}
+      onChange={toggleView}
+      color={'primary'}
+    >
+      <ToggleButton
+        value={CardDisplayType.grid}
+        key={CardDisplayType.grid}
+        sx={{ color: 'inherit' }}
+      >
         <GridViewIcon />
       </ToggleButton>
-      <ToggleButton value={CardDisplayType.rows} key={CardDisplayType.rows}>
+      <ToggleButton
+        value={CardDisplayType.rows}
+        key={CardDisplayType.rows}
+        sx={{ color: 'inherit' }}
+      >
         <SplitscreenIcon />
       </ToggleButton>
     </ToggleButtonGroup>

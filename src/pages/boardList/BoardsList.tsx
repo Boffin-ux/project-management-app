@@ -21,7 +21,7 @@ export const Boards = () => {
   return (
     <Box className={styles.boardWrapper}>
       <ControlUnit />
-      <Grid container spacing={1} justifyContent="center">
+      <Grid container spacing={1} justifyContent="center" pl={1}>
         {isLoading && generateRandomArray(5, 10).map((_, index) => <SkeletonCard key={index} />)}
         {!isLoading && boards.map((board) => <BoardCard {...board} key={board._id} />)}
       </Grid>

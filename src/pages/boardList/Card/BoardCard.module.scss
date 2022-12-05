@@ -1,13 +1,11 @@
 .card {
 
-
   &:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.75);
   }
 
   .content {
-    padding-bottom: 0;
     display: flex;
     flex-direction: column;
     gap: 10px;

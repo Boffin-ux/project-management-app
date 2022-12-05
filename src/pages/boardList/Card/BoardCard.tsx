@@ -27,13 +27,20 @@ import { deleteBoard, updateBoard } from 'store/board/thunks';
 import { getUserById } from 'utils/helpers';
 import { CardDisplayType } from '../controlUnit/mappingSpaces/views';
 import styles from './BoardCard.module.scss';
-import { actionGrid, actionRow, cardGrid, cardHeadRow, cardRow } from './BoardCardStyle';
+import {
+  actionGrid,
+  actionRow,
+  cardGrid,
+  cardHeadGrid,
+  cardHeadRow,
+  cardRow,
+} from './BoardCardStyle';
 import { setRandomColor } from './utils';
 
 export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const allUsers = useAppSelector((state) => state.user.users);
+  const allUsers = useAppSelector((state) => state.users.users);
   const { enqueueSnackbar } = useSnackbar();
   const [isModalActive, setIsModalActive] = useState(false);
   const [modalProps, setIsModalProps] = useState<ICustomFormProps>({
@@ -50,6 +57,7 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
       enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
     }
   }
+
   const boardCardView = useAppSelector((state) => state.boards.displayedView);
 
   const editBoard = () => {
@@ -82,7 +90,7 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
         sx={boardCardView === CardDisplayType.grid ? cardGrid : cardRow}
       >
         <CardHeader
-          sx={boardCardView === CardDisplayType.grid ? actionGrid : cardHeadRow}
+          sx={boardCardView === CardDisplayType.grid ? cardHeadGrid : cardHeadRow}
           avatar={<Avatar sx={{ bgcolor: setRandomColor() }}>{title[0]}</Avatar>}
           action={
             <IconButton onClick={removeBoard}>

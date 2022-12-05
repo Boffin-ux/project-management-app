@@ -23,13 +23,17 @@ export const Board = () => {
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useAppDispatch();
+  const searchTasks = useAppSelector((state) => state.tasks.searchTasks);
   const params = useParams();
 
   const { columns, error, isLoading } = useAppSelector((state) => state.columns);
   const { tasks } = useAppSelector((state) => state.tasks);
 
   useEffect(() => {
-    const newCol = putTasksInColumns(columns, tasks);
+    const newCol =
+      searchTasks.length > 0
+        ? putTasksInColumns(columns, searchTasks)
+        : putTasksInColumns(columns, tasks);
     setViewedColumns(newCol);
   }, [columns, tasks]);
 
@@ -44,7 +48,10 @@ export const Board = () => {
   const onDragEndColumn = (result: DropResult) => {
     const { source, destination } = result;
     let newCol: IColumn[] = [];
-
+    if (searchTasks.length > 0) {
+      enqueueSnackbar(t(`errors.noDragDrop`), { variant: 'error' });
+      return;
+    }
     if (!destination) return;
     if (!source) return;
 

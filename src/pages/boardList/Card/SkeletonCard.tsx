@@ -4,7 +4,7 @@ import styles from './BoardCard.module.scss';
 
 export const SkeletonCard = () => {
   return (
-    <Card className={styles.card} sx={{ width: { xs: '100%', sm: '400px' } }}>
+    <Card className={styles.card} sx={{ width: { xs: '100%', sm: '400px' }, margin: '2rem' }}>
       <Box sx={{ p: 2, display: 'flex', flexDirection: 'row' }}>
         <Skeleton animation="wave" variant="circular" width={40} height={40} sx={{ p: 2 }} />
         <Skeleton animation="wave" variant="rectangular" width="100%">

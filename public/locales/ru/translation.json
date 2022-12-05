@@ -18,7 +18,8 @@
     "errorMaxLengthName": "Максимальная длина {{NAME_MAX_LENGTH}} символов",
     "errorMaxLengthDesc": "Максимальная длина {{DESC_MAX_LENGTH}} символов",
     "errorUserLabel": "Выберите пользователя",
-    "errorTrim": "Поле не может содержать начальные и конечные пробелы."
+    "errorTrim": "Поле не может содержать начальные и конечные пробелы.",
+    "noDragDrop": "Перенос не работает при поиске"
   },
   "successful": {
     "signUpMessage": "Аккаунт успешно зарегистрирован!",

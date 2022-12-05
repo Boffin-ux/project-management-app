@@ -18,7 +18,8 @@
     "errorMaxLengthName": "Max length {{NAME_MAX_LENGTH}} letters",
     "errorMaxLengthDesc": "Max length {{DESC_MAX_LENGTH}} letters",
     "errorUserLabel": "Select user",
-    "errorTrim": "The field cannot include leading and trailing spaces"
+    "errorTrim": "The field cannot include leading and trailing spaces",
+    "noDragDrop": "The transfer does not work when searching"
   },
   "successful": {
     "signUpMessage": "Successful registration!",

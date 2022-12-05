@@ -9,7 +9,6 @@ const toolbarStyle = {
   alignItems: 'center',
   padding: { xs: '10px', sm: '20px 40px' },
   backgroundColor: '#333',
-  gap: { sm: '10px' },
   flexDirection: { sm: 'column', md: 'row' },
 };
 
@@ -17,7 +16,7 @@ const navWrapStyle = {
   justifyContent: 'flex-end',
   alignItems: 'center',
   height: '100%',
-  gap: { xs: '10px', sm: '20px' },
+  gap: { xs: '10px', sm: '15px' },
   flexDirection: { sm: 'column', md: 'row' },
 };
 

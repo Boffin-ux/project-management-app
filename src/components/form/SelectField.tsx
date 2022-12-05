@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
   Checkbox,
   FormControl,
@@ -8,45 +8,62 @@ import {
   MenuItem,
   OutlinedInput,
   Select,
+  Typography,
 } from '@mui/material';
 import { ICustomSelectField } from 'interfaces/modal';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { useTranslation } from 'react-i18next';
+import Loader from 'components/universal/Loader/Loader';
+import { getUsers } from 'store/users/thunks';
 
 export default function SelectField({
-  users,
   value,
   handleChange,
   helperText,
   error,
-  label,
-  labelId,
 }: ICustomSelectField) {
-  const [userLogin, setUserLogin] = useState<string[]>([]);
+  const { users, isLoading, error: usersError } = useAppSelector((state) => state.users);
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
-    if (value) {
-      const getLogin = users.reduce((acc: string[], user) => {
-        if (value.includes(user._id)) {
-          acc = [...acc, user.login];
-        }
-        return acc;
-      }, []);
-      setUserLogin([...getLogin]);
+    if (!users.length) {
+      dispatch(getUsers());
     }
-  }, [value]);
+  }, []);
+
+  const usersLogin = useMemo(() => {
+    return users.reduce((acc: string[], user) => {
+      if (value.includes(user._id)) {
+        acc = [...acc, user.login];
+      }
+      return acc;
+    }, []);
+  }, [users, value]);
+
+  if (isLoading) {
+    return <Loader size={48} />;
+  }
+
+  if (usersError) {
+    return (
+      <Typography variant="body1" color="error" sx={{ textAlign: 'center' }}>
+        {t(`errors.${usersError as string}`)}
+      </Typography>
+    );
+  }
 
   return (
     <FormControl margin="normal" fullWidth>
-      <InputLabel id={labelId}>{label}</InputLabel>
+      <InputLabel id={'users'}>{t('selectUser.userLabelForm')}</InputLabel>
       <Select
-        labelId={labelId}
+        labelId={'users'}
         multiple
         value={value}
-        name={labelId}
+        name={'users'}
         onChange={handleChange}
-        input={<OutlinedInput label={label} />}
-        renderValue={() => {
-          return userLogin.join(', ');
-        }}
+        input={<OutlinedInput label={t('selectUser.userLabelForm')} />}
+        renderValue={() => usersLogin.join(', ')}
         error={error}
       >
         {users.map((user) => (

@@ -61,7 +61,8 @@ export const ControlUnit = (props: ISearch) => {
       <FormModal
         isModalActive={isModalActive}
         closeModal={() => setIsModalActive(false)}
-        {...{ ...addBoardForm, action: addNewBoard }}
+        action={addNewBoard}
+        {...addBoardForm}
       />
     </>
   );

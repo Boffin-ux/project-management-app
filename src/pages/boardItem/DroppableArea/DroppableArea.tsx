@@ -14,7 +14,7 @@ export interface DroppableAreaProps {
 const DroppableArea: FC<DroppableAreaProps> = ({ provider, snapshot, columns }) => {
   return (
     <Box
-      sx={{ display: 'flex', justifyContent: 'center' }}
+      sx={{ display: 'flex', justifyContent: 'flex-start' }}
       ref={provider.innerRef}
       {...provider.droppableProps}
       className={snapshot.isDraggingOver ? styles.drag : styles.over}

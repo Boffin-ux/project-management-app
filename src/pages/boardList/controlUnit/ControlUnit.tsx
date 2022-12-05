@@ -39,7 +39,7 @@ export const ControlUnit = (props: ISearch) => {
         container
         flexDirection="column"
         justifyContent="center"
-        gap={2}
+        gap={3}
         padding={2}
         sx={{ alignItems: { xs: 'center', sm: 'unset' } }}
       >

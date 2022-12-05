@@ -5,12 +5,12 @@ import { useLocation } from 'react-router-dom';
 const useDocumentTitle = () => {
   const { t } = useTranslation();
   const { pathname } = useLocation();
+  const pathKey = pathname.split('/')[1];
+  const title = pathKey ? `${t(`titles.${pathKey}`)} - PMA` : 'PMA';
 
   useEffect(() => {
-    const pathKey = pathname.split('/')[1];
-    const title = t(`titles.${pathKey}`);
-    document.title = pathKey ? `${title} - PMA` : 'PMA';
-  }, [pathname]);
+    document.title = title;
+  }, [title]);
 };
 
 export { useDocumentTitle };

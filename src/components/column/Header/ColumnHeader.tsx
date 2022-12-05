@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { AppBar, Toolbar } from '@mui/material';
 import styles from './ColumnHeader.module.scss';
-import { useAppDispatch } from 'hooks/redux';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { deleteColumn, updateColumn } from 'store/column/thunks';
 import { useSnackbar } from 'notistack';
 import { deleteColumnForm } from 'components/form/constants/formOptions';
@@ -24,7 +24,7 @@ export const ColumnHeader: FC<IColumn> = (column) => {
       dispatch(toggleBanOnUpdate());
       column.tasks.forEach((task) => dispatch(deleteTask(task)));
       dispatch(toggleBanOnUpdate());
-      dispatch(deleteColumn(column));
+      await dispatch(deleteColumn(column));
     };
 
     try {

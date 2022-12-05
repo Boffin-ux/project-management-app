@@ -14,6 +14,7 @@ import { useSnackbar } from 'notistack';
 import { addTaskForm } from 'components/form/constants/formOptions';
 import FormModal from 'components/form/FormModal';
 import { createTask } from 'store/tasks/thunks';
+import Loader from 'components/universal/Loader/Loader';
 
 const ORDER_NUM = 0;
 
@@ -25,7 +26,6 @@ export const Column: FC<IColumn> = (column) => {
   const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
   const { _id, title, tasks, order, boardId } = column;
-
   const addNewTask = async (formData?: IFormValues) => {
     const newFormData = {
       ...formData,

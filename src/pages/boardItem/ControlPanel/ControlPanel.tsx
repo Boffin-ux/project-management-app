@@ -63,7 +63,8 @@ export const ControlPanel = () => {
       <FormModal
         isModalActive={isModalActive}
         closeModal={() => setIsModalActive(false)}
-        {...{ ...addColumnForm, action: addNewColumn }}
+        action={addNewColumn}
+        {...addColumnForm}
       />
     </>
   );

@@ -17,9 +17,10 @@ export const ColumnHeader: FC<IColumn> = (column) => {
   const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
   const [isModalActive, setIsModalActive] = useState(false);
+  const { isLoading } = useAppSelector((state) => state.columns);
   const { title } = column;
 
-  const removeBoard = async () => {
+  const removeColumn = async () => {
     const removeColumnById = async () => {
       dispatch(toggleBanOnUpdate());
       column.tasks.forEach((task) => dispatch(deleteTask(task)));
@@ -54,7 +55,8 @@ export const ColumnHeader: FC<IColumn> = (column) => {
       <FormModal
         isModalActive={isModalActive}
         closeModal={() => setIsModalActive(false)}
-        action={removeBoard}
+        action={removeColumn}
+        isLoading={isLoading}
         {...deleteColumnForm}
       />
     </>

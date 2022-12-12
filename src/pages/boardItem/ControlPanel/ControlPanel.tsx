@@ -24,9 +24,9 @@ export const ControlPanel = () => {
   const currentBoard = useAppSelector((state) =>
     findBoardById(state.boards.boards, params.id as string)
   );
-  const { columns } = useAppSelector((state) => state.columns);
+  const { columns, isLoading } = useAppSelector((state) => state.columns);
 
-  async function addNewColumn(formData?: IFormValues) {
+  const addNewColumn = async (formData?: IFormValues, resetForm?: () => void) => {
     const newFormData = {
       ...formData,
       boardId: currentBoard?._id,
@@ -37,10 +37,13 @@ export const ControlPanel = () => {
       await dispatch(createColumn(newFormData)).unwrap();
       enqueueSnackbar(t('successful.addColumnMessage'), { variant: 'success' });
       setIsModalActive(false);
+      if (resetForm) {
+        resetForm();
+      }
     } catch (error) {
       enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
     }
-  }
+  };
 
   return (
     <>
@@ -64,6 +67,7 @@ export const ControlPanel = () => {
         isModalActive={isModalActive}
         closeModal={() => setIsModalActive(false)}
         action={addNewColumn}
+        isLoading={isLoading}
         {...addColumnForm}
       />
     </>

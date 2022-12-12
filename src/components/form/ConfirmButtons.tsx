@@ -2,8 +2,9 @@ import React from 'react';
 import { Button, Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { IPropsConfirm } from 'interfaces/modal';
+import Loader from 'components/universal/Loader/Loader';
 
-export default function ConfirmButtons({ action, closeModal }: IPropsConfirm) {
+export default function ConfirmButtons({ action, closeModal, isLoading }: IPropsConfirm) {
   const { t } = useTranslation();
 
   return (
@@ -12,14 +13,21 @@ export default function ConfirmButtons({ action, closeModal }: IPropsConfirm) {
         color="success"
         variant="contained"
         onClick={action}
-        sx={{ width: { xs: '100%', sm: '25%' }, textTransform: 'none' }}
+        disabled={isLoading}
+        sx={{
+          width: { xs: '100%', sm: '25%' },
+          textTransform: 'none',
+          position: 'relative',
+          minHeight: '40px',
+        }}
       >
-        {t('confirmBtn.agreeBtnForm')}
+        {isLoading ? <Loader /> : t('confirmBtn.agreeBtnForm')}
       </Button>
       <Button
         color="error"
         variant="contained"
         onClick={closeModal}
+        disabled={isLoading}
         sx={{ width: { xs: '100%', sm: '25%' }, textTransform: 'none' }}
       >
         {t('confirmBtn.disagreeBtnForm')}

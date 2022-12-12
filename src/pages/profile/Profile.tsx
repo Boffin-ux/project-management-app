@@ -1,6 +1,6 @@
 import { Build } from '@mui/icons-material';
 import { Avatar, Box, Button, Container, TextField, Typography } from '@mui/material';
-import { deleteProfileForm, editProfileForm } from 'components/form/constants/formOptions';
+import { deleteProfileForm } from 'components/form/constants/formOptions';
 import FormModal from 'components/form/FormModal';
 import Loader from 'components/universal/Loader/Loader';
 import { useFormik } from 'formik';
@@ -8,7 +8,6 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
 import { userValidationSchema } from 'schemas/userSchemas';
 import { deleteUser, updateUserInfo } from 'store/user/thunks';
 
@@ -18,8 +17,6 @@ function Profile() {
   const dispatch = useAppDispatch();
   const { id, name, login, isLoading } = useAppSelector((state) => state.user);
   const [isModalActive, setIsModalActive] = useState(false);
-  const [isEditProfile, setIsEditProfile] = useState(false);
-  const navigate = useNavigate();
 
   const initialValues = {
     name: name ?? '',
@@ -31,20 +28,12 @@ function Profile() {
     initialValues,
     enableReinitialize: true,
     validationSchema: userValidationSchema,
-    onSubmit: () => {
-      setIsEditProfile(true);
-      setIsModalActive(true);
-    },
+    onSubmit: () => handleEditUser(),
   });
 
   const nameError = errors.name;
   const loginError = errors.login;
   const passwordError = errors.password;
-
-  const onConfirm = () => {
-    setIsEditProfile(false);
-    setIsModalActive(true);
-  };
 
   const handleDeleteUser = async () => {
     try {
@@ -60,18 +49,11 @@ function Profile() {
     try {
       await dispatch(updateUserInfo({ ...values, userId: id })).unwrap();
       enqueueSnackbar(t('successful.userEditMessage'), { variant: 'success' });
-      setIsEditProfile(false);
-      setIsModalActive(false);
-      // navigate('/' + VIEW_PATH.BOARDS);
     } catch (error) {
       enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
       resetForm();
     }
   };
-
-  const confirmData = isEditProfile
-    ? { ...editProfileForm, action: handleEditUser }
-    : { ...deleteProfileForm, action: handleDeleteUser };
 
   return (
     <Container maxWidth="sm">
@@ -137,6 +119,7 @@ function Profile() {
               disabled={isLoading}
             >
               {t('profile.saveButton')}
+              {isLoading && <Loader />}
             </Button>
           </Box>
         </form>
@@ -147,7 +130,7 @@ function Profile() {
             fullWidth
             type="submit"
             disabled={isLoading}
-            onClick={onConfirm}
+            onClick={() => setIsModalActive(true)}
           >
             {t('profile.deleteUserButton')}
           </Button>
@@ -156,9 +139,10 @@ function Profile() {
       <FormModal
         isModalActive={isModalActive}
         closeModal={() => setIsModalActive(false)}
-        {...confirmData}
+        isLoading={isLoading}
+        action={handleDeleteUser}
+        {...deleteProfileForm}
       />
-      {isLoading && <Loader />}
     </Container>
   );
 }

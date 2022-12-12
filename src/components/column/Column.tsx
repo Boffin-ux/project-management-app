@@ -14,7 +14,6 @@ import { useSnackbar } from 'notistack';
 import { addTaskForm } from 'components/form/constants/formOptions';
 import FormModal from 'components/form/FormModal';
 import { createTask } from 'store/tasks/thunks';
-import Loader from 'components/universal/Loader/Loader';
 
 const ORDER_NUM = 0;
 
@@ -22,11 +21,13 @@ export const Column: FC<IColumn> = (column) => {
   const [btnCapture, setBtnCapture] = useState<boolean>(false);
   const [isModalActive, setIsModalActive] = useState(false);
   const userId = useAppSelector((state) => state.user.id);
+  const { isLoading } = useAppSelector((state) => state.tasks);
   const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
   const { _id, title, tasks, order, boardId } = column;
-  const addNewTask = async (formData?: IFormValues) => {
+
+  const addNewTask = async (formData?: IFormValues, resetForm?: () => void) => {
     const newFormData = {
       ...formData,
       _id: '',
@@ -39,6 +40,9 @@ export const Column: FC<IColumn> = (column) => {
       await dispatch(createTask(newFormData)).unwrap();
       enqueueSnackbar(t('successful.addTaskMessage'), { variant: 'success' });
       setIsModalActive(false);
+      if (resetForm) {
+        resetForm();
+      }
     } catch (error) {
       enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
     }
@@ -97,6 +101,7 @@ export const Column: FC<IColumn> = (column) => {
         isModalActive={isModalActive}
         closeModal={() => setIsModalActive(false)}
         action={addNewTask}
+        isLoading={isLoading}
         {...addTaskForm}
       />
     </>

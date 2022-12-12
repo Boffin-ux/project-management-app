@@ -12,9 +12,9 @@ const Layout = () => {
   useDocumentTitle();
   const { isLoading } = useAppSelector((state) => state.user);
 
-  if (isLoading) {
-    return <Loader size={110} />;
-  }
+  // if (isLoading) {
+  //   return <Loader size={110} />;
+  // }
 
   return (
     <>

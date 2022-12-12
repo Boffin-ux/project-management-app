@@ -19,6 +19,7 @@ export const Task: FC<ITaskProps> = ({ task, index }) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const user = useAppSelector((state) => state.user);
+  const { isLoading } = useAppSelector((state) => state.tasks);
   const { enqueueSnackbar } = useSnackbar();
   const { _id, boardId, columnId, title, description, order, users } = task;
   const [isModalActive, setIsModalActive] = useState(false);
@@ -55,7 +56,7 @@ export const Task: FC<ITaskProps> = ({ task, index }) => {
     setIsModalActive(true);
   };
 
-  const updateTaskData = async (formData?: IFormValues) => {
+  const updateTaskData = async (formData?: IFormValues, resetForm?: () => void) => {
     const newFormData = {
       ...formData,
       _id,
@@ -64,10 +65,14 @@ export const Task: FC<ITaskProps> = ({ task, index }) => {
       order,
       userId: user.id,
     } as ITask;
+
     try {
       await dispatch(updateTask(newFormData)).unwrap();
       enqueueSnackbar(t('successful.editTaskMessage'), { variant: 'success' });
       setIsModalActive(false);
+      if (resetForm) {
+        resetForm();
+      }
     } catch (error) {
       enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
     }
@@ -106,6 +111,7 @@ export const Task: FC<ITaskProps> = ({ task, index }) => {
       <FormModal
         isModalActive={isModalActive}
         closeModal={() => setIsModalActive(false)}
+        isLoading={isLoading}
         {...modalProps}
       />
     </>

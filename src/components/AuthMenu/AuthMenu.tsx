@@ -15,6 +15,7 @@ import { VIEW_PATH } from 'utils/variables';
 
 function AuthMenu() {
   const { token, id } = useAppSelector((state) => state.user);
+  const { isLoading } = useAppSelector((state) => state.boards);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const [isModalActive, setIsModalActive] = useState(false);
@@ -24,12 +25,15 @@ function AuthMenu() {
     setIsModalActive(true);
   };
 
-  const addNewBoard = async (formData?: IFormValues) => {
+  const addNewBoard = async (formData?: IFormValues, resetForm?: () => void) => {
     const newFormData = { ...formData, owner: id } as unknown as IRequestForBoard;
     try {
       await dispatch(createBoard(newFormData)).unwrap();
       enqueueSnackbar(t('successful.addBoardMessage'), { variant: 'success' });
       setIsModalActive(false);
+      if (resetForm) {
+        resetForm();
+      }
     } catch (error) {
       enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
     }
@@ -73,6 +77,7 @@ function AuthMenu() {
         isModalActive={isModalActive}
         closeModal={() => setIsModalActive(false)}
         action={addNewBoard}
+        isLoading={isLoading}
         {...addBoardForm}
       />
     </>

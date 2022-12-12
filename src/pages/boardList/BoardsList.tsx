@@ -44,7 +44,7 @@ export const Boards = () => {
     <Box className={styles.boardWrapper}>
       <ControlUnit onSearch={handleSearch} searchQuery={searchQuery} />
       <Grid container spacing={1} justifyContent="center">
-        {isLoading && generateRandomArray(3, 0).map((_, index) => <SkeletonCard key={index} />)}
+        {isLoading && generateRandomArray(4, 0).map((_, index) => <SkeletonCard key={index} />)}
         {!isLoading &&
           (filteredBoards.length ? (
             filteredBoards.map((board) => <BoardCard {...board} key={board._id} />)

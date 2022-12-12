@@ -16,6 +16,7 @@ import { Search } from './search/Search';
 export const ControlUnit = (props: ISearch) => {
   const dispatch = useAppDispatch();
   const { id } = useAppSelector((state) => state.user);
+  const { isLoading } = useAppSelector((state) => state.boards);
   const { enqueueSnackbar } = useSnackbar();
   const [isModalActive, setIsModalActive] = useState(false);
   const { t } = useTranslation();
@@ -62,6 +63,7 @@ export const ControlUnit = (props: ISearch) => {
         isModalActive={isModalActive}
         closeModal={() => setIsModalActive(false)}
         action={addNewBoard}
+        isLoading={isLoading}
         {...addBoardForm}
       />
     </>

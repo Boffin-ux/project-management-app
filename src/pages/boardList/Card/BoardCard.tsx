@@ -41,6 +41,8 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const allUsers = useAppSelector((state) => state.users.users);
+  const { isLoading } = useAppSelector((state) => state.boards);
+  const boardCardView = useAppSelector((state) => state.boards.displayedView);
   const { enqueueSnackbar } = useSnackbar();
   const [isModalActive, setIsModalActive] = useState(false);
   const [modalProps, setIsModalProps] = useState<ICustomFormProps>({
@@ -58,8 +60,6 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
     }
   }
 
-  const boardCardView = useAppSelector((state) => state.boards.displayedView);
-
   const editBoard = () => {
     const currentData = {
       initialValues: {
@@ -72,15 +72,24 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
     setIsModalActive(true);
   };
 
-  const updateBoardData = async (formData?: IFormValues) => {
+  const updateBoardData = async (formData?: IFormValues, resetForm?: () => void) => {
     const newFormData = { ...formData, owner, _id } as IBoard;
     try {
       await dispatch(updateBoard(newFormData)).unwrap();
       enqueueSnackbar(t('successful.editBoardMessage'), { variant: 'success' });
       setIsModalActive(false);
+      if (resetForm) {
+        resetForm();
+        console.log('resetForm: ', resetForm);
+      }
     } catch (error) {
       enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
     }
+  };
+
+  const deleteCurrentBoard = () => {
+    setIsModalProps({ ...deleteBoardForm, action: removeBoard });
+    setIsModalActive(true);
   };
 
   return (
@@ -93,7 +102,7 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
           sx={boardCardView === CardDisplayType.grid ? cardHeadGrid : cardHeadRow}
           avatar={<Avatar sx={{ bgcolor: setRandomColor() }}>{title[0]}</Avatar>}
           action={
-            <IconButton onClick={removeBoard}>
+            <IconButton onClick={deleteCurrentBoard}>
               <DeleteIcon color="error" className={styles.iconButton} />
             </IconButton>
           }
@@ -126,6 +135,7 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
       <FormModal
         isModalActive={isModalActive}
         closeModal={() => setIsModalActive(false)}
+        isLoading={isLoading}
         {...modalProps}
       />
     </>

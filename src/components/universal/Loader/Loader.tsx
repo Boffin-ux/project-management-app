@@ -16,9 +16,7 @@ function Loader({ size }: ISize) {
       sx={{
         position: 'absolute',
         top: `calc(50% - ${indent}px)`,
-        left: '50%',
-        marginTop: '-12px',
-        marginLeft: `-${indent}px`,
+        left: `calc(50% - ${indent}px)`,
       }}
     />
   );

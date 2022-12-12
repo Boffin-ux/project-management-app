@@ -82,24 +82,22 @@ export const Board = () => {
 
   return (
     <Box className={styles.wrapper}>
-      <>
-        <ControlPanel />
-        <Box className={styles.centering}>
-          <Box className={styles.columns}>
-            <DragDropContext onDragEnd={onDragEndColumn}>
-              <Droppable droppableId="all-columns" direction="horizontal" type="column">
-                {(columnsProvided, columnSnapshot) => (
-                  <DroppableArea
-                    columns={viewedColumns}
-                    provider={columnsProvided}
-                    snapshot={columnSnapshot}
-                  />
-                )}
-              </Droppable>
-            </DragDropContext>
-          </Box>
+      <ControlPanel />
+      <Box className={styles.centering}>
+        <Box className={styles.columns}>
+          <DragDropContext onDragEnd={onDragEndColumn}>
+            <Droppable droppableId="all-columns" direction="horizontal" type="column">
+              {(columnsProvided, columnSnapshot) => (
+                <DroppableArea
+                  columns={viewedColumns}
+                  provider={columnsProvided}
+                  snapshot={columnSnapshot}
+                />
+              )}
+            </Droppable>
+          </DragDropContext>
         </Box>
-      </>
+      </Box>
     </Box>
   );
 };

@@ -9,6 +9,7 @@ import ConfirmButtons from './ConfirmButtons';
 import { defaultValues } from './constants/formOptions';
 import CustomTextField from './CustomTextField';
 import SelectField from './SelectField';
+import Loader from 'components/universal/Loader/Loader';
 const { MIN_LENGTH, NAME_MAX_LENGTH, DESC_MAX_LENGTH } = VALUE_VALID;
 
 export default function FormModal({
@@ -21,16 +22,15 @@ export default function FormModal({
   isUsers,
   isModalActive,
   closeModal,
+  isLoading,
 }: IFormProps) {
   const { values, errors, touched, handleSubmit, handleChange, dirty } = useFormik({
     initialValues,
     validationSchema: schema,
     enableReinitialize: true,
-    onSubmit: (values, { resetForm }) => {
-      action(values);
-      resetForm({ values: initialValues });
-    },
+    onSubmit: (values, { resetForm }) => action(values, resetForm),
   });
+
   const { t } = useTranslation();
   type fieldName = keyof typeof initialValues;
 
@@ -66,17 +66,23 @@ export default function FormModal({
           )}
           <Button
             type="submit"
-            disabled={!dirty}
+            disabled={!dirty || isLoading}
             color="primary"
             variant="contained"
             fullWidth
-            sx={{ textTransform: 'none', marginTop: '20px' }}
+            sx={{
+              textTransform: 'none',
+              marginTop: '20px',
+              position: 'relative',
+              minHeight: '40px',
+            }}
           >
             {btnTitle && t(btnTitle)}
+            {isLoading && <Loader />}
           </Button>
         </Box>
       ) : (
-        <ConfirmButtons action={action} closeModal={closeModal} />
+        <ConfirmButtons isLoading={isLoading} action={action} closeModal={closeModal} />
       )}
     </ModalBasic>
   );

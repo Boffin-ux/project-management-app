@@ -9,7 +9,6 @@ const toolbarStyle = {
   alignItems: 'center',
   padding: { xs: '10px', sm: '20px 40px' },
   backgroundColor: '#333',
-  flexDirection: { sm: 'column', md: 'row' },
 };
 
 const navWrapStyle = {
@@ -17,10 +16,9 @@ const navWrapStyle = {
   alignItems: 'center',
   height: '100%',
   gap: { xs: '10px', sm: '15px' },
-  flexDirection: { sm: 'column', md: 'row' },
 };
 
 const titleStyle = { display: 'flex', flexGrow: 1, fontSize: '1.8rem' };
-const subtitleStyle = { display: { xs: 'none', sm: 'flex' } };
+const subtitleStyle = { display: { xs: 'none', md: 'flex' } };
 
 export { btnStyle, toolbarStyle, titleStyle, subtitleStyle, navWrapStyle };

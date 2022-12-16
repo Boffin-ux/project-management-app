@@ -8,16 +8,24 @@ import React, { ChangeEvent, FC, useState } from 'react';
 import { VALUE_VALID } from 'utils/variables';
 import { useTranslation } from 'react-i18next';
 import styles from './../ColumnHeader.module.scss';
+import { updateColumn } from 'store/column/thunks';
+import { IColumn } from 'interfaces/columns';
+import useSubmitHelper from 'hooks/useSubmitHelper';
 
 export interface EditableTitleProps {
-  title: string;
-  onOkEditTitle: (newTitle: string) => void;
+  columnValues: IColumn;
   onDeleteColumn: () => void;
+  isLoading: boolean;
 }
-export const EditableTitle: FC<EditableTitleProps> = (column) => {
-  const { title, onOkEditTitle, onDeleteColumn } = column;
 
-  const [isEdit, setIsEdit] = useState(false);
+export const EditableTitle: FC<EditableTitleProps> = ({
+  columnValues,
+  onDeleteColumn,
+  isLoading,
+}) => {
+  const { title } = columnValues;
+
+  const { isFormActive, setIsFormActive, formSubmit } = useSubmitHelper();
   const [columnTitle, setColumnTitle] = useState<string>(title);
 
   const { t } = useTranslation();
@@ -26,43 +34,64 @@ export const EditableTitle: FC<EditableTitleProps> = (column) => {
     setColumnTitle(event.target.value);
   };
 
+  const setNewTitle = async (newTitle: string) => {
+    await formSubmit({
+      action: updateColumn({ ...columnValues, title: newTitle }),
+      confirmMessage: 'successful.editColumnMessage',
+    });
+  };
+
   const onCancelEditTitle = () => {
-    setIsEdit(false);
+    setIsFormActive(false);
     setColumnTitle(title);
   };
 
-  const onOkClick = () => {
+  const onOkClick = async () => {
+    if (columnTitle === title) {
+      setIsFormActive(false);
+      return;
+    }
+
     if (columnTitle.length >= VALUE_VALID.MIN_LENGTH) {
-      setIsEdit(false);
-      onOkEditTitle(columnTitle);
+      setNewTitle(columnTitle);
     }
   };
 
   return (
     <>
-      {isEdit && (
+      {isFormActive ? (
         <>
-          <ButtonWithIcon icon={<CancelOutlinedIcon />} clickAction={onCancelEditTitle} />
+          <ButtonWithIcon
+            icon={<CancelOutlinedIcon />}
+            clickAction={onCancelEditTitle}
+            disabled={isLoading}
+          />
           <TextField
             variant="standard"
             value={columnTitle}
+            autoFocus
             onChange={onEnterTitle}
             helperText={t('errors.errorMinLengthName').replace(
               '{{MIN_LENGTH}}',
               String(VALUE_VALID.MIN_LENGTH)
             )}
             error={columnTitle.length < VALUE_VALID.MIN_LENGTH}
+            onBlur={onCancelEditTitle}
           />
-          <ButtonWithIcon icon={<CheckIcon />} clickAction={onOkClick} />
+          <ButtonWithIcon
+            icon={<CheckIcon />}
+            clickAction={onOkClick}
+            disabled={isLoading}
+            isLoading={isLoading}
+          />
         </>
-      )}
-      {!isEdit && (
+      ) : (
         <>
-          <ButtonWithIcon clickAction={() => setIsEdit(true)} icon={<EditIcon />} />
+          <ButtonWithIcon clickAction={() => setIsFormActive(true)} icon={<EditIcon />} />
           <Typography
             variant="subtitle1"
             className={styles.caption}
-            onClick={() => setIsEdit(true)}
+            onClick={() => setIsFormActive(true)}
           >
             {title}
           </Typography>

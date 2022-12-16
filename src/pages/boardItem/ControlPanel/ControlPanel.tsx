@@ -1,25 +1,23 @@
-import { Box, Button, Grid } from '@mui/material';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import React, { useState } from 'react';
+import { Button, Grid } from '@mui/material';
+import { useAppSelector } from 'hooks/redux';
+import React from 'react';
 import { BreadCrumbs } from '../Breadcrumbs/Breadcrumbs';
 import ViewWeekIcon from '@mui/icons-material/ViewWeek';
 import { useParams } from 'react-router-dom';
 import styles from '../BoardItem.module.scss';
 import { useTranslation } from 'react-i18next';
-import { useSnackbar } from 'notistack';
 import { IFormValues } from 'interfaces/modal';
 import FormModal from 'components/form/FormModal';
 import { IRequestForCreateColumns } from 'interfaces/columns';
 import { createColumn } from 'store/column/thunks';
 import { addColumnForm } from 'components/form/constants/formOptions';
 import { findBoardById } from 'utils/helpers';
+import useSubmitHelper from 'hooks/useSubmitHelper';
 
 export const ControlPanel = () => {
-  const [isModalActive, setIsModalActive] = useState(false);
+  const { isFormActive, setIsFormActive, formSubmit } = useSubmitHelper();
   const params = useParams();
   const { t } = useTranslation();
-  const { enqueueSnackbar } = useSnackbar();
-  const dispatch = useAppDispatch();
 
   const currentBoard = useAppSelector((state) =>
     findBoardById(state.boards.boards, params.id as string)
@@ -33,16 +31,11 @@ export const ControlPanel = () => {
       order: columns.length,
     } as IRequestForCreateColumns;
 
-    try {
-      await dispatch(createColumn(newFormData)).unwrap();
-      enqueueSnackbar(t('successful.addColumnMessage'), { variant: 'success' });
-      setIsModalActive(false);
-      if (resetForm) {
-        resetForm();
-      }
-    } catch (error) {
-      enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
-    }
+    formSubmit({
+      action: createColumn(newFormData),
+      confirmMessage: 'successful.addColumnMessage',
+      resetForm,
+    });
   };
 
   return (
@@ -58,14 +51,14 @@ export const ControlPanel = () => {
         <Button
           startIcon={<ViewWeekIcon />}
           variant="contained"
-          onClick={() => setIsModalActive(true)}
+          onClick={() => setIsFormActive(true)}
         >
           {t('boards.addColumn')}
         </Button>
       </Grid>
       <FormModal
-        isModalActive={isModalActive}
-        closeModal={() => setIsModalActive(false)}
+        isModalActive={isFormActive}
+        closeModal={() => setIsFormActive(false)}
         action={addNewColumn}
         isLoading={isLoading}
         {...addColumnForm}

@@ -7,23 +7,21 @@ import { IColumn } from 'interfaces/columns';
 import { ButtonAddTask } from './ButtonAddTask/ButtonAddTask';
 import { useTranslation } from 'react-i18next';
 import { ITask } from 'interfaces/task';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { useAppSelector } from 'hooks/redux';
 import { Task } from 'pages/boardItem/Task/Task';
 import { IFormValues } from 'interfaces/modal';
-import { useSnackbar } from 'notistack';
 import { addTaskForm } from 'components/form/constants/formOptions';
 import FormModal from 'components/form/FormModal';
 import { createTask } from 'store/tasks/thunks';
+import useSubmitHelper from 'hooks/useSubmitHelper';
 
 const ORDER_NUM = 0;
 
 export const Column: FC<IColumn> = (column) => {
   const [btnCapture, setBtnCapture] = useState<boolean>(false);
-  const [isModalActive, setIsModalActive] = useState(false);
+  const { isFormActive, setIsFormActive, formSubmit } = useSubmitHelper();
   const userId = useAppSelector((state) => state.user.id);
   const { isLoading } = useAppSelector((state) => state.tasks);
-  const dispatch = useAppDispatch();
-  const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
   const { _id, title, tasks, order, boardId } = column;
 
@@ -36,16 +34,12 @@ export const Column: FC<IColumn> = (column) => {
       boardId,
       userId,
     } as ITask;
-    try {
-      await dispatch(createTask(newFormData)).unwrap();
-      enqueueSnackbar(t('successful.addTaskMessage'), { variant: 'success' });
-      setIsModalActive(false);
-      if (resetForm) {
-        resetForm();
-      }
-    } catch (error) {
-      enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
-    }
+
+    formSubmit({
+      action: createTask(newFormData),
+      confirmMessage: 'successful.addTaskMessage',
+      resetForm,
+    });
   };
 
   return (
@@ -74,7 +68,7 @@ export const Column: FC<IColumn> = (column) => {
               <ButtonAddTask
                 isCapture={btnCapture}
                 title={t('boards.addTask')}
-                clickAction={() => setIsModalActive(true)}
+                clickAction={() => setIsFormActive(true)}
               />
               <Box sx={{ mt: 2, flexGrow: 1, overflowY: 'auto' }}>
                 <Droppable droppableId={_id}>
@@ -98,8 +92,8 @@ export const Column: FC<IColumn> = (column) => {
         )}
       </Draggable>
       <FormModal
-        isModalActive={isModalActive}
-        closeModal={() => setIsModalActive(false)}
+        isModalActive={isFormActive}
+        closeModal={() => setIsFormActive(false)}
         action={addNewTask}
         isLoading={isLoading}
         {...addTaskForm}

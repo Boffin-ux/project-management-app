@@ -4,19 +4,17 @@ import { deleteProfileForm } from 'components/form/constants/formOptions';
 import FormModal from 'components/form/FormModal';
 import Loader from 'components/universal/Loader/Loader';
 import { useFormik } from 'formik';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { useSnackbar } from 'notistack';
-import React, { useState } from 'react';
+import { useAppSelector } from 'hooks/redux';
+import useSubmitHelper from 'hooks/useSubmitHelper';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { userValidationSchema } from 'schemas/userSchemas';
 import { deleteUser, updateUserInfo } from 'store/user/thunks';
 
 function Profile() {
-  const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
   const { id, name, login, isLoading } = useAppSelector((state) => state.user);
-  const [isModalActive, setIsModalActive] = useState(false);
+  const { isFormActive, setIsFormActive, formSubmit } = useSubmitHelper();
 
   const initialValues = {
     name: name ?? '',
@@ -36,23 +34,19 @@ function Profile() {
   const passwordError = errors.password;
 
   const handleDeleteUser = async () => {
-    try {
-      await dispatch(deleteUser(id)).unwrap();
-      enqueueSnackbar(t('successful.userDeleteMessage'), { variant: 'success' });
-      setIsModalActive(false);
-    } catch (error) {
-      enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
-    }
+    formSubmit({
+      action: deleteUser(id),
+      confirmMessage: 'successful.userDeleteMessage',
+    });
   };
 
   const handleEditUser = async () => {
-    try {
-      await dispatch(updateUserInfo({ ...values, userId: id })).unwrap();
-      enqueueSnackbar(t('successful.userEditMessage'), { variant: 'success' });
-    } catch (error) {
-      enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
-      resetForm();
-    }
+    await formSubmit({
+      action: updateUserInfo({ ...values, userId: id }),
+      confirmMessage: 'successful.userEditMessage',
+      withoutModal: true,
+      resetForm,
+    });
   };
 
   return (
@@ -130,15 +124,15 @@ function Profile() {
             fullWidth
             type="submit"
             disabled={isLoading}
-            onClick={() => setIsModalActive(true)}
+            onClick={() => setIsFormActive(true)}
           >
             {t('profile.deleteUserButton')}
           </Button>
         </Box>
       </Box>
       <FormModal
-        isModalActive={isModalActive}
-        closeModal={() => setIsModalActive(false)}
+        isModalActive={isFormActive}
+        closeModal={() => setIsFormActive(false)}
         isLoading={isLoading}
         action={handleDeleteUser}
         {...deleteProfileForm}

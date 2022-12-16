@@ -1,9 +1,9 @@
 import AuthRedirect from 'components/AuthRedirect/AuthRedirect';
-import { Layout } from 'components/layout/Layout';
+import Layout from 'components/layout/Layout';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { SnackbarProvider } from 'notistack';
-import { Board } from 'pages/boardItem/BoardItem';
-import { Boards } from 'pages/boardList/BoardsList';
+import Board from 'pages/boardItem/BoardItem';
+import Boards from 'pages/boardList/BoardsList';
 import ErrorBoundaryPage from 'pages/errorBoundaryPage/errorBoundaryPage';
 import HomePage from 'pages/homePage/HomePage';
 import PageNotFound from 'pages/page404/Page404';

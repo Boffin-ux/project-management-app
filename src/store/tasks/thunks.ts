@@ -49,7 +49,7 @@ export const deleteTask = createAsyncThunk(
   'tasks/deleteTask',
   async (taskRequest: ITaskRequest, { rejectWithValue }) => {
     try {
-      const { boardId, columnId, taskId } = taskRequest;
+      const { boardId, columnId, _id: taskId } = taskRequest;
       const response = await axiosPrivate.delete(
         API_ENDPOINTS.TASK(boardId, columnId, taskId as string)
       );

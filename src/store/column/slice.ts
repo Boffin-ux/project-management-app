@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IColumn, IColumnState } from 'interfaces/columns';
-import { ITask } from 'interfaces/task';
+
 import {
   createColumn,
   deleteColumn,
@@ -13,20 +13,12 @@ const initialState: IColumnState = {
   columns: [],
   isLoading: false,
   error: null,
-  banOnUpdate: false,
-};
-
-const updateOrder = (tasks: ITask[]): ITask[] => {
-  return tasks.map((task, index) => ({ ...task, order: index }));
 };
 
 export const columnSlice = createSlice({
   name: 'columns',
   initialState,
   reducers: {
-    toggleBanOnUpdate: (state) => {
-      state.banOnUpdate = !state.banOnUpdate;
-    },
     moveColumns: (state, action: PayloadAction<IColumn[]>) => {
       state.columns = action.payload;
     },
@@ -103,5 +95,5 @@ export const columnSlice = createSlice({
   },
 });
 
-export const { moveColumns, toggleBanOnUpdate } = columnSlice.actions;
+export const { moveColumns } = columnSlice.actions;
 export default columnSlice.reducer;

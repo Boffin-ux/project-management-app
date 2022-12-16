@@ -32,5 +32,5 @@ export interface ITaskState {
 export interface ITaskRequest {
   boardId: string;
   columnId: string;
-  taskId?: string;
+  _id?: string;
 }

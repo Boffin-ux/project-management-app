@@ -71,7 +71,7 @@ export const boardGetAllForUser = createAsyncThunk<IBoard[], string, { rejectVal
   }
 );
 
-export const boardGetById = createAsyncThunk(
+export const boardGetById = createAsyncThunk<IBoard, string, { rejectValue: string }>(
   'boards/getById',
   async (boardId: string, { rejectWithValue }) => {
     try {
@@ -84,7 +84,7 @@ export const boardGetById = createAsyncThunk(
   }
 );
 
-export const boardGetByIds = createAsyncThunk(
+export const boardGetByIds = createAsyncThunk<IBoard, Array<string>, { rejectValue: string }>(
   'boards/getByIds',
   async (boardIds: Array<string>, { rejectWithValue }) => {
     try {

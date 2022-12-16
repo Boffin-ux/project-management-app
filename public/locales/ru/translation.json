@@ -30,6 +30,7 @@
     "addBoardMessage": "Доска успешно создана!",
     "editBoardMessage": "Доска успешно изменена!",
     "addColumnMessage": "Колонка успешно создана!",
+    "editColumnMessage": "Колонка успешно изменена!",
     "deleteColumnMessage": "Колонка успешно удалена!",
     "addTaskMessage": "Задача успешно создана!",
     "editTaskMessage": "Задача успешно изменена!",

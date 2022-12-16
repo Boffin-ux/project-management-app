@@ -17,7 +17,7 @@ import { useParams } from 'react-router-dom';
 import DroppableArea from './DroppableArea/DroppableArea';
 import { putTasksInColumns } from 'utils/helpers';
 
-export const Board = () => {
+const Board = () => {
   const [viewedColumns, setViewedColumns] = useState<IColumn[]>([]);
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
@@ -101,3 +101,5 @@ export const Board = () => {
     </Box>
   );
 };
+
+export default Board;

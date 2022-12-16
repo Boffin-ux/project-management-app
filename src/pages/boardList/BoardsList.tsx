@@ -12,7 +12,7 @@ import { BoardCard } from './Card/BoardCard';
 import { SkeletonCard } from './Card/SkeletonCard';
 import { ControlUnit } from './controlUnit/ControlUnit';
 
-export const Boards = () => {
+const Boards = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { boards, isLoading: isLoadingBoards } = useAppSelector((state) => state.boards);
@@ -55,3 +55,5 @@ export const Boards = () => {
     </Box>
   );
 };
+
+export default Boards;

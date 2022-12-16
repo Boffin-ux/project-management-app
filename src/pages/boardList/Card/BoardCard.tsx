@@ -16,10 +16,10 @@ import {
 import Button from '@mui/material/Button';
 import { deleteBoardForm, editBoardForm } from 'components/form/constants/formOptions';
 import FormModal from 'components/form/FormModal';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { useAppSelector } from 'hooks/redux';
+import useSubmitHelper from 'hooks/useSubmitHelper';
 import { IBoard } from 'interfaces/boards';
 import { ICustomFormProps, IFormValues } from 'interfaces/modal';
-import { useSnackbar } from 'notistack';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -39,25 +39,20 @@ import { setRandomColor } from './utils';
 
 export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
   const allUsers = useAppSelector((state) => state.users.users);
   const { isLoading } = useAppSelector((state) => state.boards);
   const boardCardView = useAppSelector((state) => state.boards.displayedView);
-  const { enqueueSnackbar } = useSnackbar();
-  const [isModalActive, setIsModalActive] = useState(false);
+  const { isFormActive, setIsFormActive, formSubmit } = useSubmitHelper();
   const [modalProps, setIsModalProps] = useState<ICustomFormProps>({
     ...deleteBoardForm,
     action: removeBoard,
   });
 
   async function removeBoard() {
-    try {
-      await dispatch(deleteBoard(_id)).unwrap();
-      enqueueSnackbar(t('successful.deleteBoardMessage'), { variant: 'success' });
-      setIsModalActive(false);
-    } catch (error) {
-      enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
-    }
+    formSubmit({
+      action: deleteBoard(_id),
+      confirmMessage: 'successful.deleteBoardMessage',
+    });
   }
 
   const editBoard = () => {
@@ -69,27 +64,22 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
       ...editBoardForm,
     };
     setIsModalProps({ ...currentData, action: updateBoardData });
-    setIsModalActive(true);
+    setIsFormActive(true);
   };
 
   const updateBoardData = async (formData?: IFormValues, resetForm?: () => void) => {
     const newFormData = { ...formData, owner, _id } as IBoard;
-    try {
-      await dispatch(updateBoard(newFormData)).unwrap();
-      enqueueSnackbar(t('successful.editBoardMessage'), { variant: 'success' });
-      setIsModalActive(false);
-      if (resetForm) {
-        resetForm();
-        console.log('resetForm: ', resetForm);
-      }
-    } catch (error) {
-      enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
-    }
+
+    formSubmit({
+      action: updateBoard(newFormData),
+      confirmMessage: 'successful.editBoardMessage',
+      resetForm,
+    });
   };
 
   const deleteCurrentBoard = () => {
     setIsModalProps({ ...deleteBoardForm, action: removeBoard });
-    setIsModalActive(true);
+    setIsFormActive(true);
   };
 
   return (
@@ -133,8 +123,8 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
         </CardActions>
       </Card>
       <FormModal
-        isModalActive={isModalActive}
-        closeModal={() => setIsModalActive(false)}
+        isModalActive={isFormActive}
+        closeModal={() => setIsFormActive(false)}
         isLoading={isLoading}
         {...modalProps}
       />

@@ -2,8 +2,8 @@ import { LockOutlined } from '@mui/icons-material';
 import { Avatar, Box, Button, Container, Link, TextField, Typography } from '@mui/material';
 import Loader from 'components/universal/Loader/Loader';
 import { useFormik } from 'formik';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { useSnackbar } from 'notistack';
+import { useAppSelector } from 'hooks/redux';
+import useSubmitHelper from 'hooks/useSubmitHelper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { userValidationSchema } from 'schemas/userSchemas';
@@ -17,29 +17,23 @@ const initialValues = {
 };
 
 function SignUp() {
-  const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
   const { isLoading, error } = useAppSelector((state) => state.user);
+  const { formSubmit } = useSubmitHelper();
 
   const { values, touched, errors, handleSubmit, handleChange, dirty } = useFormik({
     initialValues,
     validationSchema: userValidationSchema,
-    onSubmit: async (values, { resetForm }) => {
-      try {
-        await dispatch(signUp(values)).unwrap();
-        enqueueSnackbar(t('successful.signUpMessage'), { variant: 'success' });
-        const { name, ...signInData } = values;
-        try {
-          await dispatch(signIn(signInData)).unwrap(); // Immediately sign in after successful sign up
-          enqueueSnackbar(t('successful.signInMessage'), { variant: 'success' });
-        } catch (error) {
-          throw error;
-        }
-      } catch (error) {
-        resetForm();
-        enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
-      }
+    onSubmit: async (values) => {
+      await formSubmit({
+        action: signUp(values),
+        confirmMessage: 'successful.signUpMessage',
+      });
+      const { ...signInData } = values;
+      await formSubmit({
+        action: signIn(signInData),
+        confirmMessage: 'successful.signInMessage',
+      });
     },
   });
 

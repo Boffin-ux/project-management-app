@@ -44,7 +44,6 @@ function Profile() {
     await formSubmit({
       action: updateUserInfo({ ...values, userId: id }),
       confirmMessage: 'successful.userEditMessage',
-      withoutModal: true,
       resetForm,
     });
   };

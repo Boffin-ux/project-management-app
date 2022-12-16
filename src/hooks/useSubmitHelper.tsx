@@ -7,7 +7,7 @@ import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootState } from 'store/store';
-import { IupdateUserData } from 'interfaces/users';
+import { ISignInData, IupdateUserData } from 'interfaces/users';
 
 type Returned = IBoard | ITask | IColumn;
 type ThunkArg =
@@ -15,6 +15,7 @@ type ThunkArg =
   | ITaskRequest
   | IRequestForBoard
   | IupdateUserData
+  | ISignInData
   | string;
 type AsyncThunkConfig = {
   state: RootState;
@@ -25,7 +26,6 @@ interface IFormSubmit {
   confirmMessage: string;
   resetForm?: () => void;
   preAction?: () => Promise<void>;
-  withoutModal?: boolean;
 }
 
 export default function useSubmitHelper() {
@@ -34,20 +34,14 @@ export default function useSubmitHelper() {
   const dispatch = useAppDispatch();
   const [isFormActive, setIsFormActive] = useState(false);
 
-  const formSubmit = async ({
-    action,
-    confirmMessage,
-    resetForm,
-    preAction,
-    withoutModal,
-  }: IFormSubmit) => {
+  const formSubmit = async ({ action, confirmMessage, resetForm, preAction }: IFormSubmit) => {
     try {
       preAction && (await preAction());
       await dispatch(action).unwrap();
 
       enqueueSnackbar(t(confirmMessage), { variant: 'success' });
 
-      !withoutModal && setIsFormActive(false);
+      setIsFormActive(false);
       resetForm && resetForm();
     } catch (error) {
       enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });

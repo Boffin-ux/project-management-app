@@ -23,33 +23,30 @@ const Board = () => {
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useAppDispatch();
   const searchTasks = useAppSelector((state) => state.tasks.searchTasks);
-  const params = useParams();
+  const { id: boardId } = useParams<{ id?: string }>();
 
-  const { columns, error } = useAppSelector((state) => state.columns);
+  const { columns } = useAppSelector((state) => state.columns);
   const { tasks } = useAppSelector((state) => state.tasks);
 
   useEffect(() => {
-    const newCol =
-      searchTasks.length > 0
-        ? putTasksInColumns(columns, searchTasks)
-        : putTasksInColumns(columns, tasks);
-    setViewedColumns(newCol);
-  }, [columns, tasks]);
-
-  useEffect(() => {
-    const boardId = params.id as string;
-    dispatch(getColumnsByBoardId(boardId));
-    dispatch(getTasksSet(boardId));
+    if (boardId) {
+      dispatch(getColumnsByBoardId(boardId));
+      dispatch(getTasksSet(boardId));
+    }
   }, []);
 
-  if (error) enqueueSnackbar(t(`errors.authNoResponse`), { variant: 'error' });
+  useEffect(() => {
+    const newCol = searchTasks.length
+      ? putTasksInColumns(columns, searchTasks)
+      : putTasksInColumns(columns, tasks);
+    setViewedColumns(newCol);
+  }, [columns, searchTasks, tasks]);
 
   const onDragEndColumn = (result: DropResult) => {
     const { source, destination } = result;
     let newCol: IColumn[] = [];
     if (searchTasks.length > 0) {
-      enqueueSnackbar(t(`errors.noDragDrop`), { variant: 'error' });
-      return;
+      return enqueueSnackbar(t(`errors.noDragDrop`), { variant: 'error' });
     }
     if (!destination) return;
     if (!source) return;

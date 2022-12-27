@@ -8,6 +8,7 @@ export interface ButtonWithIconProps {
   size?: 'small' | 'medium' | 'large';
   isLoading?: boolean;
   disabled?: boolean;
+  type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
 }
 
 export const ButtonWithIcon: FC<ButtonWithIconProps> = ({
@@ -16,9 +17,10 @@ export const ButtonWithIcon: FC<ButtonWithIconProps> = ({
   size,
   isLoading,
   disabled,
+  type = 'button',
 }) => {
   return (
-    <IconButton size={size} color="inherit" onClick={clickAction} disabled={disabled}>
+    <IconButton size={size} color="inherit" onClick={clickAction} disabled={disabled} type={type}>
       {isLoading && <Loader size={34} color={'secondary'} />}
       {icon}
     </IconButton>

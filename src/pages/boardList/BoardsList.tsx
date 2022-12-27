@@ -34,7 +34,7 @@ const Boards = () => {
 
   useEffect(() => {
     dispatch(getTasksBySearch(searchQuery));
-  }, [searchQuery]);
+  }, [dispatch, searchQuery]);
 
   const handleSearch = (searchQuery: string) => {
     setSearch({ search: searchQuery });

@@ -19,7 +19,7 @@ export const ColumnHeader: FC<IColumn> = (column) => {
     Promise.all(column.tasks.map(async (task) => await dispatch(deleteTask(task))));
   };
 
-  const removeColumn = async () => {
+  const removeColumn = () => {
     formSubmit({
       action: deleteColumn(column),
       confirmMessage: 'successful.deleteColumnMessage',
@@ -31,11 +31,7 @@ export const ColumnHeader: FC<IColumn> = (column) => {
     <>
       <AppBar position="static" className={styles.bar}>
         <Toolbar variant="dense" className={styles.align}>
-          <EditableTitle
-            columnValues={column}
-            onDeleteColumn={() => setIsFormActive(true)}
-            isLoading={isLoading}
-          />
+          <EditableTitle columnValues={column} onDeleteColumn={() => setIsFormActive(true)} />
         </Toolbar>
       </AppBar>
       <FormModal

@@ -32,6 +32,8 @@ export type IError = string | null;
 export interface IColumnState {
   columns: IColumn[];
   isLoading: boolean;
+  isGetColums: boolean;
+  isDeleteColumn: boolean;
   error: IError;
 }
 

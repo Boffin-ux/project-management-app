@@ -12,6 +12,8 @@ import {
 const initialState: IColumnState = {
   columns: [],
   isLoading: false,
+  isGetColums: false,
+  isDeleteColumn: false,
   error: null,
 };
 
@@ -27,18 +29,18 @@ export const columnSlice = createSlice({
     builder
       .addCase(getColumnsByBoardId.pending, (state) => {
         state.columns = [];
-        state.isLoading = true;
+        state.isGetColums = true;
         state.error = '';
       })
       .addCase(getColumnsByBoardId.fulfilled, (state, action: PayloadAction<IColumn[]>) => {
-        state.isLoading = false;
+        state.isGetColums = false;
         state.columns = action.payload.sort((a, b) => a.order - b.order);
         state.columns = state.columns.map((column) => {
           return { ...column, tasks: [] };
         });
       })
       .addCase(getColumnsByBoardId.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isGetColums = false;
         state.error = action.payload as string;
       })
       .addCase(createColumn.pending, (state) => {
@@ -58,11 +60,7 @@ export const columnSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(updateColumnsSet.fulfilled, (state) => {
-        state.isLoading = false;
-      })
       .addCase(updateColumnsSet.rejected, (state, action) => {
-        state.isLoading = false;
         state.error = action.payload as string;
       })
       .addCase(updateColumn.pending, (state) => {
@@ -79,15 +77,15 @@ export const columnSlice = createSlice({
         state.error = action.payload as string;
       })
       .addCase(deleteColumn.pending, (state) => {
-        state.isLoading = true;
+        state.isDeleteColumn = true;
         state.error = null;
       })
       .addCase(deleteColumn.fulfilled, (state, action: PayloadAction<IColumn>) => {
-        state.isLoading = false;
+        state.isDeleteColumn = false;
         state.columns = state.columns.filter((column) => column._id !== action.payload._id);
       })
       .addCase(deleteColumn.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isDeleteColumn = false;
         state.error = action.payload as string;
       });
   },

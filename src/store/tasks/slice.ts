@@ -13,6 +13,7 @@ export interface ITaskState {
   tasks: ITask[];
   searchTasks: ITask[];
   isLoading: boolean;
+  isGetTasksSet: boolean;
   error: string | null;
 }
 
@@ -20,6 +21,7 @@ const initialState: ITaskState = {
   tasks: [],
   searchTasks: [],
   isLoading: false,
+  isGetTasksSet: false,
   error: null,
 };
 
@@ -58,15 +60,15 @@ export const tasksSlice = createSlice({
         state.error = action.payload as string;
       })
       .addCase(getTasksSet.pending, (state) => {
-        state.isLoading = true;
+        state.isGetTasksSet = true;
         state.error = null;
       })
       .addCase(getTasksSet.fulfilled, (state, action: PayloadAction<ITask[]>) => {
-        state.isLoading = false;
+        state.isGetTasksSet = false;
         state.tasks = action.payload;
       })
       .addCase(getTasksSet.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isGetTasksSet = false;
         state.error = action.payload as string;
       })
       .addCase(updateTask.pending, (state) => {

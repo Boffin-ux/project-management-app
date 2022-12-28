@@ -16,22 +16,30 @@ import ControlPanel from './ControlPanel/ControlPanel';
 import { useParams } from 'react-router-dom';
 import DroppableArea from './DroppableArea/DroppableArea';
 import { putTasksInColumns } from 'utils/helpers';
+import Loader from 'components/universal/Loader/Loader';
 
 const Board = () => {
-  const [viewedColumns, setViewedColumns] = useState<IColumn[]>([]);
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useAppDispatch();
   const searchTasks = useAppSelector((state) => state.tasks.searchTasks);
   const { id: boardId } = useParams<{ id?: string }>();
-
-  const { columns } = useAppSelector((state) => state.columns);
-  const { tasks } = useAppSelector((state) => state.tasks);
+  const [viewedColumns, setViewedColumns] = useState<IColumn[]>([]);
+  const { columns, isGetColums } = useAppSelector((state) => state.columns);
+  const { tasks, isGetTasksSet } = useAppSelector((state) => state.tasks);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (boardId) {
-      dispatch(getColumnsByBoardId(boardId));
-      dispatch(getTasksSet(boardId));
+      const getData = async () => {
+        try {
+          await dispatch(getColumnsByBoardId(boardId)).unwrap();
+          await dispatch(getTasksSet(boardId)).unwrap();
+        } catch (error) {
+          enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
+        }
+      };
+      getData();
     }
   }, []);
 
@@ -41,6 +49,10 @@ const Board = () => {
       : putTasksInColumns(columns, tasks);
     setViewedColumns(newCol);
   }, [columns, searchTasks, tasks]);
+
+  useEffect(() => {
+    setIsLoading(isGetTasksSet || isGetColums);
+  }, [isGetColums, isGetTasksSet]);
 
   const onDragEndColumn = (result: DropResult) => {
     const { source, destination } = result;
@@ -80,21 +92,25 @@ const Board = () => {
   return (
     <Box className={styles.wrapper}>
       <ControlPanel />
-      <Box className={styles.centering}>
-        <Box className={styles.columns}>
-          <DragDropContext onDragEnd={onDragEndColumn}>
-            <Droppable droppableId="all-columns" direction="horizontal" type="column">
-              {(columnsProvided, columnSnapshot) => (
-                <DroppableArea
-                  columns={viewedColumns}
-                  provider={columnsProvided}
-                  snapshot={columnSnapshot}
-                />
-              )}
-            </Droppable>
-          </DragDropContext>
+      {isLoading ? (
+        <Loader size={110} color={'inherit'} />
+      ) : (
+        <Box className={styles.centering}>
+          <Box className={styles.columns}>
+            <DragDropContext onDragEnd={onDragEndColumn}>
+              <Droppable droppableId="all-columns" direction="horizontal" type="column">
+                {(columnsProvided, columnSnapshot) => (
+                  <DroppableArea
+                    columns={viewedColumns}
+                    provider={columnsProvided}
+                    snapshot={columnSnapshot}
+                  />
+                )}
+              </Droppable>
+            </DragDropContext>
+          </Box>
         </Box>
-      </Box>
+      )}
     </Box>
   );
 };

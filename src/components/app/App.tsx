@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { SnackbarProvider } from 'notistack';
 import ErrorBoundaryPage from 'pages/errorBoundaryPage/errorBoundaryPage';
 import HomePage from 'pages/homePage/HomePage';
+import Board from 'pages/boardItem/BoardItem';
 import Layout from 'components/layout/Layout';
 import {
   createBrowserRouter,
@@ -17,11 +18,10 @@ import { VIEW_PATH } from 'utils/variables';
 import '../../i18n/i18next';
 import './app.scss';
 import Loader from 'components/universal/Loader/Loader';
+import Boards from 'pages/boardList/BoardsList';
 
 const PageNotFound = lazy(() => import('pages/page404/Page404'));
 const Profile = lazy(() => import('pages/profile/Profile'));
-const Boards = lazy(() => import('pages/boardList/BoardsList'));
-const Board = lazy(() => import('pages/boardItem/BoardItem'));
 const SignIn = lazy(() => import('pages/signIn/SignIn'));
 const SignUp = lazy(() => import('pages/signUp/SignUp'));
 
@@ -70,22 +70,8 @@ export default function App() {
               />
             </Route>
             <Route element={<AuthRedirect withAuth />}>
-              <Route
-                path={VIEW_PATH.BOARDS}
-                element={
-                  <Suspense fallback={<Loader size={110} />}>
-                    <Boards />
-                  </Suspense>
-                }
-              />
-              <Route
-                path={VIEW_PATH.BOARD}
-                element={
-                  <Suspense fallback={<Loader size={110} />}>
-                    <Board />
-                  </Suspense>
-                }
-              />
+              <Route path={VIEW_PATH.BOARDS} element={<Boards />} />
+              <Route path={VIEW_PATH.BOARD} element={<Board />} />
               <Route
                 path={VIEW_PATH.PROFILE}
                 element={

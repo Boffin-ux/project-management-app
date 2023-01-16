@@ -39,7 +39,7 @@ export const ControlPanel = () => {
   };
 
   const currentBoard = useMemo(() => {
-    if (boards.length) {
+    if (boards && boards.length) {
       return findBoardById(boards, params.id as string);
     } else {
       dispatch(getAllBoards());

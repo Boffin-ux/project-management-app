@@ -10,6 +10,7 @@ import { logout } from 'store/user/slice';
 import { VIEW_PATH } from 'utils/variables';
 import HeaderScroll from './HeaderScroll';
 import { btnStyle, navWrapStyle, titleStyle, toolbarStyle } from './headerStyles';
+
 export default function Header() {
   const { t } = useTranslation();
   const { token } = useAppSelector((state) => state.user);

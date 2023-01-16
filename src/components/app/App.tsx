@@ -46,7 +46,7 @@ export default function App() {
             <Route
               path={VIEW_PATH.REST}
               element={
-                <Suspense fallback={<Loader size={110} />}>
+                <Suspense fallback={<Loader size={110} color={'inherit'} />}>
                   <PageNotFound />
                 </Suspense>
               }
@@ -55,7 +55,7 @@ export default function App() {
               <Route
                 path={VIEW_PATH.SIGN_UP}
                 element={
-                  <Suspense fallback={<Loader size={110} />}>
+                  <Suspense fallback={<Loader size={110} color={'inherit'} />}>
                     <SignUp />
                   </Suspense>
                 }
@@ -63,7 +63,7 @@ export default function App() {
               <Route
                 path={VIEW_PATH.SIGN_IN}
                 element={
-                  <Suspense fallback={<Loader size={110} />}>
+                  <Suspense fallback={<Loader size={110} color={'inherit'} />}>
                     <SignIn />
                   </Suspense>
                 }
@@ -75,7 +75,7 @@ export default function App() {
               <Route
                 path={VIEW_PATH.PROFILE}
                 element={
-                  <Suspense fallback={<Loader size={110} />}>
+                  <Suspense fallback={<Loader size={110} color={'inherit'} />}>
                     <Profile />
                   </Suspense>
                 }

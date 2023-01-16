@@ -14,7 +14,7 @@ import { Search } from './search/Search';
 
 export const ControlUnit = (props: ISearch) => {
   const { id } = useAppSelector((state) => state.user);
-  const { isLoading } = useAppSelector((state) => state.boards);
+  const { isCreateBoard } = useAppSelector((state) => state.boards);
   const { isFormActive, setIsFormActive, formSubmit } = useSubmitHelper();
 
   const addNewBoard = (formData?: IFormValues, resetForm?: () => void) => {
@@ -56,7 +56,7 @@ export const ControlUnit = (props: ISearch) => {
         isModalActive={isFormActive}
         closeModal={() => setIsFormActive(false)}
         action={addNewBoard}
-        isLoading={isLoading}
+        isLoading={isCreateBoard}
         {...addBoardForm}
       />
     </>

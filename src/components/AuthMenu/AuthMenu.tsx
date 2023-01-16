@@ -15,7 +15,7 @@ import { VIEW_PATH } from 'utils/variables';
 
 function AuthMenu() {
   const { token, id } = useAppSelector((state) => state.user);
-  const { isLoading } = useAppSelector((state) => state.boards);
+  const { isCreateBoard } = useAppSelector((state) => state.boards);
   const { t } = useTranslation();
   const { isFormActive, setIsFormActive, formSubmit } = useSubmitHelper();
 
@@ -71,7 +71,7 @@ function AuthMenu() {
         isModalActive={isFormActive}
         closeModal={() => setIsFormActive(false)}
         action={addNewBoard}
-        isLoading={isLoading}
+        isLoading={isCreateBoard}
         {...addBoardForm}
       />
     </>

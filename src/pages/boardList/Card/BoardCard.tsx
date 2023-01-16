@@ -40,13 +40,15 @@ import { setRandomColor } from './utils';
 export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
   const { t } = useTranslation();
   const allUsers = useAppSelector((state) => state.users.users);
-  const { isLoading } = useAppSelector((state) => state.boards);
   const boardCardView = useAppSelector((state) => state.boards.displayedView);
+  const { isDeleteBoard, isUpdateBoard } = useAppSelector((state) => state.boards);
   const { isFormActive, setIsFormActive, formSubmit } = useSubmitHelper();
   const [modalProps, setIsModalProps] = useState<ICustomFormProps>({
     ...deleteBoardForm,
     action: removeBoard,
   });
+
+  const isLoading = isUpdateBoard || isDeleteBoard;
 
   async function removeBoard() {
     formSubmit({
@@ -67,7 +69,7 @@ export const BoardCard: FC<IBoard> = ({ _id, title, owner, users }) => {
     setIsFormActive(true);
   };
 
-  const updateBoardData = async (formData?: IFormValues, resetForm?: () => void) => {
+  const updateBoardData = (formData?: IFormValues, resetForm?: () => void) => {
     const newFormData = { ...formData, owner, _id } as IBoard;
 
     formSubmit({

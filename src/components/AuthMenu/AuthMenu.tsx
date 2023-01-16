@@ -3,11 +3,11 @@ import { Button, Typography } from '@mui/material';
 import { addBoardForm } from 'components/form/constants/formOptions';
 import FormModal from 'components/form/FormModal';
 import { btnStyle, subtitleStyle } from 'components/header/headerStyles';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import React from 'react';
+import { useAppSelector } from 'hooks/redux';
+import useSubmitHelper from 'hooks/useSubmitHelper';
 import { IRequestForBoard } from 'interfaces/boards';
 import { IFormValues } from 'interfaces/modal';
-import { useSnackbar } from 'notistack';
-import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { createBoard } from 'store/board/thunks';
@@ -15,24 +15,18 @@ import { VIEW_PATH } from 'utils/variables';
 
 function AuthMenu() {
   const { token, id } = useAppSelector((state) => state.user);
-  const dispatch = useAppDispatch();
+  const { isCreateBoard } = useAppSelector((state) => state.boards);
   const { t } = useTranslation();
-  const [isModalActive, setIsModalActive] = useState(false);
-  const { enqueueSnackbar } = useSnackbar();
+  const { isFormActive, setIsFormActive, formSubmit } = useSubmitHelper();
 
-  const handleCreateBoard = () => {
-    setIsModalActive(true);
-  };
+  const addNewBoard = (formData?: IFormValues, resetForm?: () => void) => {
+    const newFormData = { ...formData, owner: id } as IRequestForBoard;
 
-  const addNewBoard = async (formData?: IFormValues) => {
-    const newFormData = { ...formData, owner: id } as unknown as IRequestForBoard;
-    try {
-      await dispatch(createBoard(newFormData)).unwrap();
-      enqueueSnackbar(t('successful.addBoardMessage'), { variant: 'success' });
-      setIsModalActive(false);
-    } catch (error) {
-      enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
-    }
+    formSubmit({
+      action: createBoard(newFormData),
+      confirmMessage: 'successful.addBoardMessage',
+      resetForm,
+    });
   };
 
   return (
@@ -44,7 +38,11 @@ function AuthMenu() {
               {t('header.boardPage')}
             </Typography>
           </Button>
-          <Button sx={btnStyle} startIcon={<DashboardCustomize />} onClick={handleCreateBoard}>
+          <Button
+            sx={btnStyle}
+            startIcon={<DashboardCustomize />}
+            onClick={() => setIsFormActive(true)}
+          >
             <Typography variant="subtitle1" sx={subtitleStyle}>
               {t('header.addBoard')}
             </Typography>
@@ -70,9 +68,10 @@ function AuthMenu() {
         </>
       )}
       <FormModal
-        isModalActive={isModalActive}
-        closeModal={() => setIsModalActive(false)}
+        isModalActive={isFormActive}
+        closeModal={() => setIsFormActive(false)}
         action={addNewBoard}
+        isLoading={isCreateBoard}
         {...addBoardForm}
       />
     </>

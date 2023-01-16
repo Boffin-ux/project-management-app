@@ -4,6 +4,7 @@ import { getUsers } from './thunks';
 
 interface UsersState {
   isLoading: boolean;
+  isSuccess: boolean;
   error: string | null;
   users: IUsers[];
 }
@@ -11,6 +12,7 @@ interface UsersState {
 const initialState: UsersState = {
   error: null,
   isLoading: false,
+  isSuccess: false,
   users: [],
 };
 
@@ -22,14 +24,17 @@ export const allUsersSlice = createSlice({
     builder
       .addCase(getUsers.pending, (state) => {
         state.isLoading = true;
+        state.isSuccess = false;
         state.error = null;
       })
       .addCase(getUsers.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.isSuccess = true;
         state.users = action.payload;
       })
       .addCase(getUsers.rejected, (state, action) => {
         state.isLoading = false;
+        state.isSuccess = false;
         state.error = action.payload as string;
       });
   },

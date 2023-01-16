@@ -1,12 +1,11 @@
 import { Box, Grid } from '@mui/material';
 import { addBoardForm } from 'components/form/constants/formOptions';
 import FormModal from 'components/form/FormModal';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { useAppSelector } from 'hooks/redux';
+import useSubmitHelper from 'hooks/useSubmitHelper';
 import { IRequestForBoard, ISearch } from 'interfaces/boards';
 import { IFormValues } from 'interfaces/modal';
-import { useSnackbar } from 'notistack';
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React from 'react';
 import { createBoard } from 'store/board/thunks';
 import { AddBoardButton } from './addBoardButton/AddBoardButton';
 import { MappingSpaces } from './mappingSpaces/MappingSpaces';
@@ -14,23 +13,18 @@ import { PersonalizeView } from './personalizeView/PersonalizeView';
 import { Search } from './search/Search';
 
 export const ControlUnit = (props: ISearch) => {
-  const dispatch = useAppDispatch();
   const { id } = useAppSelector((state) => state.user);
-  const { enqueueSnackbar } = useSnackbar();
-  const [isModalActive, setIsModalActive] = useState(false);
-  const { t } = useTranslation();
+  const { isCreateBoard } = useAppSelector((state) => state.boards);
+  const { isFormActive, setIsFormActive, formSubmit } = useSubmitHelper();
 
-  const addNewBoard = async (formData?: IFormValues) => {
-    if (formData) {
-      const newFormData = { ...formData, owner: id } as IRequestForBoard;
-      try {
-        await dispatch(createBoard(newFormData)).unwrap();
-        enqueueSnackbar(t('successful.addBoardMessage'), { variant: 'success' });
-        setIsModalActive(false);
-      } catch (error) {
-        enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
-      }
-    }
+  const addNewBoard = (formData?: IFormValues, resetForm?: () => void) => {
+    const newFormData = { ...formData, owner: id } as IRequestForBoard;
+
+    formSubmit({
+      action: createBoard(newFormData),
+      confirmMessage: 'successful.addBoardMessage',
+      resetForm,
+    });
   };
 
   return (
@@ -50,7 +44,7 @@ export const ControlUnit = (props: ISearch) => {
           width="100%"
           sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
         >
-          <AddBoardButton onAddBoard={() => setIsModalActive(true)} />
+          <AddBoardButton onAddBoard={() => setIsFormActive(true)} />
           <Search {...props} />
         </Grid>
         <Box display="flex" justifyContent="end" alignItems="center" gap={1}>
@@ -59,9 +53,10 @@ export const ControlUnit = (props: ISearch) => {
         </Box>
       </Grid>
       <FormModal
-        isModalActive={isModalActive}
-        closeModal={() => setIsModalActive(false)}
+        isModalActive={isFormActive}
+        closeModal={() => setIsFormActive(false)}
         action={addNewBoard}
+        isLoading={isCreateBoard}
         {...addBoardForm}
       />
     </>

@@ -4,8 +4,7 @@ import { AxiosError } from 'axios';
 import { axiosErrorHandler } from 'utils/helpers';
 import { API_ENDPOINTS } from 'utils/variables';
 import { IColumn, IColumnSet, IRequestForCreateColumns } from 'interfaces/columns';
-import { IColumnHeaderProps, IDeleteColumn } from 'interfaces/columns';
-import { ITask, ITaskRequest, ITasksSet } from 'interfaces/task';
+import { ITask, ITaskRequest } from 'interfaces/task';
 
 export const getColumnsByBoardId = createAsyncThunk(
   'columns/byBoardId',
@@ -34,7 +33,7 @@ export const createColumn = createAsyncThunk(
   }
 );
 
-export const updateColumnsSet = createAsyncThunk(
+export const updateColumnsSet = createAsyncThunk<IColumn, IColumnSet[], { rejectValue: string }>(
   'columns/columnsSet',
   async (dataColumnSet: IColumnSet[], { rejectWithValue }) => {
     try {
@@ -47,7 +46,7 @@ export const updateColumnsSet = createAsyncThunk(
   }
 );
 
-export const deleteColumn = createAsyncThunk(
+export const deleteColumn = createAsyncThunk<IColumn, IColumn, { rejectValue: string }>(
   'columns/delete',
   async (column: IColumn, { rejectWithValue }) => {
     try {
@@ -61,7 +60,7 @@ export const deleteColumn = createAsyncThunk(
   }
 );
 
-export const updateColumn = createAsyncThunk(
+export const updateColumn = createAsyncThunk<IColumn, IColumn, { rejectValue: string }>(
   'columns/update',
   async (column: IColumn, { rejectWithValue }) => {
     try {

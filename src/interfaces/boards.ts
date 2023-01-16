@@ -2,6 +2,10 @@ export interface IBoardState {
   boards: Array<IBoard>;
   displayedView: string;
   isLoading: boolean;
+  isCreateBoard: boolean;
+  isDeleteBoard: boolean;
+  isUpdateBoard: boolean;
+  isSuccess: boolean;
   error: string | null;
 }
 

@@ -2,8 +2,8 @@ import { LockOutlined } from '@mui/icons-material';
 import { Avatar, Box, Button, Container, Link, TextField, Typography } from '@mui/material';
 import Loader from 'components/universal/Loader/Loader';
 import { useFormik } from 'formik';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { useSnackbar } from 'notistack';
+import { useAppSelector } from 'hooks/redux';
+import useSubmitHelper from 'hooks/useSubmitHelper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { loginValidationSchema } from 'schemas/userSchemas';
@@ -16,22 +16,19 @@ const initialValues = {
 };
 
 function SignIn() {
-  const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
   const { isLoading, error } = useAppSelector((state) => state.user);
+  const { formSubmit } = useSubmitHelper();
 
   const { values, touched, errors, handleSubmit, handleChange, dirty } = useFormik({
     initialValues,
     validationSchema: loginValidationSchema,
-    onSubmit: async (values, { resetForm }) => {
-      try {
-        await dispatch(signIn(values)).unwrap();
-        enqueueSnackbar(t('successful.signInMessage'), { variant: 'success' });
-      } catch (error) {
-        resetForm();
-        enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
-      }
+    onSubmit: (values, { resetForm }) => {
+      formSubmit({
+        action: signIn(values),
+        confirmMessage: 'successful.signInMessage',
+        resetForm,
+      });
     },
   });
 
@@ -84,7 +81,7 @@ function SignIn() {
           {!dirty && error && (
             <Typography sx={{ color: 'red', my: 1 }}>{t(`errors.${error}`)}</Typography>
           )}
-          <Box sx={{ position: 'relative' }}>
+          <Box sx={{ position: 'relative' }} margin={'16px 0 8px'}>
             <Button
               color="primary"
               variant="contained"

@@ -16,6 +16,7 @@ interface IModalProps extends IModalState {
 interface IPropsConfirm {
   action: () => void;
   closeModal: () => void;
+  isLoading: boolean;
 }
 
 interface IDefaultFormProps {
@@ -28,7 +29,7 @@ interface IDefaultFormProps {
 }
 
 interface ICustomFormProps extends IDefaultFormProps {
-  action: (formData?: IFormValues) => void;
+  action: (formData?: IFormValues, resetForm?: () => void) => void;
 }
 
 interface IOpenModal {
@@ -36,7 +37,9 @@ interface IOpenModal {
   openModal: (formOptions?: IDefaultFormProps, action?: () => Promise<void>) => void;
 }
 
-interface IFormProps extends IModalState, ICustomFormProps {}
+interface IFormProps extends IModalState, ICustomFormProps {
+  isLoading: boolean;
+}
 
 interface IUserData {
   _id: string;

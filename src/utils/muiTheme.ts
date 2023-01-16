@@ -15,6 +15,10 @@ const muiTheme = createTheme({
       main: 'rgba(63, 191, 195, 0.8)',
       contrastText: '#fff',
     },
+    secondary: {
+      main: 'rgba(255, 255, 255, 0.9)',
+      contrastText: '#000',
+    },
   },
 });
 

@@ -30,6 +30,7 @@
     "addBoardMessage": "The board was created successfully!",
     "editBoardMessage": "The board was changed successfully!",
     "addColumnMessage": "The column was created successfully!",
+    "editColumnMessage": "The column was changed successfully!",
     "deleteColumnMessage": "The column was deleted successfully!",
     "addTaskMessage": "The task was created successfully!",
     "editTaskMessage": "The task was changed successfully!",
@@ -41,7 +42,7 @@
     "homeLink": "Home",
     "addBoard": "Add Board",
     "boardPage": "Boards",
-    "editProfile": "Edit Profile"
+    "editProfile": "Profile"
   },
   "auth": {
     "signIn": "Sign In",

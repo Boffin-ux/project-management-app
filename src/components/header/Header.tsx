@@ -10,6 +10,7 @@ import { logout } from 'store/user/slice';
 import { VIEW_PATH } from 'utils/variables';
 import HeaderScroll from './HeaderScroll';
 import { btnStyle, navWrapStyle, titleStyle, toolbarStyle } from './headerStyles';
+
 export default function Header() {
   const { t } = useTranslation();
   const { token } = useAppSelector((state) => state.user);
@@ -25,7 +26,7 @@ export default function Header() {
         <Toolbar sx={toolbarStyle}>
           <Typography variant="h1" sx={titleStyle}>
             <Button component={Link} to={VIEW_PATH.HOME} sx={btnStyle} startIcon={<Home />}>
-              <Typography variant="subtitle1" sx={{ display: { xs: 'none', sm: 'flex' } }}>
+              <Typography variant="subtitle1" sx={{ display: { xs: 'none', md: 'flex' } }}>
                 {t('header.homeLink')}
               </Typography>
             </Button>
@@ -41,12 +42,12 @@ export default function Header() {
                     to={VIEW_PATH.PROFILE}
                     startIcon={<ManageAccounts />}
                   >
-                    <Typography variant="subtitle1" sx={{ display: { xs: 'none', sm: 'flex' } }}>
+                    <Typography variant="subtitle1" sx={{ display: { xs: 'none', md: 'flex' } }}>
                       {t('header.editProfile')}
                     </Typography>
                   </Button>
                   <Button sx={btnStyle} onClick={handleLogout} startIcon={<Logout />}>
-                    <Typography variant="subtitle1" sx={{ display: { xs: 'none', sm: 'flex' } }}>
+                    <Typography variant="subtitle1" sx={{ display: { xs: 'none', md: 'flex' } }}>
                       {t('auth.signOut')}
                     </Typography>
                   </Button>

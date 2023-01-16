@@ -41,20 +41,9 @@ export default function SelectField({
     }, []);
   }, [users, value]);
 
-  if (isLoading) {
-    return <Loader size={48} />;
-  }
-
-  if (usersError) {
-    return (
-      <Typography variant="body1" color="error" sx={{ textAlign: 'center' }}>
-        {t(`errors.${usersError as string}`)}
-      </Typography>
-    );
-  }
-
   return (
     <FormControl margin="normal" fullWidth>
+      {isLoading && <Loader />}
       <InputLabel id={'users'}>{t('selectUser.userLabelForm')}</InputLabel>
       <Select
         labelId={'users'}
@@ -66,12 +55,18 @@ export default function SelectField({
         renderValue={() => usersLogin.join(', ')}
         error={error}
       >
-        {users.map((user) => (
-          <MenuItem key={user._id} value={user._id}>
-            <Checkbox checked={value && value.indexOf(user._id) > -1} />
-            <ListItemText primary={user.login} />
-          </MenuItem>
-        ))}
+        {usersError ? (
+          <Typography variant="body1" color="error" sx={{ textAlign: 'center' }}>
+            {t(`errors.${usersError as string}`)}
+          </Typography>
+        ) : (
+          users.map((user) => (
+            <MenuItem key={user._id} value={user._id}>
+              <Checkbox checked={value && value.indexOf(user._id) > -1} />
+              <ListItemText primary={user.login} />
+            </MenuItem>
+          ))
+        )}
       </Select>
       <FormHelperText error>{helperText}</FormHelperText>
     </FormControl>

@@ -7,34 +7,28 @@ import { ITask, ITaskProps } from 'interfaces/task';
 import { ButtonWithIcon } from 'components/buttons/ButtonWithIcon/ButtonWithIcon';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { useSnackbar } from 'notistack';
-import { useTranslation } from 'react-i18next';
+import { useAppSelector } from 'hooks/redux';
 import { deleteTaskForm, editTaskForm } from 'components/form/constants/formOptions';
 import { ICustomFormProps, IFormValues } from 'interfaces/modal';
 import FormModal from 'components/form/FormModal';
 import { deleteTask, updateTask } from 'store/tasks/thunks';
+import useSubmitHelper from 'hooks/useSubmitHelper';
 
 export const Task: FC<ITaskProps> = ({ task, index }) => {
-  const dispatch = useAppDispatch();
-  const { t } = useTranslation();
+  const { isFormActive, setIsFormActive, formSubmit } = useSubmitHelper();
   const user = useAppSelector((state) => state.user);
-  const { enqueueSnackbar } = useSnackbar();
+  const { isLoading } = useAppSelector((state) => state.tasks);
   const { _id, boardId, columnId, title, description, order, users } = task;
-  const [isModalActive, setIsModalActive] = useState(false);
   const [modalProps, setIsModalProps] = useState<ICustomFormProps>({
     ...deleteTaskForm,
     action: removeTask,
   });
 
   async function removeTask() {
-    try {
-      await dispatch(deleteTask({ boardId, columnId, taskId: _id })).unwrap();
-      enqueueSnackbar(t('successful.deleteTaskMessage'), { variant: 'success' });
-      setIsModalActive(false);
-    } catch (error) {
-      enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
-    }
+    await formSubmit({
+      action: deleteTask({ boardId, columnId, _id }),
+      confirmMessage: 'successful.deleteTaskMessage',
+    });
   }
 
   const editTask = () => {
@@ -47,15 +41,15 @@ export const Task: FC<ITaskProps> = ({ task, index }) => {
       ...editTaskForm,
     };
     setIsModalProps({ ...currentData, action: updateTaskData });
-    setIsModalActive(true);
+    setIsFormActive(true);
   };
 
   const deleteCurrentTask = () => {
     setIsModalProps({ ...deleteTaskForm, action: removeTask });
-    setIsModalActive(true);
+    setIsFormActive(true);
   };
 
-  const updateTaskData = async (formData?: IFormValues) => {
+  const updateTaskData = async (formData?: IFormValues, resetForm?: () => void) => {
     const newFormData = {
       ...formData,
       _id,
@@ -64,13 +58,12 @@ export const Task: FC<ITaskProps> = ({ task, index }) => {
       order,
       userId: user.id,
     } as ITask;
-    try {
-      await dispatch(updateTask(newFormData)).unwrap();
-      enqueueSnackbar(t('successful.editTaskMessage'), { variant: 'success' });
-      setIsModalActive(false);
-    } catch (error) {
-      enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
-    }
+
+    formSubmit({
+      action: updateTask(newFormData),
+      confirmMessage: 'successful.editTaskMessage',
+      resetForm,
+    });
   };
 
   return (
@@ -104,8 +97,9 @@ export const Task: FC<ITaskProps> = ({ task, index }) => {
         )}
       </Draggable>
       <FormModal
-        isModalActive={isModalActive}
-        closeModal={() => setIsModalActive(false)}
+        isModalActive={isFormActive}
+        closeModal={() => setIsFormActive(false)}
+        isLoading={isLoading}
         {...modalProps}
       />
     </>

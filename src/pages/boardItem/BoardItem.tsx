@@ -16,40 +16,49 @@ import ControlPanel from './ControlPanel/ControlPanel';
 import { useParams } from 'react-router-dom';
 import DroppableArea from './DroppableArea/DroppableArea';
 import { putTasksInColumns } from 'utils/helpers';
+import Loader from 'components/universal/Loader/Loader';
 
-export const Board = () => {
-  const [viewedColumns, setViewedColumns] = useState<IColumn[]>([]);
+const Board = () => {
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useAppDispatch();
   const searchTasks = useAppSelector((state) => state.tasks.searchTasks);
-  const params = useParams();
-
-  const { columns, error } = useAppSelector((state) => state.columns);
-  const { tasks } = useAppSelector((state) => state.tasks);
-
-  useEffect(() => {
-    const newCol =
-      searchTasks.length > 0
-        ? putTasksInColumns(columns, searchTasks)
-        : putTasksInColumns(columns, tasks);
-    setViewedColumns(newCol);
-  }, [columns, tasks]);
+  const { id: boardId } = useParams<{ id?: string }>();
+  const [viewedColumns, setViewedColumns] = useState<IColumn[]>([]);
+  const { columns, isGetColums } = useAppSelector((state) => state.columns);
+  const { tasks, isGetTasksSet } = useAppSelector((state) => state.tasks);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const boardId = params.id as string;
-    dispatch(getColumnsByBoardId(boardId));
-    dispatch(getTasksSet(boardId));
+    if (boardId) {
+      const getData = async () => {
+        try {
+          await dispatch(getColumnsByBoardId(boardId)).unwrap();
+          await dispatch(getTasksSet(boardId)).unwrap();
+        } catch (error) {
+          enqueueSnackbar(t(`errors.${error as string}`), { variant: 'error' });
+        }
+      };
+      getData();
+    }
   }, []);
 
-  if (error) enqueueSnackbar(t(`errors.authNoResponse`), { variant: 'error' });
+  useEffect(() => {
+    const newCol = searchTasks.length
+      ? putTasksInColumns(columns, searchTasks)
+      : putTasksInColumns(columns, tasks);
+    setViewedColumns(newCol);
+  }, [columns, searchTasks, tasks]);
+
+  useEffect(() => {
+    setIsLoading(isGetTasksSet || isGetColums);
+  }, [isGetColums, isGetTasksSet]);
 
   const onDragEndColumn = (result: DropResult) => {
     const { source, destination } = result;
     let newCol: IColumn[] = [];
     if (searchTasks.length > 0) {
-      enqueueSnackbar(t(`errors.noDragDrop`), { variant: 'error' });
-      return;
+      return enqueueSnackbar(t(`errors.noDragDrop`), { variant: 'error' });
     }
     if (!destination) return;
     if (!source) return;
@@ -82,8 +91,10 @@ export const Board = () => {
 
   return (
     <Box className={styles.wrapper}>
-      <>
-        <ControlPanel />
+      <ControlPanel />
+      {isLoading ? (
+        <Loader size={110} color={'inherit'} />
+      ) : (
         <Box className={styles.centering}>
           <Box className={styles.columns}>
             <DragDropContext onDragEnd={onDragEndColumn}>
@@ -99,7 +110,9 @@ export const Board = () => {
             </DragDropContext>
           </Box>
         </Box>
-      </>
+      )}
     </Box>
   );
 };
+
+export default Board;

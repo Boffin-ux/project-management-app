@@ -81,7 +81,7 @@ function SignIn() {
           {!dirty && error && (
             <Typography sx={{ color: 'red', my: 1 }}>{t(`errors.${error}`)}</Typography>
           )}
-          <Box sx={{ position: 'relative' }}>
+          <Box sx={{ position: 'relative' }} margin={'16px 0 8px'}>
             <Button
               color="primary"
               variant="contained"

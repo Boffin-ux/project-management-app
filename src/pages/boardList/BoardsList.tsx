@@ -13,6 +13,9 @@ import { BoardCard } from './Card/BoardCard';
 import { SkeletonCard } from './Card/SkeletonCard';
 import { ControlUnit } from './controlUnit/ControlUnit';
 
+const MINLENGHT = 4;
+const MAXLENGHT = 0;
+
 const Boards = () => {
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
@@ -69,7 +72,8 @@ const Boards = () => {
     <Box className={styles.boardWrapper}>
       <ControlUnit onSearch={handleSearch} searchQuery={searchQuery} />
       <Grid container spacing={1} justifyContent="center">
-        {isLoading && generateRandomArray(4, 0).map((_, index) => <SkeletonCard key={index} />)}
+        {isLoading &&
+          generateRandomArray(MINLENGHT, MAXLENGHT).map((_, index) => <SkeletonCard key={index} />)}
         {isSuccess && renderBoards}
       </Grid>
     </Box>

@@ -20,6 +20,15 @@ const muiTheme = createTheme({
       contrastText: '#000',
     },
   },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        startIcon: {
+          margin: '0',
+        },
+      },
+    },
+  },
 });
 
 export { muiTheme };

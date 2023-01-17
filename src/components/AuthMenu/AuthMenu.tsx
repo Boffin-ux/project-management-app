@@ -1,5 +1,5 @@
 import { AppRegistration, Dashboard, DashboardCustomize, Login } from '@mui/icons-material';
-import { Button, Typography } from '@mui/material';
+import { Button, Tooltip, Typography } from '@mui/material';
 import { addBoardForm } from 'components/form/constants/formOptions';
 import FormModal from 'components/form/FormModal';
 import { btnStyle, subtitleStyle } from 'components/header/headerStyles';
@@ -9,11 +9,15 @@ import useSubmitHelper from 'hooks/useSubmitHelper';
 import { IRequestForBoard } from 'interfaces/boards';
 import { IFormValues } from 'interfaces/modal';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import { createBoard } from 'store/board/thunks';
 import { VIEW_PATH } from 'utils/variables';
+import NavButton from 'components/header/NavButton';
 
-function AuthMenu() {
+type TBreakpointMenu = {
+  matches: boolean;
+};
+
+function AuthMenu({ matches }: TBreakpointMenu) {
   const { token, id } = useAppSelector((state) => state.user);
   const { isCreateBoard } = useAppSelector((state) => state.boards);
   const { t } = useTranslation();
@@ -33,38 +37,38 @@ function AuthMenu() {
     <>
       {token ? (
         <>
-          <Button component={Link} sx={btnStyle} to={VIEW_PATH.BOARDS} startIcon={<Dashboard />}>
-            <Typography variant="subtitle1" sx={subtitleStyle}>
-              {t('header.boardPage')}
-            </Typography>
-          </Button>
-          <Button
-            sx={btnStyle}
-            startIcon={<DashboardCustomize />}
-            onClick={() => setIsFormActive(true)}
-          >
-            <Typography variant="subtitle1" sx={subtitleStyle}>
-              {t('header.addBoard')}
-            </Typography>
-          </Button>
+          <NavButton
+            text={t('header.boardPage')}
+            route={VIEW_PATH.BOARDS}
+            matches={matches}
+            icon={<Dashboard />}
+          />
+          <Tooltip title={matches ? t('header.addBoard') : ''} arrow>
+            <Button
+              sx={btnStyle}
+              startIcon={<DashboardCustomize />}
+              onClick={() => setIsFormActive(true)}
+            >
+              <Typography variant="subtitle1" sx={subtitleStyle}>
+                {t('header.addBoard')}
+              </Typography>
+            </Button>
+          </Tooltip>
         </>
       ) : (
         <>
-          <Button component={Link} to={VIEW_PATH.SIGN_IN} sx={btnStyle} startIcon={<Login />}>
-            <Typography variant="subtitle1" sx={subtitleStyle}>
-              {t('header.signIn')}
-            </Typography>
-          </Button>
-          <Button
-            component={Link}
-            to={VIEW_PATH.SIGN_UP}
-            sx={btnStyle}
-            startIcon={<AppRegistration />}
-          >
-            <Typography variant="subtitle1" sx={subtitleStyle}>
-              {t('header.signUp')}
-            </Typography>
-          </Button>
+          <NavButton
+            text={t('header.signIn')}
+            route={VIEW_PATH.SIGN_IN}
+            matches={matches}
+            icon={<Login />}
+          />
+          <NavButton
+            text={t('header.signUp')}
+            route={VIEW_PATH.SIGN_UP}
+            matches={matches}
+            icon={<AppRegistration />}
+          />
         </>
       )}
       <FormModal

@@ -3,7 +3,7 @@ import { Button, Tooltip, Typography } from '@mui/material';
 import { addBoardForm } from 'components/form/constants/formOptions';
 import FormModal from 'components/form/FormModal';
 import { btnStyle, subtitleStyle } from 'components/header/headerStyles';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAppSelector } from 'hooks/redux';
 import useSubmitHelper from 'hooks/useSubmitHelper';
 import { IRequestForBoard } from 'interfaces/boards';
@@ -12,16 +12,20 @@ import { useTranslation } from 'react-i18next';
 import { createBoard } from 'store/board/thunks';
 import { VIEW_PATH } from 'utils/variables';
 import NavButton from 'components/header/NavButton';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 type TBreakpointMenu = {
   matches: boolean;
 };
 
 function AuthMenu({ matches }: TBreakpointMenu) {
+  const navigate = useNavigate();
   const { token, id } = useAppSelector((state) => state.user);
-  const { isCreateBoard } = useAppSelector((state) => state.boards);
+  const { isCreateBoard, isSuccessCreate } = useAppSelector((state) => state.boards);
   const { t } = useTranslation();
   const { isFormActive, setIsFormActive, formSubmit } = useSubmitHelper();
+  const location = useLocation();
+  const currentUrl = location.pathname.slice(1) === VIEW_PATH.BOARDS;
 
   const addNewBoard = (formData?: IFormValues, resetForm?: () => void) => {
     const newFormData = { ...formData, owner: id } as IRequestForBoard;
@@ -32,6 +36,12 @@ function AuthMenu({ matches }: TBreakpointMenu) {
       resetForm,
     });
   };
+
+  useEffect(() => {
+    if (isSuccessCreate && !currentUrl) {
+      navigate(VIEW_PATH.BOARDS);
+    }
+  }, [isSuccessCreate]);
 
   return (
     <>

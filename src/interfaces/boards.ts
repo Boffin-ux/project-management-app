@@ -6,6 +6,7 @@ export interface IBoardState {
   isDeleteBoard: boolean;
   isUpdateBoard: boolean;
   isSuccess: boolean;
+  isSuccessCreate: boolean;
   error: string | null;
 }
 

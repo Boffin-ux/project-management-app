@@ -20,13 +20,17 @@ const Boards = () => {
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useAppDispatch();
-  const boards = useAppSelector((state) => state.boards.boards);
-  const isLoadingBoards = useAppSelector((state) => state.boards.isLoading);
-  const isLoadingUsers = useAppSelector((state) => state.users.isLoading);
-  const isLoadingTasks = useAppSelector((state) => state.tasks.isLoading);
-  const isSuccessBoards = useAppSelector((state) => state.boards.isSuccess);
-  const isSuccessUsers = useAppSelector((state) => state.users.isSuccess);
-  const isSuccessTasks = useAppSelector((state) => state.tasks.isSuccess);
+  const {
+    boards,
+    isLoading: isLoadingBoards,
+    isSuccess: isSuccessBoards,
+  } = useAppSelector((state) => state.boards);
+  const { isLoading: isLoadingUsers, isSuccess: isSuccessUsers } = useAppSelector(
+    (state) => state.users
+  );
+  const { isLoading: isLoadingTasks, isSuccess: isSuccessTasks } = useAppSelector(
+    (state) => state.tasks
+  );
   const isLoading = isLoadingBoards || isLoadingUsers || isLoadingTasks;
   const isSuccess = isSuccessBoards && isSuccessUsers && isSuccessTasks;
 

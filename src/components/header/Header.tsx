@@ -1,20 +1,31 @@
 import { Home, Logout, ManageAccounts } from '@mui/icons-material';
-import { AppBar, Box, Button, Grid, Toolbar, Typography } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  Button,
+  Grid,
+  Toolbar,
+  Tooltip,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
 import AuthMenu from 'components/AuthMenu/AuthMenu';
 import SelectionLang from 'components/selectionLang/SelectionLang';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import { logout } from 'store/user/slice';
 import { VIEW_PATH } from 'utils/variables';
 import HeaderScroll from './HeaderScroll';
-import { btnStyle, navWrapStyle, titleStyle, toolbarStyle } from './headerStyles';
+import { btnStyle, navWrapStyle, subtitleStyle, titleStyle, toolbarStyle } from './headerStyles';
+import NavButton from './NavButton';
+import { muiTheme } from 'utils/muiTheme';
 
 export default function Header() {
   const { t } = useTranslation();
-  const { token } = useAppSelector((state) => state.user);
+  const token = useAppSelector((state) => state.user.token);
   const dispatch = useAppDispatch();
+  const isMatchesMD = useMediaQuery(muiTheme.breakpoints.down('md'));
 
   const handleLogout = () => {
     dispatch(logout());
@@ -25,32 +36,31 @@ export default function Header() {
       <AppBar position="sticky" color="inherit">
         <Toolbar sx={toolbarStyle}>
           <Typography variant="h1" sx={titleStyle}>
-            <Button component={Link} to={VIEW_PATH.HOME} sx={btnStyle} startIcon={<Home />}>
-              <Typography variant="subtitle1" sx={{ display: { xs: 'none', md: 'flex' } }}>
-                {t('header.homeLink')}
-              </Typography>
-            </Button>
+            <NavButton
+              text={t('header.homeLink')}
+              route={VIEW_PATH.HOME}
+              matches={isMatchesMD}
+              icon={<Home />}
+            />
           </Typography>
           <Grid container sx={navWrapStyle}>
             <Box component="nav">
-              <AuthMenu />
+              <AuthMenu matches={isMatchesMD} />
               {token && (
                 <>
-                  <Button
-                    component={Link}
-                    sx={btnStyle}
-                    to={VIEW_PATH.PROFILE}
-                    startIcon={<ManageAccounts />}
-                  >
-                    <Typography variant="subtitle1" sx={{ display: { xs: 'none', md: 'flex' } }}>
-                      {t('header.editProfile')}
-                    </Typography>
-                  </Button>
-                  <Button sx={btnStyle} onClick={handleLogout} startIcon={<Logout />}>
-                    <Typography variant="subtitle1" sx={{ display: { xs: 'none', md: 'flex' } }}>
-                      {t('auth.signOut')}
-                    </Typography>
-                  </Button>
+                  <NavButton
+                    text={t('header.editProfile')}
+                    route={VIEW_PATH.PROFILE}
+                    matches={isMatchesMD}
+                    icon={<ManageAccounts />}
+                  />
+                  <Tooltip title={isMatchesMD ? t('auth.signOut') : ''} arrow>
+                    <Button sx={btnStyle} onClick={handleLogout} startIcon={<Logout />}>
+                      <Typography variant="subtitle1" sx={subtitleStyle}>
+                        {t('auth.signOut')}
+                      </Typography>
+                    </Button>
+                  </Tooltip>
                 </>
               )}
             </Box>

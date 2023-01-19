@@ -17,6 +17,7 @@ const initialState: IBoardState = {
   isDeleteBoard: false,
   isUpdateBoard: false,
   isSuccess: false,
+  isSuccessCreate: false,
   error: null,
 };
 
@@ -47,14 +48,17 @@ export const boardSlice = createSlice({
       })
       .addCase(createBoard.pending, (state) => {
         state.isCreateBoard = true;
+        state.isSuccessCreate = false;
         state.error = null;
       })
       .addCase(createBoard.fulfilled, (state, action) => {
         state.isCreateBoard = false;
+        state.isSuccessCreate = true;
         state.boards.push(action.payload);
       })
       .addCase(createBoard.rejected, (state, action) => {
         state.isCreateBoard = false;
+        state.isSuccessCreate = false;
         state.error = action.payload as string;
       })
       .addCase(deleteBoard.pending, (state) => {

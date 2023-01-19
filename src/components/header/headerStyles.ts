@@ -19,6 +19,6 @@ const navWrapStyle = {
 };
 
 const titleStyle = { display: 'flex', flexGrow: 1, fontSize: '1.8rem' };
-const subtitleStyle = { display: { xs: 'none', md: 'flex' } };
+const subtitleStyle = { display: { xs: 'none', md: 'flex' }, ml: '4px' };
 
 export { btnStyle, toolbarStyle, titleStyle, subtitleStyle, navWrapStyle };

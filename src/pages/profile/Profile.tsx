@@ -56,15 +56,15 @@ function Profile() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          backgroundColor: '#fff',
+          bgcolor: '#fff',
           padding: '20px',
           borderRadius: '4px',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+        <Avatar sx={{ m: 1, bgcolor: 'secondary' }}>
           <Build />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" color="#000">
           {t('profile.profileHeader')}
         </Typography>
         <form onSubmit={handleSubmit}>
